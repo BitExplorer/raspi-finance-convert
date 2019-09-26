@@ -47,10 +47,10 @@ class InsertTransactionProcessorSpec extends Specification {
         then:
         1 * exchange.getIn() >> message
         1 * message.getBody(String.class) >> payload
-        1 * meterRegistry.timer('insert.transaction.timer', []) >> timer
-        1 * timer.record(_ as Object)
-        0 * transactionRepository.findByGuid(guid) >> Optional.of(transaction)
-        0 * validator.validate(_ as Object) >> new HashSet<>()
+        //1 * meterRegistry.timer('insert.transaction.timer', []) >> timer
+        //1 * timer.record(_ as Object)
+        1 * transactionRepository.findByGuid(guid) >> Optional.of(transaction)
+        1 * validator.validate(_ as Object) >> new HashSet<>()
         1 * message.setBody(_ as Object)
         0 * _
     }

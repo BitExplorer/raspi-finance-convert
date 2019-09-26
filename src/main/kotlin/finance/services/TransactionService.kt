@@ -42,11 +42,17 @@ open class TransactionService @Autowired constructor(
         val constraintViolations: Set<ConstraintViolation<Transaction>> = validator.validate(transaction)
         if (constraintViolations.isNotEmpty()) {
             //TODO: handle the violation
+
+            logger.info("validation issue for<${transaction.toString()}>")
             //meterRegistry.counter(METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER).increment()
             logger.info("METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER")
         }
 
         if (transactionOptional.isPresent) {
+            val transactionDb = transactionOptional.get()
+            if( transactionDb.accountNameOwner != transaction.accountNameOwner ) {
+              logger.info("misuse of the guid=<${transactionDb.guid}>")
+            }
             logger.info("transaction already exists, no transaction data inserted.")
             //meterRegistry.counter(METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER).increment()
             logger.info("METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER")

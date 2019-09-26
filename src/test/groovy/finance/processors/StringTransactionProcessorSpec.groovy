@@ -1,15 +1,9 @@
 package finance.processors
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import finance.configs.CamelConfig
 import finance.models.Transaction
-import finance.helpers.TransactionBuilder
-import org.apache.camel.CamelContext
 import org.apache.camel.Exchange
 import org.apache.camel.Message
-import org.apache.camel.builder.ExchangeBuilder
-import org.apache.camel.impl.DefaultCamelContext
-import org.apache.camel.impl.DefaultMessage
 import spock.lang.Specification
 
 class StringTransactionProcessorSpec extends Specification {
