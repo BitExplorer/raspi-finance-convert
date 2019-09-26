@@ -59,7 +59,7 @@ class TransactionServiceSpec extends Specification {
         0 * _
     }
 
-    @PendingFeature
+    //@PendingFeature
     def "test new insertTransaction"() {
         Category category = new Category()
         category.category = "online"

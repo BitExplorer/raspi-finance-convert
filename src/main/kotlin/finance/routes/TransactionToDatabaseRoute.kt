@@ -29,7 +29,7 @@ open class TransactionToDatabaseRoute @Autowired constructor(
                 .log(LoggingLevel.INFO, "process string")
                 .process(stringTransactionProcessor)
                 .convertBodyTo(String::class.java)
-                //.to("file:${routeUriProperties.jsonFilesInputPath}${File.separator}.processed?fileName=\${property.guid}.json&autoCreate=true")
+                .to("file:${routeUriProperties.jsonFilesInputPath}${File.separator}.processed?fileName=\${property.guid}.json&autoCreate=true")
                 //.to(routeUriProperties.sedaOutputUri)
                 //.to(routeUriProperties.databaseInsertRoute)
 
