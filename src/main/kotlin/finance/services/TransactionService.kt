@@ -5,12 +5,6 @@ import finance.models.Category
 import finance.models.Transaction
 import finance.pojos.AccountType
 import finance.repositories.TransactionRepository
-import finance.utils.Constants.METRIC_ACCOUNT_ALREADY_EXISTS_COUNTER
-import finance.utils.Constants.METRIC_ACCOUNT_NOT_FOUND_COUNTER
-import finance.utils.Constants.METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER
-import finance.utils.Constants.METRIC_TRANSACTION_DATABASE_INSERT_COUNTER
-import finance.utils.Constants.METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER
-import io.micrometer.core.annotation.Timed
 import io.micrometer.core.instrument.MeterRegistry
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +12,6 @@ import org.springframework.stereotype.Service
 import java.sql.Timestamp
 import java.util.Optional
 import java.util.Optional.empty
-import javax.transaction.Transactional
 import javax.validation.ConstraintViolation
 import javax.validation.Validator
 
@@ -38,7 +31,6 @@ open class TransactionService @Autowired constructor(
         logger.debug("insertTransaction")
         val transactionOptional = findByGuid(transaction.guid)
 
-
         val constraintViolations: Set<ConstraintViolation<Transaction>> = validator.validate(transaction)
         if (constraintViolations.isNotEmpty()) {
             //TODO: handle the violation
@@ -50,13 +42,8 @@ open class TransactionService @Autowired constructor(
 
         if (transactionOptional.isPresent) {
             val transactionDb = transactionOptional.get()
-            if( transactionDb.accountNameOwner != transaction.accountNameOwner ) {
-              logger.info("misuse of the guid=<${transactionDb.guid}>")
-            }
-            logger.info("transaction already exists, no transaction data inserted.")
-            //meterRegistry.counter(METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER).increment()
-            logger.info("METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER")
-            return false
+            
+            return updateTransaction(transactionDb, transaction)
         }
 
         var accountOptional = accountService.findByAccountNameOwner(transaction.accountNameOwner)
@@ -121,5 +108,28 @@ open class TransactionService @Autowired constructor(
         account.dateAdded = Timestamp(System.currentTimeMillis())
         account.dateUpdated = Timestamp(System.currentTimeMillis())
         return account
+    }
+
+    private fun updateTransaction(transactionDb: Transaction, transaction: Transaction): Boolean {
+        if(transactionDb.accountNameOwner.trim() == transaction.accountNameOwner) {
+
+            if( transactionDb.amount != transaction.amount ) {
+                logger.info("discrepancy in the amount for <${transactionDb.guid}>")
+                transactionRepository.setAmountByGuid(transaction.amount, transaction.guid)
+                return true
+            }
+
+            if( transactionDb.cleared != transaction.cleared ) {
+                logger.info("discrepancy in the cleared value for <${transactionDb.guid}>")
+                transactionRepository.setClearedByGuid(transaction.cleared, transaction.guid)
+                return true
+            }
+        }
+
+        logger.info("transaction already exists, no transaction data inserted.")
+        //meterRegistry.counter(METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER).increment()
+        logger.info("METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER")
+
+        return false
     }
 }
