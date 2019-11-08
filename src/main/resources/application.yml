@@ -74,6 +74,7 @@ endpoints:
 # Show or not log for each sql query
   jpa:
     show-sql: true
+    open-in-view: true
     generate-ddl: true
     hibernate:
       ddl-auto: ${HIBERNATE_DDL}

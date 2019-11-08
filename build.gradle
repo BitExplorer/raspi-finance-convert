@@ -280,6 +280,8 @@ dependencies {
     //compile("com.github.spullara.mustache.java:compiler:0.9.5")
     //compile("org.fluttercode.datafactory:datafactory:0.8")
     //compile("digest:digest:1.4.6")
+
+    //compile("javassist:javassist:3.12.1.GA")
 }
 
 compileJava {
