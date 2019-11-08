@@ -1,6 +1,6 @@
 SPRING_PROFILES_ACTIVE=home
 #DATASOURCE=jdbc:postgresql://192.168.100.82:5432/finance_db
-DATASOURCE=jdbc:postgresql://192.168.100.217:5432/finance_db
+DATASOURCE=jdbc:postgresql://hornsup:5432/finance_db
 DATASOURCE_USERNAME=henninb
 JSON_FILES_INPUT_PATH=/opt/raspi_finance_convert/json_in
 SERVER_PORT=8080

@@ -1,11 +1,10 @@
 #!/bin/sh
 
-#RASPI_IP=$(nmap -sP --host-timeout 10 192.168.100.0/24 | grep raspb | grep -o '[0-9.]\+[0-9]')
 mkdir -p logs ssl json_in
 HOST_BASEDIR=$(pwd)
 GUEST_BASEDIR=/opt/raspi_finance_convert
 #HOST_IP=$(ifconfig getifaddr en0)
-HOST_IP=$(hostname -I | awk '{print $1}')
+HOST_IP=192.168.100.208
 export LOGS=$BASEDIR/logs
 touch env
 echo ./mvnw package -Dmaven.test.skip=true
