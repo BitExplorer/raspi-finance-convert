@@ -13,8 +13,10 @@ import javax.validation.constraints.Digits
 import javax.validation.constraints.Min
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
+import org.hibernate.annotations.Proxy
 
 @Entity(name = "AccountEntity")
+@Proxy(lazy = false)
 @Table(name = "t_account")
 open class Account constructor(_accountId: Long = 0L, _accountNameOwner: String = "",
                                _accountType: AccountType = AccountType.Credit,

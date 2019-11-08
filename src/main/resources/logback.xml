@@ -40,9 +40,9 @@
     </appender>
 
     <!-- Send all our DEBUG and higher log statements to the ASYNC logger. -->
-    <logger name="com.tgt.dist" level="INFO">
-        <appender-ref ref="ASYNC" />
-    </logger>
+    <!-- <logger name="" level="INFO"> -->
+    <!--     <appender-ref ref="ASYNC" /> -->
+    <!-- </logger> -->
 
     <!-- Log all WARN messages, regardless of source -->
     <logger name="java" level="WARN">
@@ -55,7 +55,7 @@
     </logger>
 
     <!-- Setup the default to log INFO and above to the console -->
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

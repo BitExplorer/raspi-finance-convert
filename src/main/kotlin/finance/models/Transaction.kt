@@ -12,6 +12,7 @@ import finance.utils.Constants.MUST_BE_ASCII_MESSAGE
 import finance.utils.Constants.MUST_BE_DOLLAR_MESSAGE
 import finance.utils.Constants.MUST_BE_UUID_MESSAGE
 import finance.utils.Constants.UUID_PATTERN
+import org.hibernate.annotations.Proxy
 import java.math.BigDecimal
 import java.sql.Date
 import java.sql.Timestamp
@@ -19,6 +20,7 @@ import javax.persistence.*
 import javax.validation.constraints.*
 
 @Entity(name = "TransactionEntity")
+@Proxy(lazy = false)
 @Table(name = "t_transaction")
 open class Transaction constructor(_transactionId: Long = 0L, _guid: String = "",
                                    _accountId: Long = 0, _accountType: AccountType = AccountType.Credit,
