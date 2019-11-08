@@ -33,8 +33,6 @@ nbdist/
 
 *.gz
 LOGS_IS_UNDEFINED/
-env
-env.mac
 logs
 *.jks
 *.pem
@@ -48,3 +46,4 @@ activemq-hornsup-client-cert
 activemq-hornsup-server-cert
 json_in.zip
 temp
+*.secrets
