@@ -1,8 +1,8 @@
 package finance.services
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import finance.helpers.TransactionDAO
 import finance.models.Transaction
-import finance.repositories.TransactionDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification

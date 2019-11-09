@@ -95,7 +95,7 @@ route:
   #directToActivemqUri: direct:sendToActivemq
   autoStartRoute: ${CAMEL_ROUTE_ENABLED}
   jsonFilesInputPath: ${JSON_FILES_INPUT_PATH}
-  databaseInsertRoute: databaseInsertRoute
+  #databaseInsertRoute: databaseInsertRoute
   #directToActivemqRoute: directToActivemqRoute
   jsonFileReaderRoute: jsonFileReaderRoute
   # sedaQueueToDirectActivemqRoute: sedaQueueToDirectActivemqRoute
