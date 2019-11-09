@@ -16,6 +16,3 @@ enum class AccountType {
         return name.toLowerCase()
     }
 }
-
-//AccountType.valueOf()
-//println(MyEnum.valueOf("Foo") == MyEnum.Foo)

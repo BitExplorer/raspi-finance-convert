@@ -3,8 +3,8 @@
 mkdir -p logs ssl json_in
 HOST_BASEDIR=$(pwd)
 GUEST_BASEDIR=/opt/raspi_finance_convert
-#HOST_IP=$(ifconfig getifaddr en0)
-HOST_IP=192.168.100.208
+#HOST_IP=$(ipconfig getifaddr en0) #MacOS
+HOST_IP=192.168.100.97
 export LOGS=$BASEDIR/logs
 touch env
 echo ./mvnw package -Dmaven.test.skip=true

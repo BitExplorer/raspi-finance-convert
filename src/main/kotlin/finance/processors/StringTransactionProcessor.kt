@@ -17,7 +17,6 @@ open class StringTransactionProcessor : Processor {
         logger.info("StringTransactionProcessor called.")
         val message = exchange.`in`
         val transaction = message.getBody(Transaction::class.java)
-        //logger.info("transaction.guid=" + transaction.guid + ">")
         logger.info("transaction.guid=${transaction.guid}")
         exchange.setProperty("guid", transaction.guid)
         message.body = transaction.toString()

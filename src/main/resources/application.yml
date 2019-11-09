@@ -90,19 +90,19 @@ logging:
 #update only add new tables in the schema.sql (starting from Java classes)
 
 route:
-  sedaOutputUri: seda:finance_drop?size=30&concurrentConsumers=10&blockWhenFull=true
-  filePollerUri: file:data/inbox?noop=true
-  directToActivemqUri: direct:sendToActivemq
+  #sedaOutputUri: seda:finance_drop?size=30&concurrentConsumers=10&blockWhenFull=true
+  #filePollerUri: file:data/inbox?noop=true
+  #directToActivemqUri: direct:sendToActivemq
   autoStartRoute: ${CAMEL_ROUTE_ENABLED}
   jsonFilesInputPath: ${JSON_FILES_INPUT_PATH}
   databaseInsertRoute: databaseInsertRoute
-  directToActivemqRoute: directToActivemqRoute
+  #directToActivemqRoute: directToActivemqRoute
   jsonFileReaderRoute: jsonFileReaderRoute
-  sedaQueueToDirectActivemqRoute: sedaQueueToDirectActivemqRoute
-  transactionToSedaQueueRoute: transactionToSedaQueueRoute
-  fileWriteRoute: fileWriteRoute
-  activemqFinanceDropConsumer: activemq:queue:finance_drop?concurrentConsumers=5&maxConcurrentConsumers=10
-  activemqFinanceDropProducer: activemq:queue:finance_drop
+  # sedaQueueToDirectActivemqRoute: sedaQueueToDirectActivemqRoute
+  #transactionToSedaQueueRoute: transactionToSedaQueueRoute
+  #fileWriteRoute: fileWriteRoute
+  # activemqFinanceDropConsumer: activemq:queue:finance_drop?concurrentConsumers=5&maxConcurrentConsumers=10
+  # activemqFinanceDropProducer: activemq:queue:finance_drop
 
 # ===============================
 # = Project Activemq

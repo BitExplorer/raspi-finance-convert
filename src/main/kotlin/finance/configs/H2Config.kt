@@ -37,7 +37,6 @@ open class H2Config  @Autowired constructor(
         val dataSource = DriverManagerDataSource()
         val driverName = environment.getProperty(driver)
         if( driverName == null ) {
-            //TODO: need to take action
             logger.info("driverName is NULL.")
         } else {
             dataSource.setDriverClassName(driverName)
@@ -46,7 +45,6 @@ open class H2Config  @Autowired constructor(
         dataSource.username = environment.getProperty(username)
         dataSource.password = environment.getProperty(password)
 
-        //cannot set schema or data
         logger.info("schema = ${environment.getProperty(schema)}")
         logger.info("data = ${environment.getProperty(data)}")
 

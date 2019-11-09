@@ -1,10 +1,8 @@
 package finance.routes
 
 import finance.configs.RouteUriProperties
-import io.micrometer.core.annotation.Timed
 import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.io.File
 

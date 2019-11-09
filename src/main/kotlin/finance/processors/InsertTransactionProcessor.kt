@@ -8,15 +8,10 @@ import io.micrometer.core.annotation.Timed
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Metrics
 import org.apache.camel.Exchange
-import org.apache.camel.Message
 import org.apache.camel.Processor
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.lang.Double.sum
-import java.util.concurrent.TimeUnit
-
-
 
 @Component
 open class InsertTransactionProcessor  @Autowired constructor(

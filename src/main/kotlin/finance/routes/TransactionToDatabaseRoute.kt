@@ -4,7 +4,6 @@ import finance.configs.RouteUriProperties
 import finance.models.Transaction
 import finance.processors.InsertTransactionProcessor
 import finance.processors.StringTransactionProcessor
-import io.micrometer.core.annotation.Timed
 import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,10 +29,6 @@ open class TransactionToDatabaseRoute @Autowired constructor(
                 .process(stringTransactionProcessor)
                 .convertBodyTo(String::class.java)
                 .to("file:${routeUriProperties.jsonFilesInputPath}${File.separator}.processed?fileName=\${property.guid}.json&autoCreate=true")
-                //.to(routeUriProperties.sedaOutputUri)
-                //.to(routeUriProperties.databaseInsertRoute)
-
-                //.convertBodyTo(String::class.java)
                 .process(insertTransactionProcessor)
                 .log(LoggingLevel.INFO, "*** message was processed by insertTransactionProcessor. ***")
 

@@ -9,13 +9,6 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
 
-
-//@Repository
-//interface TransactionRepository : JpaRepository<Transaction, Long> {
-//    //TODO: add LIMIT 1 result
-//    fun findByGuid(guid: String): Optional<Transaction>
-//}
-
 @Repository
 interface TransactionRepository<T : Transaction> : JpaRepository<T, Long> {
     //TODO: add LIMIT 1 result
