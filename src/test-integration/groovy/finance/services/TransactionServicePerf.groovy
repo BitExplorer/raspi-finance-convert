@@ -19,8 +19,7 @@ class TransactionServicePerf extends Specification {
     @Autowired
     private TransactionService transactionService
 
-    private FakeValuesService fakeValuesService = new FakeValuesService(
-            new Locale("en-US"), new RandomService())
+    private FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"), new RandomService())
 
     //@Test
     def "transactionServiceTest" () {

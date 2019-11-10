@@ -47,3 +47,5 @@ activemq-hornsup-server-cert
 json_in.zip
 temp
 *.secrets
+dependencies.txt
+dependencies_compile.txt

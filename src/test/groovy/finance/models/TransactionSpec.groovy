@@ -43,7 +43,7 @@ class TransactionSpec extends Specification {
         1 == 1
     }
 
-    def "test JSON to Transaction"() {
+    def "test JSON deserialize to Transaction object"() {
 
         given:
         def jsonPayload = "{\"guid\":\"0a23fec3-18c8-4b89-a5af-68fab8db8620\",\"accountType\":\"credit\",\"accountNameOwner\":\"amex_brian\",\"transactionDate\":1475647200000,\"description\":\"Cafe Roale\",\"category\":\"online\",\"amount\":33.08,\"cleared\":1,\"reoccurring\":false,\"notes\":\"\",\"dateUpdated\":1475588992000,\"dateAdded\":1475588992000,\"sha256\":\"\"}"
@@ -76,7 +76,6 @@ class TransactionSpec extends Specification {
     def "test validation invalid #invalidField has error #expectedError"() {
         given:
         Transaction transaction = new TransactionBuilder()
-        //.transactionId(transactionId)
                 .guid(guid)
                 .accountId(accountId)
                 .accountType(accountType)

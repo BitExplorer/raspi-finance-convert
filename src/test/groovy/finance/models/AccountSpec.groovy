@@ -3,6 +3,7 @@ package finance.models
 import com.fasterxml.jackson.databind.ObjectMapper
 import finance.helpers.AccountBuilder
 import finance.pojos.AccountType
+import finance.models.Account
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -26,7 +27,7 @@ class AccountSpec extends Specification {
         validatorFactory.close()
     }
 
-    def "test JSON to Account"() {
+    def "test JSON serialization to Account object"() {
 
         given:
         def jsonPayload = "{\"accountId\":1001,\"accountNameOwner\":\"discover_brian\",\"accountType\":\"credit\",\"activeStatus\":true,\"moniker\":\"1234\",\"totals\":0.01,\"totalsBalanced\":0.02,\"dateClosed\":0,\"dateUpdated\":1553645394000,\"dateAdded\":1553645394000}"
@@ -47,7 +48,7 @@ class AccountSpec extends Specification {
         //println json
 
         when:
-        Set<ConstraintViolation<Transaction>> violations = validator.validate(account)
+        Set<ConstraintViolation<Account>> violations = validator.validate(account)
 
         then:
         violations.isEmpty()
@@ -76,7 +77,7 @@ class AccountSpec extends Specification {
                 .build()
 
         when:
-        Set<ConstraintViolation<Transaction>> violations = validator.validate(account)
+        Set<ConstraintViolation<Account>> violations = validator.validate(account)
 
         then:
         println("'" + violations.message + "'")
