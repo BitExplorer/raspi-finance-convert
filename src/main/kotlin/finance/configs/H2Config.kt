@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import org.h2.server.web.WebServlet
 import org.slf4j.LoggerFactory
+import org.h2.tools.Server
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.jdbc.datasource.DriverManagerDataSource
@@ -12,10 +13,13 @@ import javax.sql.DataSource
 import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment
+import java.sql.SQLException
+
+
 
 @Configuration
 @EnableTransactionManagement
-@Profile("offline")
+@Profile("h2")
 @PropertySource("classpath:database-h2.properties")
 open class H2Config  @Autowired constructor(
             private var environment: Environment
@@ -31,6 +35,7 @@ open class H2Config  @Autowired constructor(
 
     //schema=classpath:schema-h2.sql
     //data=classpath:data-h2.sql
+    //web-allow-others
 
     @Bean
     open fun dataSource(): DataSource {
@@ -57,6 +62,12 @@ open class H2Config  @Autowired constructor(
         registration.addUrlMappings("/h2-console/*")
         return registration
     }
+
+//    @Bean(initMethod = "start", destroyMethod = "stop")
+//    @Throws(SQLException::class)
+//    open fun h2WebConsoleServer(): Server {
+//        return Server.createWebServer("-web", "-webAllowOthers", "-webDaemon", "-webPort", "8080")
+//    }
 
     //@Bean
     //open fun jdbcTemplate(dataSource: DataSource): JdbcTemplate {
