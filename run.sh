@@ -9,6 +9,7 @@ export LOGS=$BASEDIR/logs
 touch env
 echo ./mvnw package -Dmaven.test.skip=true
 echo gradle wrapper --gradle-version 5.6.2 --distribution-type all
+./gradlew :dependencies > dependencies.txt
 ./gradlew clean build
 rm -rf LOGS_IS_UNDEFINED
 docker build -t raspi_finance_convert .
