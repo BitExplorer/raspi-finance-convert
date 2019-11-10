@@ -10,12 +10,16 @@ import org.apache.camel.model.RouteDefinition
 import spock.lang.PendingFeature
 import spock.lang.Specification
 
-//https://stackoverflow.com/questions/23434232/how-to-unit-test-this-route-builder-in-camel
-//@PendingFeature
+class TransactionToDatabaseRouteSpec extends Specification {
+    def mockRouteUriProperties = Mock(RouteUriProperties)
+    def mockInsertTransactionProcessor = Mock(InsertTransactionProcessor)
+    def mockStringTransactionProcessor = Mock(StringTransactionProcessor)
 
-class DatabaseInsertRouteSpec extends Specification {
 
     def setup() {
+        def route = new TransactionToDatabaseRoute()
+        route.insertTransactionProcessor = mockInsertTransactionProcessor
+        route.stringTransactionProcessor = mockStringTransactionProcessor
     }
 
     def cleanup() {
@@ -23,7 +27,7 @@ class DatabaseInsertRouteSpec extends Specification {
     }
 
     @PendingFeature
-    def "test DatabaseInsertRoute"() {
+    def "test TransactionToDatabaseRoute"() {
         1== 2
     }
 }

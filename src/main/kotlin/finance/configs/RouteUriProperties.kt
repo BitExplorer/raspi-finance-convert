@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull
 
 @Component
 @ConfigurationProperties(prefix = "route", ignoreUnknownFields = false)
-class RouteUriProperties {
+open class RouteUriProperties {
 
     @NotNull
     lateinit var autoStartRoute: String

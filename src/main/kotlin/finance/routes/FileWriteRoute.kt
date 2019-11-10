@@ -15,7 +15,6 @@ open class FileWriteRoute @Autowired constructor(
     override fun configure() {
         from("direct:jsonFileWriteRoute")
                 .autoStartup(routeUriProperties.autoStartRoute)
-                //.routeId(routeId)
                 .to("file:${routeUriProperties.jsonFilesInputPath}${File.separator}.processed?fileName=\${property.guid}.json&autoCreate=true")
                 .end()
     }

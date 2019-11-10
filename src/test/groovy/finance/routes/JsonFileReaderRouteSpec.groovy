@@ -8,8 +8,8 @@ class JsonFileReaderRouteSpec extends Specification {
     def mockJsonTransactionProcessor = Mock(JsonTransactionProcessor)
 
     def setup() {
-        def router = new JsonFileReaderRoute()
-        router.jsonTransactionProcessor = mockJsonTransactionProcessor
+        def route = new JsonFileReaderRoute()
+        route.jsonTransactionProcessor = mockJsonTransactionProcessor
     }
 
     @PendingFeature
