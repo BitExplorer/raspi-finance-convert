@@ -17,6 +17,8 @@ spring:
     # enable initialization-mode flag to always if you want to utilize data.sql and schema.sql
     #initialization-mode: always
     initialization-mode: never
+  thymeleaf:
+    cache: false
 
 server:
   port: ${SERVER_PORT}
@@ -29,6 +31,9 @@ server:
       path: /h2-console
     settings:
       web-allow-others: true
+
+
+
 
 #management.endpoints.web.exposure.include=*
 #management.metrics.tag.host=windows10
