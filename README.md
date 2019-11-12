@@ -11,8 +11,8 @@ Purpose: take input json data files of 1 or more records and insert each record 
 3) setup the postgresql database - run the project raspi-finance-database [https://github.com/BitExplorer/raspi_finance_database]
 4) In your /etc/hosts file add hornsup as the local ip address; Example: 192.168.100.25 hornsup
 5) create the file env.secrets and set a value for DATASOURCE_PASSWORD. Example: DATASOURCE_PASSWORD=changeit
-6) ./run.sh prod
-
+6) create a file called ip and put your ip address  in it. Example: 192.168.100.25
+7) ./run.sh prod
 
 ## setup running custom application.yml
 ./gradlew clean build

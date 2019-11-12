@@ -11,12 +11,13 @@ if [ $ENV = "prod" ]; then
 fi
 
 mkdir -p logs ssl json_in
+touch env.secrets
+touch ip
 HOST_BASEDIR=$(pwd)
 GUEST_BASEDIR=/opt/raspi_finance_convert
 #HOST_IP=$(ipconfig getifaddr en0) #MacOS
-HOST_IP=192.168.100.208
+HOST_IP=$(cat ip)
 export LOGS=$BASEDIR/logs
-touch env.secrets
 ./gradlew clean build
 rm -rf LOGS_IS_UNDEFINED
 docker build -t raspi_finance_convert .
