@@ -1,4 +1,3 @@
-
 *.bak
 
 ## gradle ##
@@ -44,8 +43,6 @@ json_in
 ssl
 activemq-hornsup-client-cert
 activemq-hornsup-server-cert
-json_in.zip
 temp
 *.secrets
-dependencies.txt
-dependencies_compile.txt
+ip

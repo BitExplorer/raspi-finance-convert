@@ -23,13 +23,12 @@ buildscript {
         cucumberVersion='4.8.0'
         springJmsVersion='5.2.1.RELEASE'
         lombokVersion='1.18.10'
-        bootstrapVersion='4.3.1'
+        bootstrapVersion= '4.3.1'
         jqueryVersion='3.4.1'
     }
     repositories {
         mavenCentral()
         maven { url "http://clojars.org/repo" }
-//        maven { url "https://jitpack.io" }
     }
 
     dependencies {
@@ -51,8 +50,8 @@ apply plugin: 'maven'
 //clojure.aotCompile = true
 
 //TODO: Java 11
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
 
 jar {
     manifest {
@@ -291,3 +290,10 @@ dependencies {
 compileJava {
     options.annotationProcessorPath = configurations.annotationProcessor
 }
+
+//bootRun {
+//    String activeProfile =  System.properties['spring.profiles.active']
+//    String confLoc = System.properties['spring.config.location']
+//    systemProperty "spring.profiles.active", activeProfile
+//    systemProperty "spring.config.location", "file:$confLoc"
+//}

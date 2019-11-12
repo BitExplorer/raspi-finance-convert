@@ -7,8 +7,8 @@ spring:
 
   datasource:
     url: jdbc:h2:mem:finance_db;DB_CLOSE_DELAY\=-1
-    username: henninb
-    password: ${DATASOURCE_PASSWORD}
+    username: sa
+    password:
     driver-class-name: org.h2.Driver
     # testWhileIdle to persist the connection when idle for a long period of time
     tomcat:
@@ -55,7 +55,7 @@ logging:
 #update only add new tables in the schema.sql (starting from Java classes)
 
 # ===============================
-# = Custom
+# = Custom Application Config
 # ===============================
 route:
   auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
