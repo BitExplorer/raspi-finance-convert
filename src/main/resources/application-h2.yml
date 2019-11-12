@@ -1,3 +1,6 @@
+server:
+  port: ${SERVER_PORT}
+
 spring:
   profiles:
     active: h2
@@ -8,10 +11,11 @@ spring:
     password: ${DATASOURCE_PASSWORD}
     driver-class-name: org.h2.Driver
     # testWhileIdle to persist the connection when idle for a long period of time
-    testWhileIdle: true
-    validationQuery: SELECT 1
+    tomcat:
+      validation-query: SELECT 1
+      test-while-idle: true
     platform: h2
-    continueOnError: false
+    continue-on-error: false
     schema: classpath:schema-h2.sql
     data: classpath:data-h2.sql
     # enable initialization-mode flag to always if you want to utilize data.sql and schema.sql
@@ -19,48 +23,12 @@ spring:
     initialization-mode: never
   thymeleaf:
     cache: false
-
-server:
-  port: ${SERVER_PORT}
-#management.endpoints.web.exposure.include=*
-#management.endpoints.web.exposure.include=info, health, metrics
-
   h2:
     console:
       enabled: true
       path: /h2-console
-    settings:
-      web-allow-others: true
-
-
-
-
-#management.endpoints.web.exposure.include=*
-#management.metrics.tag.host=windows10
-#management.metrics.tag.application=raspi_finance
-#management.metrics.export.influx.enabled=true
-#management.metrics.export.influx.auto-create-db=true
-#management.metrics.export.influx.db=metrics
-#management.metrics.export.influx.compressed=false
-#management.metrics.export.influx.step=1m
-#management.metrics.export.influx.uri=192.168.100.135:8086
-#management.health.show-details=always
-
-# ===============================
-# = SSL Setup
-# ===============================
-# Define a custom port instead of the default 8080
-#server.port=8443
-# Tell Spring Security (if used) to require requests over HTTPS
-#security.require-ssl=true
-# The format used for the keystore
-#server.ssl.key-store-type=PKCS12
-# The path to the keystore containing the certificate
-#server.ssl.key-store=classpath:keystore.p12
-# The password used to generate the certificate
-#server.ssl.key-store-password=password
-# The alias mapped to the certificate
-#server.ssl.key-alias=tomcat
+      settings:
+        web-allow-others: true
 
 # ===============================
 # = JPA / HIBERNATE
@@ -72,10 +40,13 @@ server:
     generate-ddl: true
     hibernate:
       ddl-auto: ${HIBERNATE_DDL}
-    properties.hibernate.jdbc.time_zone: UTC
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
 
 logging:
-  level.org.hibernate.SQL: INFO
+  level.org.hibernate.SQL: WARN
 
 #spring.jpa.hibernate.ddl-auto: none
 # Hibernate ddl auto (create, create-drop, update): with "create-drop" the database
@@ -83,41 +54,25 @@ logging:
 #none is build from schema.sql (no Java classes)
 #update only add new tables in the schema.sql (starting from Java classes)
 
+# ===============================
+# = Custom
+# ===============================
 route:
-  #sedaOutputUri: seda:finance_drop?size=30&concurrentConsumers=10&blockWhenFull=true
-  #filePollerUri: file:data/inbox?noop=true
-  #directToActivemqUri: direct:sendToActivemq
-  autoStartRoute: ${CAMEL_ROUTE_ENABLED}
-  jsonFilesInputPath: ${JSON_FILES_INPUT_PATH}
-  #databaseInsertRoute: databaseInsertRoute
-  #directToActivemqRoute: directToActivemqRoute
-  jsonFileReaderRoute: jsonFileReaderRoute
-  # sedaQueueToDirectActivemqRoute: sedaQueueToDirectActivemqRoute
-  #transactionToSedaQueueRoute: transactionToSedaQueueRoute
-  #fileWriteRoute: fileWriteRoute
-  # activemqFinanceDropConsumer: activemq:queue:finance_drop?concurrentConsumers=5&maxConcurrentConsumers=10
-  # activemqFinanceDropProducer: activemq:queue:finance_drop
-
-# ===============================
-# = Project Activemq
-# ===============================
+  auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
+  json-Files-Input-Path: ${JSON_FILES_INPUT_PATH}
+  json-File-Reader-Route-Id: jsonFileReaderRoute
+  transaction-To-Database-Route-Id: transactionToDatabaseRoute
+  json-File-Writer-Route-Id: jsonFileWriterRoute
+  process-each-transaction: direct:processEachTransaction
+  json-file-writer-route: direct:jsonFileWriterRoute
 
 # ===============================
 # = Camel
 # ===============================
-# the name of Camel
-#camel.springboot.name=SampleCamel
 camel:
+  springboot:
+    name: RaspiFinance
   health.check.routes.enabled: false
-
-# ===============================
-# = MongoDB
-# ===============================
-#spring.data.mongodb.database=${MONGO_DATABASE}
-#spring.data.mongodb.host=${MONGO_HOSTNAME}
-#spring.data.mongodb.port=${MONGO_PORT}
-#spring.data.mongodb.uri=${MONGO_URI}
-#spring.main.allow-bean-definition-overriding=true
 
 # ===============================
 # = Thymeleaf
@@ -130,30 +85,19 @@ camel:
 #spring.thymeleaf.content-type=text/html
 #spring.thymeleaf.cache=false
 
-# ===============================
-# = Kafka Properties
-# ===============================
-#project.kafka.serverNamePort=hornsup:9092
-#project.kafka.zookeeperServerPort=hornsup:2181
-#project.kafka.topic=ynot
-#project.kafka.sslKeystore=${SSL_KEYSTORE}
-#project.kafka.sslKeystorePassword=${SSL_KEYSTORE_PASSOWRD}
-#project.kafka.sslTruststore=${SSL_TRUSTSTORE}
-#project.kafka.sslTruststorePassword=${SSL_TRUSTSTORE_PASSOWRD}
-
 #kebab-case '-' separated
 
 management:
   endpoints:
-    beans:
-      enabled: true
+    #beans:
+      #enabled: true
     web:
       exposure:
         include: "*"
   metrics:
-    web:
-      server:
-        auto-time-requests: true
+    #web:
+      #server:
+        #auto-time-requests: true
     tags.host: hornsup
     tags.environment: local
     tags.application: raspi-finance-convert
@@ -165,5 +109,5 @@ management:
         compressed: false
         step: 1m
         uri: http://hornsup::8086
-  health:
-    show-details: always
+  #health:
+  #  show-details: always

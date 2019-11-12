@@ -3,7 +3,6 @@ package finance.services
 import finance.models.Category
 import finance.repositories.CategoryRepository
 import finance.utils.Constants.METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER
-import io.micrometer.core.annotation.Timed
 import io.micrometer.core.instrument.MeterRegistry
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
 import org.slf4j.LoggerFactory
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.Optional
 import java.util.Optional.empty
-import javax.transaction.Transactional
 
 @Service
 open class CategoryService @Autowired constructor(
@@ -20,7 +18,6 @@ open class CategoryService @Autowired constructor(
 ) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
-    //@Transactional
     //@Timed("find.by.category.timer")
     fun findByCategory( category: String ): Optional<Category> {
         logger.debug("findByCategory")

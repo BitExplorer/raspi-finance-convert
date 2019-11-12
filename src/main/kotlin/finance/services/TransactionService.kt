@@ -35,7 +35,7 @@ open class TransactionService @Autowired constructor(
         if (constraintViolations.isNotEmpty()) {
             //TODO: handle the violation
 
-            logger.info("validation issue for<${transaction.toString()}>")
+            logger.info("validation issue for<${transaction}>")
             //meterRegistry.counter(METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER).increment()
             logger.info("METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER")
         }

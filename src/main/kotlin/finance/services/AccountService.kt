@@ -2,8 +2,6 @@ package finance.services
 
 import finance.models.Account
 import finance.repositories.AccountRepository
-import finance.utils.Constants
-import io.micrometer.core.annotation.Timed
 import io.micrometer.core.instrument.MeterRegistry
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
 import org.slf4j.LoggerFactory

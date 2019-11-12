@@ -6,7 +6,6 @@ import finance.services.TransactionService
 import finance.utils.Constants.METRIC_INSERT_TRANSACTION_TIMER
 import io.micrometer.core.annotation.Timed
 import io.micrometer.core.instrument.MeterRegistry
-import io.micrometer.core.instrument.Metrics
 import org.apache.camel.Exchange
 import org.apache.camel.Processor
 import org.slf4j.LoggerFactory

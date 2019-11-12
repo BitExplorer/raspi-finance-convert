@@ -20,7 +20,6 @@ class AccountTypeConverter : AttributeConverter<AccountType, String> {
             "credit" -> AccountType.Credit
             "debit" -> AccountType.Debit
             "unknown" -> AccountType.Undefined
-            //else -> throw IllegalArgumentException("Unknown attribute: $attribute")
             else -> throw RuntimeException("Unknown attribute: $attribute")
         }
     }

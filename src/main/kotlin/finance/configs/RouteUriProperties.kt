@@ -15,5 +15,17 @@ open class RouteUriProperties {
     lateinit var jsonFilesInputPath: String
 
     @NotNull
-    lateinit var jsonFileReaderRoute: String
+    lateinit var jsonFileReaderRouteId: String
+
+    @NotNull
+    lateinit var jsonFileWriterRouteId: String
+
+    @NotNull
+    lateinit var transactionToDatabaseRouteId: String
+
+    @NotNull
+    lateinit var processEachTransaction: String
+
+    @NotNull
+    lateinit var jsonFileWriterRoute: String
 }

@@ -1,4 +1,4 @@
-CREATE TABLE t_transaction_categories6(
+CREATE TABLE t_test(
   category_id INTEGER,
   transaction_id INTEGER
 );

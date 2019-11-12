@@ -8,7 +8,6 @@ import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.io.File
 
 @Component
 open class TransactionToDatabaseRoute @Autowired constructor(
@@ -19,19 +18,18 @@ open class TransactionToDatabaseRoute @Autowired constructor(
 
     @Throws(Exception::class)
     override fun configure() {
-        from("direct:processEachTransaction")
+        from(routeUriProperties.processEachTransaction)
                 .autoStartup(routeUriProperties.autoStartRoute)
-                .routeId("transactionToDatabase")
+                .routeId(routeUriProperties.transactionToDatabaseRouteId)
                 .split(body())
-                .log(LoggingLevel.INFO, "split body")
+                .log(LoggingLevel.INFO, "split body completed.")
                 .convertBodyTo(Transaction::class.java)
-                .log(LoggingLevel.INFO, "process string")
+                .log(LoggingLevel.INFO, "converted body to string.")
                 .process(stringTransactionProcessor)
                 .convertBodyTo(String::class.java)
-                .to("file:${routeUriProperties.jsonFilesInputPath}${File.separator}.processed?fileName=\${property.guid}.json&autoCreate=true")
+                .to(routeUriProperties.jsonFileWriterRoute)
                 .process(insertTransactionProcessor)
-                .log(LoggingLevel.INFO, "*** message was processed by insertTransactionProcessor. ***")
-
+                .log(LoggingLevel.INFO, "message was processed by insertTransactionProcessor.")
                 .end()
     }
 }

@@ -1,0 +1,46 @@
+{
+  "properties": [
+    {
+      "name": "route.jsonFileWriterRoute",
+      "type": "java.lang.String",
+      "description": "Camel route for json file writer.",
+      "defaultValue": ""
+    },
+    {
+      "name": "route.processEachTransaction",
+      "type": "java.lang.String",
+      "description": "Camel for process each transaction.",
+      "defaultValue": ""
+    },
+    {
+      "name": "route.autoStartRoute",
+      "type": "java.lang.String",
+      "description": "Camel autoStartRoute.",
+      "defaultValue": ""
+    },
+    {
+      "name": "route.jsonFilesInputPath",
+      "type": "java.lang.String",
+      "description": "Camel jsonFilesInputPath.",
+      "defaultValue": ""
+    },
+    {
+      "name": "route.jsonFileReaderRouteId",
+      "type": "java.lang.String",
+      "description": "Camel jsonFileReaderRouteId.",
+      "defaultValue": ""
+    },
+    {
+      "name": "route.transactionToDatabaseRouteId",
+      "type": "java.lang.String",
+      "description": "Camel transactionToDatabaseRouteId.",
+      "defaultValue": ""
+    },
+    {
+      "name": "route.jsonFileWriterRouteId",
+      "type": "java.lang.String",
+      "description": "Camel jsonFileWriterRouteId.",
+      "defaultValue": ""
+    }
+  ]
+}

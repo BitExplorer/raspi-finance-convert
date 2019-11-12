@@ -2,7 +2,6 @@ package finance.routes
 
 import finance.configs.RouteUriProperties
 import finance.processors.JsonTransactionProcessor
-import io.micrometer.core.instrument.MeterRegistry
 import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,16 +19,15 @@ class JsonFileReaderRoute @Autowired constructor(
     override fun configure() {
 
         // first route
-
         from("file:${routeUriProperties.jsonFilesInputPath}?delete=true&moveFailed=.failedWithErrors")
                 .autoStartup(routeUriProperties.autoStartRoute)
-                .routeId(routeUriProperties.jsonFileReaderRoute)
-                .log(routeUriProperties.jsonFileReaderRoute)
+                .routeId(routeUriProperties.jsonFileReaderRouteId)
+                .log(routeUriProperties.jsonFileReaderRouteId)
                 .choice()
                 .`when`(header("CamelFileName").endsWith(".json"))
                   .log(LoggingLevel.INFO, "\$simple{file:onlyname.noext}_\$simple{date:now:yyyy-MM-dd}.json")
                   .process(jsonTransactionProcessor)
-                  .to("direct:processEachTransaction")
+                  .to(routeUriProperties.processEachTransaction)
                   .log(LoggingLevel.INFO, "JSON file processed successfully.")
                 .otherwise()
                   .to("file:${routeUriProperties.jsonFilesInputPath}${File.separator}.notJsonAndnotProcessed")
