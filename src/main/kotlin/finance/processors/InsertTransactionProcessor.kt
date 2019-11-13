@@ -10,8 +10,10 @@ import org.apache.camel.Exchange
 import org.apache.camel.Processor
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
+@Profile("!mongo")
 @Component
 open class InsertTransactionProcessor  @Autowired constructor(
         private var transactionService: TransactionService,

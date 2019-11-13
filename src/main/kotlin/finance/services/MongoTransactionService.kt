@@ -4,7 +4,7 @@ import finance.models.Account
 import finance.models.Category
 import finance.models.Transaction
 import finance.pojos.AccountType
-import finance.repositories.TransactionRepository
+import finance.repositories.MongoTransactionRepository
 import io.micrometer.core.instrument.MeterRegistry
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,12 +16,12 @@ import java.util.Optional.empty
 import javax.validation.ConstraintViolation
 import javax.validation.Validator
 
-@Profile("!mongo")
+@Profile("mongo")
 @Service
-open class TransactionService @Autowired constructor(
-        private val transactionRepository: TransactionRepository<Transaction>,
-        private val accountService: AccountService,
-        private val categoryService: CategoryService,
+open class MongoTransactionService @Autowired constructor(
+        private val transactionRepository: MongoTransactionRepository<Transaction>,
+        private val accountService: MongoAccountService,
+        private val categoryService: MongoCategoryService,
         private val validator: Validator,
         private val meterRegistry: MeterRegistry
 ) {
@@ -44,7 +44,7 @@ open class TransactionService @Autowired constructor(
 
         if (transactionOptional.isPresent) {
             val transactionDb = transactionOptional.get()
-            
+
             return updateTransaction(transactionDb, transaction)
         }
 
@@ -77,7 +77,7 @@ open class TransactionService @Autowired constructor(
             }
         }
         logger.debug("will insert transaction")
-        transactionRepository.saveAndFlush(transaction)
+        transactionRepository.save(transaction)
         //transactionRepository.count()
         logger.debug("inserted transaction")
         //meterRegistry.counter(METRIC_TRANSACTION_DATABASE_INSERT_COUNTER).increment()
@@ -117,13 +117,13 @@ open class TransactionService @Autowired constructor(
 
             if( transactionDb.amount != transaction.amount ) {
                 logger.info("discrepancy in the amount for <${transactionDb.guid}>")
-                transactionRepository.setAmountByGuid(transaction.amount, transaction.guid)
+                //transactionRepository.setAmountByGuid(transaction.amount, transaction.guid)
                 return true
             }
 
             if( transactionDb.cleared != transaction.cleared ) {
                 logger.info("discrepancy in the cleared value for <${transactionDb.guid}>")
-                transactionRepository.setClearedByGuid(transaction.cleared, transaction.guid)
+                //transactionRepository.setClearedByGuid(transaction.cleared, transaction.guid)
                 return true
             }
         }

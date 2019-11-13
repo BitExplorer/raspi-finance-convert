@@ -2,11 +2,19 @@ server:
   port: ${SERVER_PORT}
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      database: finance_db
+      host: hornsup
+      port: 27017
+      uri: mongodb://hornsup/finance_db
   profiles:
-    active: h2
+    active: mongo
 
   datasource:
-    url: jdbc:h2:mem:finance_db;DB_CLOSE_DELAY\=-1
+    url: jdbc:h2:mem:finance_db;DB_CLOSE_DELAY=-1
     username: sa
     password:
     driver-class-name: org.h2.Driver

@@ -50,7 +50,7 @@ class InsertTransactionProcessorSpec extends Specification {
         //1 * meterRegistry.timer('insert.transaction.timer', []) >> timer
         //1 * timer.record(_ as Object)
         1 * transactionRepository.findByGuid(guid) >> Optional.of(transaction)
-        1 * validator.validate(_ as Object) >> new HashSet<>()
+        1 * validator.validate(_ as Object) >> new HashSet()
         1 * message.setBody(_ as Object)
         0 * _
     }

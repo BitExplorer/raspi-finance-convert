@@ -1,6 +1,7 @@
 package finance.repositories
 
 import finance.models.Transaction
+import org.springframework.context.annotation.Profile
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
 
+@Profile("!mongo")
 @Repository
 interface TransactionRepository<T : Transaction> : JpaRepository<T, Long> {
     //TODO: add LIMIT 1 result

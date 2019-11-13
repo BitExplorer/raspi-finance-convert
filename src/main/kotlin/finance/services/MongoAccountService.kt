@@ -1,7 +1,7 @@
 package finance.services
 
 import finance.models.Account
-import finance.repositories.AccountRepository
+import finance.repositories.MongoAccountRepository
 import io.micrometer.core.instrument.MeterRegistry
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
 import org.slf4j.LoggerFactory
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service
 import java.util.Optional
 import java.util.Optional.*
 
-@Profile("!mongo")
+@Profile("mongo")
 @Service
-open class AccountService @Autowired constructor(
-        private var accountRepository: AccountRepository<Account>,
+open class MongoAccountService @Autowired constructor(
+        private var accountRepository: MongoAccountRepository<Account>,
         private var meterRegistry: MeterRegistry
 ) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
@@ -34,7 +34,7 @@ open class AccountService @Autowired constructor(
     fun insertAccount(account: Account) : Boolean {
         logger.debug("insertAccount")
         try {
-            accountRepository.saveAndFlush(account)
+            accountRepository.save(account)
         } catch ( jsicv: JdbcSQLIntegrityConstraintViolationException) {
             //meterRegistry.counter(Constants.METRIC_DUPLICATE_ACCOUNT_INSERT_ATTEMPT_COUNTER).increment()
             logger.info("accountRepository.saveAndFlush(account) - JdbcSQLIntegrityConstraintViolationException")

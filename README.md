@@ -1,5 +1,6 @@
 # raspi-finance-convert
 Purpose: take input json data files of 1 or more records and insert each record into the database.
+Example Record: {"guid":"246190f4-cd34-4c0e-987b-56a4c3d3958c","transactionDate":"1572933600000","description":"Subway","category":"restaurant","amount":"10.65","reoccurring":"false","cleared":"1","notes":"","dateUpdated":"1573219281000","dateAdded":"1573219281000","accountType":"credit","accountNameOwner":"chase_brian","sha256":"4add85bc7570312be62cdfe895d52bedb37a73fa6f8d3e04f3455c8fc306aa7d"}
 
 ## setup local (h2)
 1) assumption - docker is installed on your system; and port 8081 is available
@@ -16,6 +17,9 @@ Purpose: take input json data files of 1 or more records and insert each record 
 6) create a file called ip and put your ip address  in it. Example: 192.168.100.25
 7) ./run.sh prod
 8) cp test.json json_in
+
+## setup mongo
+** work in progress
 
 ## setup running custom application.yml
 ./gradlew clean build

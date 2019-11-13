@@ -1,6 +1,5 @@
 package finance.helpers
 
-import lombok.val
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 
@@ -14,23 +13,21 @@ class TransactionDAO {
     private static String SQL_DROP_CATEGORY_TABLE = "DROP TABLE t_category"
     private static String SQL_TRUNCATE_TRANSACTION_CATEGORIES_TABLE = "TRUNCATE TABLE t_transaction_categories"
     private static String SQL_DROP_TRANSACTION_CATEGORIES_TABLE = "DROP TABLE t_transaction_categories"
+    private static String SQL_COUNT_TRANSACTIONS = "SELECT COUNT(*) FROM t_transaction"
+    private static String SQL_COUNT_TRANSACTION_CATEGORIES = "SELECT COUNT(*) FROM t_transaction_categories"
 
     private JdbcTemplate jdbcTemplate
 
     @Autowired
-    public TransactionDAO(JdbcTemplate jdbcTemplate) {
+    TransactionDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate
     }
 
-    public void truncateTransactionTable() {
-        try {
-            jdbcTemplate.execute(SQL_TRUNCATE_TRANSACTION_TABLE)
-        } catch (Exception e) {
-            println("failure = ${SQL_TRUNCATE_TRANSACTION_TABLE}")
-        }
+    void truncateTransactionTable() {
+        jdbcTemplate.execute(SQL_TRUNCATE_TRANSACTION_TABLE)
     }
 
-    public void dropTransactionTable() {
+    void dropTransactionTable() {
         jdbcTemplate.execute(SQL_DROP_TRANSACTION_TABLE)
     }
 
@@ -38,42 +35,33 @@ class TransactionDAO {
         jdbcTemplate.execute(SQL_TRUNCATE_TRANSACTION_CATEGORIES_TABLE)
     }
 
-    public void dropTransactionCategories() {
+    void dropTransactionCategories() {
         jdbcTemplate.execute(SQL_DROP_TRANSACTION_CATEGORIES_TABLE)
     }
 
-    public void dropAccountTable() {
+    void dropAccountTable() {
         jdbcTemplate.execute(SQL_DROP_ACCOUNT_TABLE)
     }
 
-    public void truncateAccountTable() {
-        try {
-            jdbcTemplate.execute(SQL_TRUNCATE_ACCOUNT_TABLE)
-        } catch (Exception e) {
-            println("failure = ${SQL_TRUNCATE_TRANSACTION_TABLE}")
-        }
+    void truncateAccountTable() {
+        jdbcTemplate.execute(SQL_TRUNCATE_ACCOUNT_TABLE)
     }
 
-    public void dropCategoryTable() {
+    void dropCategoryTable() {
         jdbcTemplate.execute(SQL_DROP_CATEGORY_TABLE)
     }
 
-    public void truncateCategoryTable() {
-        try {
-            jdbcTemplate.execute(SQL_TRUNCATE_CATEGORY_TABLE)
-        } catch (Exception e) {
-            println("failure = ${SQL_TRUNCATE_TRANSACTION_TABLE}")
-        }
+    void truncateCategoryTable() {
+        jdbcTemplate.execute(SQL_TRUNCATE_CATEGORY_TABLE)
     }
 
-    public int transactionCount() {
+    int transactionCount() {
         return jdbcTemplate.queryForObject(
-                "SELECT COUNT(*) FROM t_transaction", Integer.class)
+                SQL_COUNT_TRANSACTIONS, Integer.class)
     }
 
-    public int transactionCategoriesCount() {
+    int transactionCategoriesCount() {
         return jdbcTemplate.queryForObject(
-                "SELECT COUNT(*) FROM t_transaction_categories", Integer.class)
+                SQL_COUNT_TRANSACTION_CATEGORIES, Integer.class)
     }
-
 }

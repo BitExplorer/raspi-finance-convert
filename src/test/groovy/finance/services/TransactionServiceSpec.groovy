@@ -73,7 +73,7 @@ class TransactionServiceSpec extends Specification {
 
         then:
         result.is(true)
-        1 * validator.validate(transaction) >> new HashSet<>()
+        1 * validator.validate(transaction) >> new HashSet()
         1 * transactionRepository.findByGuid(transaction.guid) >> Optional.empty()
         1 * accountRepository.findByAccountNameOwner(transaction.accountNameOwner) >> Optional.of(account)
         1 * categoryRepository.findByCategory(transaction.category) >> Optional.of(category)

@@ -12,7 +12,6 @@ import java.math.RoundingMode
 import java.sql.Timestamp
 import java.sql.Date
 
-//@RunWith(SpringRunner.class)
 @SpringBootTest
 class TransactionServicePerf extends Specification {
 
@@ -21,7 +20,6 @@ class TransactionServicePerf extends Specification {
 
     private FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"), new RandomService())
 
-    //@Test
     def "transactionServiceTest" () {
         when:
         for( int idx = 0; idx < 100; idx ++ ) {
@@ -34,7 +32,6 @@ class TransactionServicePerf extends Specification {
 
     private Transaction createTransaction() {
         Transaction transaction = new Transaction()
-        //transactionService.insertTransaction()
 
         transaction.setGuid(fakeValuesService.regexify("[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"))
         transaction.setAccountNameOwner(fakeValuesService.regexify("[a-z]{8}_[a-z]{4}"))
@@ -48,7 +45,6 @@ class TransactionServicePerf extends Specification {
         transaction.setDateAdded(new Timestamp(1553600000000 + Integer.parseInt(fakeValuesService.regexify("[0-9]{5}000"))))
         transaction.setAmount(new BigDecimal(fakeValuesService.regexify("[0-9]{2}.[0-9]{2}")).setScale(2, RoundingMode.HALF_UP))
         transaction.setCleared(1)
-        //String sha256 = '963e35c37ea59f3f6fa35d72fb0ba47e1e1523fae867eeeb7ead64b55ff22b77'
 
         return transaction
     }

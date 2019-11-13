@@ -3,25 +3,31 @@ server:
 
 spring:
   profiles:
-    active: prod
+    active: h2
 
-  # ===============================
-  # = DATA SOURCE
-  # ===============================
   datasource:
-    url: ${DATASOURCE}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
-    driver-class-name: ${DATASOURCE_DRIVER}
+    url: jdbc:h2:mem:finance_db;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
     # testWhileIdle to persist the connection when idle for a long period of time
     tomcat:
-      test-While-Idle: true
-      validation-Query: SELECT 1
-    platform: ${DATASOURCE_PLATFORM}
-    continue-On-Error: false
-    # enable initialization-mode flag to always if you want to utilize data.sql and schema.sql
-    #initialization-mode: always
-    initialization-mode: never
+      validation-query: SELECT 1
+      test-while-idle: true
+    platform: h2
+    continue-on-error: false
+    schema: classpath:schema-h2.sql
+    data: classpath:data-h2.sql
+    # enable flag to always if you want to utilize data.sql and schema.sql
+    initialization-mode: always
+  thymeleaf:
+    cache: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
 
 # ===============================
 # = JPA / HIBERNATE
@@ -47,10 +53,10 @@ logging:
 #none is build from schema.sql (no Java classes)
 #update only add new tables in the schema.sql (starting from Java classes)
 
+# ===============================
+# = Custom Application Config
+# ===============================
 route:
-  #sedaOutputUri: seda:finance_drop?size=30&concurrentConsumers=10&blockWhenFull=true
-  #filePollerUri: file:data/inbox?noop=true
-  #directToActivemqUri: direct:sendToActivemq
   auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
   json-Files-Input-Path: ${JSON_FILES_INPUT_PATH}
   json-File-Reader-Route-Id: jsonFileReaderRoute
@@ -82,17 +88,17 @@ camel:
 
 management:
   endpoints:
-#    beans:
-#      enabled: true
+    #beans:
+      #enabled: true
     web:
       exposure:
         include: "*"
   metrics:
-#    web:
-#      server:
-#        auto-time-requests: true
+    #web:
+      #server:
+        #auto-time-requests: true
     tags.host: hornsup
-    tags.environment: prod
+    tags.environment: local
     tags.application: raspi-finance-convert
     export:
       influx:
@@ -102,5 +108,5 @@ management:
         compressed: false
         step: 1m
         uri: http://hornsup::8086
-#  health:
-#    show-details: always
+  #health:
+  #  show-details: always

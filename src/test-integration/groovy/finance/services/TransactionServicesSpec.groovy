@@ -26,7 +26,6 @@ class TransactionServicesSpec extends Specification {
     private static ObjectMapper mapper = new ObjectMapper()
 
     def "test insert valid transactions"() {
-        //transactionDAO.truncateTransactionCategories()
         transactionDAO.truncateTransactionTable()
         transactionDAO.truncateAccountTable()
         transactionDAO.truncateCategoryTable()
