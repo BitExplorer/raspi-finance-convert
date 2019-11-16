@@ -48,9 +48,6 @@ logging:
 #update only add new tables in the schema.sql (starting from Java classes)
 
 route:
-  #sedaOutputUri: seda:finance_drop?size=30&concurrentConsumers=10&blockWhenFull=true
-  #filePollerUri: file:data/inbox?noop=true
-  #directToActivemqUri: direct:sendToActivemq
   auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
   json-Files-Input-Path: ${JSON_FILES_INPUT_PATH}
   json-File-Reader-Route-Id: jsonFileReaderRoute

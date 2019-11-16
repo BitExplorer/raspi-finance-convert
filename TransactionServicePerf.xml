@@ -1,0 +1,28 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TransactionServicePerf" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+    <module name="raspi_finance_convert.integrationTest" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="finance.services.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="finance.services" />
+    <option name="MAIN_CLASS_NAME" value="finance.services.TransactionServicePerf" />
+    <option name="METHOD_NAME" value="transactionServiceTest" />
+    <option name="TEST_OBJECT" value="class" />
+    <option name="VM_PARAMETERS" value="-ea -Dspring.profiles.active=local" />
+    <option name="PARAMETERS" value="" />
+    <envs>
+      <env name="CAMEL_ROUTE_ENABLED" value="true" />
+      <env name="HIBERNATE_DDL" value="none" />
+      <env name="JSON_FILES_INPUT_PATH" value="json_in" />
+      <env name="LOGS" value="logs" />
+      <env name="SERVER_PORT" value="8080" />
+      <env name="SPRING_PROFILES_ACTIVE" value="local" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

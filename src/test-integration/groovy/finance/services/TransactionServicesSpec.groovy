@@ -5,6 +5,7 @@ import finance.helpers.TransactionDAO
 import finance.models.Transaction
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Profile
 import spock.lang.Specification
 
 @SpringBootTest

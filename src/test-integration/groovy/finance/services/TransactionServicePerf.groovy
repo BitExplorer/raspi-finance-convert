@@ -2,6 +2,7 @@ package finance.services
 
 import com.github.javafaker.service.FakeValuesService
 import com.github.javafaker.service.RandomService
+import finance.helpers.TransactionDAO
 import finance.models.Transaction
 import finance.pojos.AccountType
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,22 +19,25 @@ class TransactionServicePerf extends Specification {
     @Autowired
     private TransactionService transactionService
 
+    @Autowired
+    private TransactionDAO transactionDAO;
+
     private FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"), new RandomService())
 
     def "transactionServiceTest" () {
         when:
-        for( int idx = 0; idx < 100; idx ++ ) {
+        for( int idx = 0; idx < 5000; idx ++ ) {
             Transaction transaction = createTransaction()
             transactionService.insertTransaction(transaction)
         }
         then:
-        1 == 1
+        //transactionDAO.transactionCount() == 5000
+        1==1
     }
 
     private Transaction createTransaction() {
         Transaction transaction = new Transaction()
-
-        transaction.setGuid(fakeValuesService.regexify("[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"))
+        transaction.setGuid(fakeValuesService.regexify("[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"))
         transaction.setAccountNameOwner(fakeValuesService.regexify("[a-z]{8}_[a-z]{4}"))
         transaction.setDescription(fakeValuesService.regexify("[a-z]{25}"))
         transaction.setCategory(fakeValuesService.regexify("[a-z]{20}"))
@@ -43,7 +47,8 @@ class TransactionServicePerf extends Specification {
         transaction.setTransactionDate(new Date(1553600000 + Integer.parseInt(fakeValuesService.regexify("[0-9]{5}"))))
         transaction.setDateUpdated(new Timestamp(1553600000000 + Integer.parseInt(fakeValuesService.regexify("[0-9]{5}000"))))
         transaction.setDateAdded(new Timestamp(1553600000000 + Integer.parseInt(fakeValuesService.regexify("[0-9]{5}000"))))
-        transaction.setAmount(new BigDecimal(fakeValuesService.regexify("[0-9]{2}.[0-9]{2}")).setScale(2, RoundingMode.HALF_UP))
+        transaction.setAmount(new BigDecimal(fakeValuesService.regexify($/[0-9]{2}\.[0-9]{2}/$)).setScale(2, RoundingMode.HALF_UP))
+
         transaction.setCleared(1)
 
         return transaction

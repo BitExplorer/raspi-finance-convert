@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: h2
+    active: local
 
   datasource:
     url: jdbc:h2:mem:finance_db;DB_CLOSE_DELAY=-1

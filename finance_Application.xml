@@ -1,0 +1,27 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="finance.Application" type="JetRunConfigurationType" factoryName="Kotlin" nameIsGenerated="true">
+    <module name="raspi_finance_convert.main" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=local" />
+    <option name="PROGRAM_PARAMETERS" value="" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <option name="MAIN_CLASS_NAME" value="finance.Application" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <envs>
+      <env name="CAMEL_ROUTE_ENABLED" value="true" />
+      <env name="DATABASE_PLATFORM" value="postgresql" />
+      <env name="DATASOURCE" value="jdbc:postgresql://hornsup:5432/finance_db" />
+      <env name="DATASOURCE_DRIVER" value="org.postgresql.Driver" />
+      <env name="DATASOURCE_USERNAME" value="henninb" />
+      <env name="HIBERNATE_DDL" value="none" />
+      <env name="JSON_FILES_INPUT_PATH" value="json_in" />
+      <env name="LOGS" value="logs" />
+      <env name="SERVER_PORT" value="8080" />
+      <env name="SPRING_PROFILES_ACTIVE" value="local" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

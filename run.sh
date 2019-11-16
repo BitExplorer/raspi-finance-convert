@@ -17,11 +17,17 @@ else
   exit 2
 fi
 
+mkdir -p .idea/runConfigurations/
 mkdir -p logs
 mkdir -p ssl
 mkdir -p json_in
+
+mv finance_Application.xml .idea/runConfigurations/
+mv TransactionServicePerf.xml .idea/runConfigurations/
+
 touch env.secrets
 touch ip
+
 HOST_BASEDIR=$(pwd)
 GUEST_BASEDIR=/opt/raspi_finance_convert
 #HOST_IP=$(ipconfig getifaddr en0) #MacOS

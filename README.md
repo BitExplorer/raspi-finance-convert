@@ -18,17 +18,22 @@ Example Record: {"guid":"246190f4-cd34-4c0e-987b-56a4c3d3958c","transactionDate"
 7) ./run.sh prod
 8) cp test.json json_in
 
+## setup intellij
+configuration VM Options add the following entry
+  ```-Dspring.profiles.active=local```
+cat env.intellij file to get the environment details for intellij
+
 ## setup mongo
 ** work in progress
 
 ## setup running custom application.yml
 ./gradlew clean build
 ./gradlew bootRun
-java -jar build/libs/raspi_finance*.jar --spring.config.location=src/main/resources/application.yml
+java -jar build/libs/raspi_finance*.jar --spring.config.location=src/main/resources/application-prod.yml
 
 ## update gradle wrapper version
 ./gradlew wrapper --gradle-version 6.0
-gradle wrapper --gradle-version 6.0 --distribution-type all
+./gradlew wrapper --gradle-version 6.0 --distribution-type all
 
 ## gradle command to find dependencies
 ./gradlew :dependencies > dependencies.txt
