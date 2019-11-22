@@ -46,13 +46,13 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'org.springframework.boot'
 //apply plugin: 'maven'
-apply plugin: 'codenarc'
+//apply plugin: 'codenarc'
 
 //clojure.aotCompile = true
 
 //TODO: Java 11
-//sourceCompatibility = 1.8
-//targetCompatibility = 1.8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 jar {
     manifest {
@@ -299,20 +299,20 @@ compileJava {
 //    systemProperty "spring.config.location", "file:$confLoc"
 //}
 
-codenarc {
-    toolVersion = "0.20"
-}
+// codenarc {
+//     toolVersion = "0.20"
+// }
 
-codenarcMain {
-    configFile = rootProject.file("quality/codenarc.groovy")
-}
+// codenarcMain {
+//     configFile = rootProject.file("quality/codenarc.groovy")
+// }
 
-codenarcTest {
-    ignoreFailures = true
-    configFile = rootProject.file("quality/codenarc.groovy")
-}
+// codenarcTest {
+//     ignoreFailures = true
+//     configFile = rootProject.file("quality/codenarc.groovy")
+// }
 
-codenarcIntegrationTest {
-    ignoreFailures = true
-    configFile = rootProject.file("quality/codenarc.groovy")
-}
+// codenarcIntegrationTest {
+//     ignoreFailures = true
+//     configFile = rootProject.file("quality/codenarc.groovy")
+// }

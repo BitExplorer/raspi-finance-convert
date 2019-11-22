@@ -1,15 +1,17 @@
 FROM openjdk:8
 
+ARG APP="raspi_finance_convert"
+ENV APP raspi_finance_convert
 RUN useradd henninb
-RUN mkdir -p /opt/raspi_finance_convert/bin
-RUN mkdir -p /opt/raspi_finance_convert/ssl
-RUN mkdir -p /opt/raspi_finance_convert/logs
-RUN mkdir -p /opt/raspi_finance_convert/json_in
-RUN chown -R henninb /opt/raspi_finance_convert/*
 
-COPY ./build/libs/raspi_finance_convert.jar /opt/raspi_finance_convert/bin/raspi_finance_convert.jar
-WORKDIR /opt/raspi_finance_convert/bin
+RUN mkdir -p -m 0775 /opt/${APP}/bin
+RUN mkdir -p -m 0775 /opt/${APP}/logs/archive
+RUN mkdir -p -m 0775 /opt/${APP}/ssl
+RUN mkdir -p -m 0775 /opt/${APP}/json_in
+ADD ./build/libs/${APP}*.jar /opt/${APP}/bin/${APP}.jar
+RUN chown -R henninb /opt/${APP}/*
 
+WORKDIR /opt/${APP}/bin
 USER henninb
 
-CMD java -jar raspi_finance_convert.jar
+CMD java -jar -Xmx1g /opt/${APP}/bin/${APP}.jar

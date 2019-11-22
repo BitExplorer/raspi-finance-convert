@@ -22,8 +22,8 @@ mkdir -p logs
 mkdir -p ssl
 mkdir -p json_in
 
-mv finance_Application.xml .idea/runConfigurations/
-mv TransactionServicePerf.xml .idea/runConfigurations/
+cp finance_Application.xml .idea/runConfigurations/
+cp TransactionServicePerf.xml .idea/runConfigurations/
 
 touch env.secrets
 touch ip
