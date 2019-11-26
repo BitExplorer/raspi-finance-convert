@@ -3,6 +3,7 @@
 out/
 target/
 build/
+bin/
 
 ### IntelliJ IDEA ###
 .idea
@@ -26,6 +27,9 @@ ssl/
 *.der
 *.ts
 *.secrets
+
+### others ###
+.settings/
 
 ### Files ###
 ip
