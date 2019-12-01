@@ -87,10 +87,13 @@ camel:
 #kebab-case '-' separated
 
 management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+  health:
+  security:
+    enabled: false
+  endpoint:
+    health:
+      show-details: always
+
 #management:
 #  endpoints:
 #    #beans:
