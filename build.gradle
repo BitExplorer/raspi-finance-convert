@@ -162,8 +162,8 @@ dependencies {
     //ActiveMQ
     //avoid using all as it causes dependency problems.
     //compile("org.apache.activemq:activemq-broker:5.15.6")
-    compile("org.apache.activemq:activemq-client:${activemqVersion}")
-    compile("org.apache.activemq:activemq-kahadb-store:${activemqVersion}")
+    //compile("org.apache.activemq:activemq-client:${activemqVersion}")
+    //compile("org.apache.activemq:activemq-kahadb-store:${activemqVersion}")
 
     //IBM MQ
     compile("com.ibm.mq:com.ibm.mq.allclient:9.1.1.0")

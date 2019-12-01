@@ -70,7 +70,7 @@ route:
 # ===============================
 camel:
   springboot:
-    name: RaspiFinance
+    name: raspi-finance-convert
   health.check.routes.enabled: false
 
 # ===============================
