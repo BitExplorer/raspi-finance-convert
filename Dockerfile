@@ -1,7 +1,7 @@
 FROM openjdk:8
 
-ARG APP="raspi_finance_convert"
-ENV APP raspi_finance_convert
+ARG APP="raspi-finance-convert"
+ENV APP raspi-finance-convert
 RUN useradd henninb
 
 RUN mkdir -p -m 0775 /opt/${APP}/bin

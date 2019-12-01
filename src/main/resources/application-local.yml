@@ -88,25 +88,30 @@ camel:
 
 management:
   endpoints:
-    #beans:
-      #enabled: true
     web:
       exposure:
         include: "*"
-  metrics:
-    #web:
-      #server:
-        #auto-time-requests: true
-    tags.host: hornsup
-    tags.environment: local
-    tags.application: raspi-finance-convert
-    export:
-      influx:
-        enabled: false
-        auto-create-db: false
-        db: metrics
-        compressed: false
-        step: 1m
-        uri: http://hornsup::8086
+#management:
+#  endpoints:
+#    #beans:
+#      #enabled: true
+#    web:
+#      exposure:
+#        include: "*"
+#  metrics:
+#    #web:
+#      #server:
+#        #auto-time-requests: true
+#    tags.host: hornsup
+#    tags.environment: local
+#    tags.application: raspi-finance-convert
+#    export:
+#      influx:
+#        enabled: false
+#        auto-create-db: false
+#        db: metrics
+#        compressed: false
+#        step: 1m
+#        uri: http://hornsup::8086
   #health:
   #  show-details: always

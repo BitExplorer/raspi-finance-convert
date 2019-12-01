@@ -114,7 +114,7 @@ dependencies {
     //compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
     //compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}")
+    //compile("org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}")
     //compile("org.springframework.boot:spring-boot-starter-jersey:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
