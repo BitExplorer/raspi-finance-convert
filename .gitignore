@@ -30,6 +30,8 @@ ssl/
 
 ### others ###
 .settings/
+.classpath
+.project
 
 ### Files ###
 ip
