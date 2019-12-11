@@ -1,6 +1,6 @@
 package finance.services
 
-import finance.models.Account
+import finance.domain.Account
 import finance.repositories.AccountRepository
 import io.micrometer.core.instrument.MeterRegistry
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException

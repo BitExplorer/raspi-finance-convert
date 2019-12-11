@@ -1,8 +1,7 @@
-package finance.models
+package finance.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import finance.helpers.TransactionBuilder
-import finance.pojos.AccountType
 import spock.lang.Specification
 import spock.lang.Unroll
 

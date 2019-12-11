@@ -1,7 +1,7 @@
 package finance.helpers
 
 import finance.models.Transaction
-import finance.pojos.AccountType
+import finance.models.AccountType
 
 import java.math.RoundingMode
 import java.sql.Timestamp

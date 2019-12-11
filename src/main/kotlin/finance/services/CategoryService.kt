@@ -1,6 +1,6 @@
 package finance.services
 
-import finance.models.Category
+import finance.domain.Category
 import finance.repositories.CategoryRepository
 import finance.utils.Constants.METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER
 import io.micrometer.core.instrument.MeterRegistry

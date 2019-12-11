@@ -4,7 +4,7 @@ import com.github.javafaker.service.FakeValuesService
 import com.github.javafaker.service.RandomService
 import finance.helpers.TransactionDAO
 import finance.models.Transaction
-import finance.pojos.AccountType
+import finance.models.AccountType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification

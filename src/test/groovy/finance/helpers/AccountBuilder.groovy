@@ -1,7 +1,7 @@
 package finance.helpers
 
 import finance.models.Account
-import finance.pojos.AccountType
+import finance.models.AccountType
 
 import java.sql.Timestamp
 

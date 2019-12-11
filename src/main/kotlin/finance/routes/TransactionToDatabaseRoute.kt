@@ -1,7 +1,7 @@
 package finance.routes
 
 import finance.configs.RouteUriProperties
-import finance.models.Transaction
+import finance.domain.Transaction
 import finance.processors.InsertTransactionProcessor
 import finance.processors.StringTransactionProcessor
 import org.apache.camel.LoggingLevel

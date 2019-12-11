@@ -1,9 +1,8 @@
 package finance.processors
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import finance.models.Transaction
+import finance.domain.Transaction
 import finance.services.TransactionService
-import finance.utils.Constants.METRIC_INSERT_TRANSACTION_TIMER
 import io.micrometer.core.annotation.Timed
 import io.micrometer.core.instrument.MeterRegistry
 import org.apache.camel.Exchange

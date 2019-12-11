@@ -1,4 +1,4 @@
-package finance.models
+package finance.domain
 
 import spock.lang.Specification
 
