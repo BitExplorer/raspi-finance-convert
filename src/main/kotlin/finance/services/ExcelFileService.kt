@@ -27,46 +27,32 @@ import java.util.stream.IntStream
 open class ExcelFileService @Autowired constructor(private val env: Environment) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
     private val inputFilePath = env.getProperty("custom.project.input.file-path") ?: throw RuntimeException("failed to set input file-path via config.")
-    private val outputFilePath = env.getProperty("custom.project.output.file-path") ?: throw RuntimeException("failed to set output file-path via config.")
     private val localTimeZone = env.getProperty("custom.project.time-zone") ?: throw RuntimeException("failed to set timezone via config.")
 
     @Throws(Exception::class)
-    fun processProtectedExcelFile(inputExcelFileName: String ) {
-        //val inputExcelFileName = "$inputFilePath/finance_db_master.xlsm"
+    fun processProtectedExcelFile(inputExcelFileName: String ) : List<Transaction> {
         val excludeAccountFileName = "$inputFilePath/account_exclude_list.txt"
-        try {
-            val accountExcludeList = readFileToList(excludeAccountFileName)
-            val fs = POIFSFileSystem(FileInputStream(inputExcelFileName))
-            val info = EncryptionInfo(fs)
-            val decryptor = Decryptor.getInstance(info)
-            decryptor.verifyPassword(env.getProperty("custom.project.excel-password") ?: throw RuntimeException("failed to set password via config."))
-            val `is` = decryptor.getDataStream(fs)
-            val workbook: Workbook = XSSFWorkbook(`is`)
-            IntStream.range(0, workbook.numberOfSheets).filter { idx: Int -> (workbook.getSheetName(idx).contains("_brian") || workbook.getSheetName(idx).contains("_kari")) && !workbook.isSheetHidden(idx) }.forEach { idx: Int ->
-                if (!isExcludedAccount(accountExcludeList, workbook.getSheetName(idx))) {
-                    logger.info("Sheet name: " + workbook.getSheetName(idx).trim { it <= ' ' })
-                    try {
-                        processExcelSheet(workbook, idx)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                } else {
-                    logger.info("is excluded: " + workbook.getSheetName(idx))
-                }
+        val accountExcludeList = readFileToList(excludeAccountFileName)
+        val fs = POIFSFileSystem(FileInputStream(inputExcelFileName))
+        val info = EncryptionInfo(fs)
+        val decryptor = Decryptor.getInstance(info)
+        decryptor.verifyPassword(env.getProperty("custom.project.excel-password") ?: throw RuntimeException("failed to set password via config."))
+        val inputStream = decryptor.getDataStream(fs)
+        val workbook: Workbook = XSSFWorkbook(inputStream)
+        val transactionMasterList: MutableList<Transaction> = ArrayList()
+        IntStream.range(0, workbook.numberOfSheets).filter { idx: Int -> (workbook.getSheetName(idx).contains("_brian") || workbook.getSheetName(idx).contains("_kari")) && !workbook.isSheetHidden(idx) }.forEach { idx: Int ->
+            if (!isExcludedAccount(accountExcludeList, workbook.getSheetName(idx))) {
+                logger.info("Sheet name: " + workbook.getSheetName(idx).trim { it <= ' ' })
+                val transactionList = processExcelSheet(workbook, idx)
+                transactionMasterList.addAll(transactionList)
             }
-            `is`.close()
-//            exitProcess(1)
-//            val outFile = FileOutputStream(File(outputExcelFileName))
-//            workbook.write(outFile)
-//            outFile.close()
-//            exitProcess(2)
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
+        inputStream.close()
+        return transactionMasterList
     }
 
     @Throws(IOException::class)
-    private fun processExcelSheet(workbook: Workbook, sheetNumber: Int) :List<Transaction> {
+    private fun processExcelSheet(workbook: Workbook, sheetNumber: Int) : List<Transaction> {
         val datatypeSheet = workbook.getSheetAt(sheetNumber)
         var blank = false
         val creditAccountFileName = "$inputFilePath/account_credit_list.txt"
