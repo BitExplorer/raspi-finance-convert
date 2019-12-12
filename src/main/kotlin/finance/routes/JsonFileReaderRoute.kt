@@ -1,6 +1,7 @@
 package finance.routes
 
 import finance.configs.RouteUriProperties
+import finance.processors.ExcelFileProcessor
 import finance.processors.JsonTransactionProcessor
 import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
@@ -11,6 +12,7 @@ import java.io.File
 @Component
 class JsonFileReaderRoute @Autowired constructor(
         private var jsonTransactionProcessor: JsonTransactionProcessor,
+        private var excelFileProcessor: ExcelFileProcessor,
         private var routeUriProperties: RouteUriProperties
         //, private var meterRegistry: MeterRegistry
 ) : RouteBuilder() {
@@ -30,8 +32,24 @@ class JsonFileReaderRoute @Autowired constructor(
                   .to(routeUriProperties.processEachTransaction)
                   .log(LoggingLevel.INFO, "JSON file processed successfully.")
                 .otherwise()
-                  .to("file:${routeUriProperties.jsonFilesInputPath}${File.separator}.notJsonAndnotProcessed")
+                  .to("file:${routeUriProperties.jsonFilesInputPath}${File.separator}.notJsonAndNotProcessed")
                   .log(LoggingLevel.INFO, "Not a JSON file, NOT processed successfully.")
+                .endChoice()
+                .end()
+
+        // first route
+        from("file:${routeUriProperties.excelFilesInputPath}?delete=true&moveFailed=.failedWithErrors")
+                .autoStartup(routeUriProperties.autoStartRoute)
+                .routeId(routeUriProperties.excelFileReaderRouteId)
+                .choice()
+                .`when`(header("CamelFileName").endsWith(".xlsm"))
+                  .setBody(simple("\${file:absolute.path}"))
+                  .process(excelFileProcessor)
+                  .to("file:${routeUriProperties.excelFilesInputPath}${File.separator}.processed")
+                  .log(LoggingLevel.INFO, "Excel file processed successfully.")
+                .otherwise()
+                  .log(LoggingLevel.INFO, "Not an Excel file, NOT processed successfully.")
+                  .to("file:${routeUriProperties.excelFilesInputPath}${File.separator}.notExcelAndNotProcessed")
                 .endChoice()
                 .end()
     }

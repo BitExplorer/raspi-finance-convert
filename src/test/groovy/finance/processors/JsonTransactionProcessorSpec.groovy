@@ -3,7 +3,7 @@ package finance.processors
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.type.TypeFactory
-import finance.models.Transaction
+import finance.domain.Transaction
 import finance.helpers.TransactionBuilder
 import org.apache.camel.Exchange
 import org.apache.camel.Message

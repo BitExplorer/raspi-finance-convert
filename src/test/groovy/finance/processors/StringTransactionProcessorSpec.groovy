@@ -1,7 +1,7 @@
 package finance.processors
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import finance.models.Transaction
+import finance.domain.Transaction
 import org.apache.camel.Exchange
 import org.apache.camel.Message
 import spock.lang.Specification

@@ -1,43 +1,43 @@
 {
   "properties": [
     {
-      "name": "route.jsonFileWriterRoute",
+      "name": "custom.project.camelRoute.jsonFileWriterRoute",
       "type": "java.lang.String",
       "description": "Camel route for json file writer.",
       "defaultValue": ""
     },
     {
-      "name": "route.processEachTransaction",
+      "name": "custom.project.camelRoute.processEachTransaction",
       "type": "java.lang.String",
       "description": "Camel for process each transaction.",
       "defaultValue": ""
     },
     {
-      "name": "route.autoStartRoute",
+      "name": "custom.project.camelRoute.autoStartRoute",
       "type": "java.lang.String",
       "description": "Camel autoStartRoute.",
       "defaultValue": ""
     },
     {
-      "name": "route.jsonFilesInputPath",
+      "name": "custom.project.camelRoute.jsonFilesInputPath",
       "type": "java.lang.String",
       "description": "Camel jsonFilesInputPath.",
       "defaultValue": ""
     },
     {
-      "name": "route.jsonFileReaderRouteId",
+      "name": "custom.project.camelRoute.jsonFileReaderRouteId",
       "type": "java.lang.String",
       "description": "Camel jsonFileReaderRouteId.",
       "defaultValue": ""
     },
     {
-      "name": "route.transactionToDatabaseRouteId",
+      "name": "custom.project.camelRoute.transactionToDatabaseRouteId",
       "type": "java.lang.String",
       "description": "Camel transactionToDatabaseRouteId.",
       "defaultValue": ""
     },
     {
-      "name": "route.jsonFileWriterRouteId",
+      "name": "custom.project.camelRoute.jsonFileWriterRouteId",
       "type": "java.lang.String",
       "description": "Camel jsonFileWriterRouteId.",
       "defaultValue": ""

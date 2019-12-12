@@ -1,6 +1,6 @@
 package finance.services
 
-import finance.models.Category
+import finance.domain.Category
 import finance.repositories.CategoryRepository
 import io.micrometer.core.instrument.MeterRegistry
 import spock.lang.Specification

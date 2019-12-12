@@ -1,7 +1,7 @@
 package finance.helpers
 
-import finance.models.Transaction
-import finance.models.AccountType
+import finance.domain.Transaction
+import finance.domain.AccountType
 
 import java.math.RoundingMode
 import java.sql.Timestamp

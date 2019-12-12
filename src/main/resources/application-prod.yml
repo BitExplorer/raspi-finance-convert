@@ -47,14 +47,22 @@ logging:
 #none is build from schema.sql (no Java classes)
 #update only add new tables in the schema.sql (starting from Java classes)
 
-route:
-  auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
-  json-Files-Input-Path: ${JSON_FILES_INPUT_PATH}
-  json-File-Reader-Route-Id: jsonFileReaderRoute
-  transaction-To-Database-Route-Id: transactionToDatabaseRoute
-  json-File-Writer-Route-Id: jsonFileWriterRoute
-  process-each-transaction: direct:processEachTransaction
-  json-file-writer-route: direct:jsonFileWriterRoute
+custom:
+  project:
+    time-zone: ${TIMEZONE}
+    input:
+      file-path: ${INPUT_FILEPATH}
+    output:
+      file-path: ${OUTPUT_FILEPATH}
+    excel-password: ${EXCEL_PASSWORD}
+    camel-route:
+      auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
+      json-Files-Input-Path: ${JSON_FILES_INPUT_PATH}
+      json-File-Reader-Route-Id: jsonFileReaderRoute
+      transaction-To-Database-Route-Id: transactionToDatabaseRoute
+      json-File-Writer-Route-Id: jsonFileWriterRoute
+      process-each-transaction: direct:processEachTransaction
+      json-file-writer-route: direct:jsonFileWriterRoute
 
 # ===============================
 # = Camel

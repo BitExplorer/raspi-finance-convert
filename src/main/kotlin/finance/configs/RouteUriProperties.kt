@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 import javax.validation.constraints.NotNull
 
 @Component
-@ConfigurationProperties(prefix = "route", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "custom.project.camel-route", ignoreUnknownFields = false)
 open class RouteUriProperties {
 
     @NotNull
@@ -18,6 +18,9 @@ open class RouteUriProperties {
     lateinit var jsonFileReaderRouteId: String
 
     @NotNull
+    lateinit var excelFileReaderRouteId: String
+
+    @NotNull
     lateinit var jsonFileWriterRouteId: String
 
     @NotNull
@@ -28,4 +31,8 @@ open class RouteUriProperties {
 
     @NotNull
     lateinit var jsonFileWriterRoute: String
+
+    @NotNull
+    lateinit var excelFilesInputPath: String
+
 }

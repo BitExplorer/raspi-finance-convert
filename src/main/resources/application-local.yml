@@ -56,14 +56,25 @@ logging:
 # ===============================
 # = Custom Application Config
 # ===============================
-route:
-  auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
-  json-Files-Input-Path: ${JSON_FILES_INPUT_PATH}
-  json-File-Reader-Route-Id: jsonFileReaderRoute
-  transaction-To-Database-Route-Id: transactionToDatabaseRoute
-  json-File-Writer-Route-Id: jsonFileWriterRoute
-  process-each-transaction: direct:processEachTransaction
-  json-file-writer-route: direct:jsonFileWriterRoute
+
+custom:
+  project:
+    time-zone: ${TIMEZONE}
+    input:
+      file-path: ${INPUT_FILEPATH}
+    output:
+      file-path: ${OUTPUT_FILEPATH}
+    excel-password: ${EXCEL_PASSWORD}
+    camel-route:
+      auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
+      json-Files-Input-Path: ${JSON_FILES_INPUT_PATH}
+      excel-Files-Input-Path: ${EXCEL_FILES_INPUT_PATH}
+      json-File-Reader-Route-Id: jsonFileReaderRoute
+      excel-File-Reader-Route-Id: excelFileReaderRoute
+      transaction-To-Database-Route-Id: transactionToDatabaseRoute
+      json-File-Writer-Route-Id: jsonFileWriterRoute
+      process-each-transaction: direct:processEachTransaction
+      json-file-writer-route: direct:jsonFileWriterRoute
 
 # ===============================
 # = Camel
@@ -87,9 +98,6 @@ camel:
 #kebab-case '-' separated
 
 management:
-  health:
-  security:
-    enabled: false
   endpoint:
     health:
       show-details: always

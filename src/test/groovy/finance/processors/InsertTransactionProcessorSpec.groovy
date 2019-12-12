@@ -1,7 +1,7 @@
 package finance.processors
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import finance.models.Transaction
+import finance.domain.Transaction
 import finance.repositories.AccountRepository
 import finance.repositories.CategoryRepository
 import finance.repositories.TransactionRepository

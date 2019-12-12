@@ -15,7 +15,10 @@ bin/
 LOGS_IS_UNDEFINED/
 logs/
 json_in/
+excel_in/
 ssl/
+config/
+json_out/
 
 ### File types ###
 *.bak
@@ -36,3 +39,4 @@ ssl/
 ### Files ###
 ip
 tags
+finance_db_master.xlsm

@@ -13,8 +13,11 @@ RUN mkdir -p -m 0775 /opt/${APP}/bin
 RUN mkdir -p -m 0775 /opt/${APP}/logs/archive
 RUN mkdir -p -m 0775 /opt/${APP}/ssl
 RUN mkdir -p -m 0775 /opt/${APP}/json_in
+RUN mkdir -p -m 0775 /opt/${APP}/excel_in
+RUN mkdir -p -m 0775 /opt/${APP}/config
+RUN mkdir -p -m 0775 /opt/${APP}/json_out
 ADD ./build/libs/${APP}*.jar /opt/${APP}/bin/${APP}.jar
-RUN chown -R henninb /opt/${APP}/*
+RUN chown -R ${USERNAME}:${USERNAME} /opt/${APP}/*
 
 WORKDIR /opt/${APP}/bin
 USER ${USERNAME}

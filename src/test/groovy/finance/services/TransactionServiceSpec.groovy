@@ -1,8 +1,8 @@
 package finance.services
 
-import finance.models.Account
-import finance.models.Transaction
-import finance.models.Category
+import finance.domain.Account
+import finance.domain.Transaction
+import finance.domain.Category
 import finance.repositories.AccountRepository
 import finance.repositories.CategoryRepository
 import finance.repositories.TransactionRepository
