@@ -58,7 +58,9 @@ custom:
     camel-route:
       auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
       json-Files-Input-Path: ${JSON_FILES_INPUT_PATH}
+      excel-Files-Input-Path: ${EXCEL_FILES_INPUT_PATH}
       json-File-Reader-Route-Id: jsonFileReaderRoute
+      excel-File-Reader-Route-Id: excelFileReaderRoute
       transaction-To-Database-Route-Id: transactionToDatabaseRoute
       json-File-Writer-Route-Id: jsonFileWriterRoute
       process-each-transaction: direct:processEachTransaction

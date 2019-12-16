@@ -40,7 +40,7 @@
     </appender>
 
     <!-- Send all our DEBUG and higher log statements to the ASYNC logger. -->
-    <logger name="raspi-finance-convert" level="INFO">
+    <logger name="finance" level="INFO">
         <appender-ref ref="ASYNC" />
     </logger>
 

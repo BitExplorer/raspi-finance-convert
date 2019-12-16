@@ -22,6 +22,7 @@ open class ExcelFileProcessor  @Autowired constructor(private var excelFileServi
         val message = exchange.`in`
         val inputExcelFileName = message.getBody(String::class.java)
         val payload = excelFileService.processProtectedExcelFile(inputExcelFileName)
+        //logger.info(payload.size.toString())
         //mapper.readValue()
         //val transactions = mapper.readValue(payload, String::class.java)
         //message.body = transactions

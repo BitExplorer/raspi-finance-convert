@@ -26,12 +26,13 @@ import java.util.stream.IntStream
 @Service
 open class ExcelFileService @Autowired constructor(private val env: Environment) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
-    private val inputFilePath = env.getProperty("custom.project.input.file-path") ?: throw RuntimeException("failed to set input file-path via config.")
+    private val configFilePath = env.getProperty("custom.project.input.file-path") ?: throw RuntimeException("failed to set input file-path via config.")
     private val localTimeZone = env.getProperty("custom.project.time-zone") ?: throw RuntimeException("failed to set timezone via config.")
+    private val jsonFilePath = env.getProperty("custom.project.camel-route.json-Files-Input-Path") ?: throw RuntimeException("failed to set timezone via config.")
 
     @Throws(Exception::class)
-    fun processProtectedExcelFile(inputExcelFileName: String ) : List<Transaction> {
-        val excludeAccountFileName = "$inputFilePath/account_exclude_list.txt"
+    fun processProtectedExcelFile(inputExcelFileName: String ) {
+        val excludeAccountFileName = "$configFilePath/account_exclude_list.txt"
         val accountExcludeList = readFileToList(excludeAccountFileName)
         val fs = POIFSFileSystem(FileInputStream(inputExcelFileName))
         val info = EncryptionInfo(fs)
@@ -39,23 +40,22 @@ open class ExcelFileService @Autowired constructor(private val env: Environment)
         decryptor.verifyPassword(env.getProperty("custom.project.excel-password") ?: throw RuntimeException("failed to set password via config."))
         val inputStream = decryptor.getDataStream(fs)
         val workbook: Workbook = XSSFWorkbook(inputStream)
-        val transactionMasterList: MutableList<Transaction> = ArrayList()
         IntStream.range(0, workbook.numberOfSheets).filter { idx: Int -> (workbook.getSheetName(idx).contains("_brian") || workbook.getSheetName(idx).contains("_kari")) && !workbook.isSheetHidden(idx) }.forEach { idx: Int ->
             if (!isExcludedAccount(accountExcludeList, workbook.getSheetName(idx))) {
                 logger.info("Sheet name: " + workbook.getSheetName(idx).trim { it <= ' ' })
                 val transactionList = processExcelSheet(workbook, idx)
-                transactionMasterList.addAll(transactionList)
+
+                mapper.writeValue(File(jsonFilePath + "/" + workbook.getSheetName(idx) + ".json"), transactionList)
             }
         }
         inputStream.close()
-        return transactionMasterList
     }
 
     @Throws(IOException::class)
     private fun processExcelSheet(workbook: Workbook, sheetNumber: Int) : List<Transaction> {
         val datatypeSheet = workbook.getSheetAt(sheetNumber)
         var blank = false
-        val creditAccountFileName = "$inputFilePath/account_credit_list.txt"
+        val creditAccountFileName = "$configFilePath/account_credit_list.txt"
         val accountCreditList = readFileToList(creditAccountFileName)
         val transactionList: MutableList<Transaction> = ArrayList()
 
@@ -139,7 +139,9 @@ open class ExcelFileService @Autowired constructor(private val env: Environment)
                 }
             }
             if (!blank) {
-                transactionList.add(transaction)
+                if ( transaction.guid.isNotEmpty() ) {
+                    transactionList.add(transaction)
+                }
                 //mapper.writeValue(File(outputFilePath + transaction.guid + ".json"), transaction)
                 //logger.info(mapper.writeValueAsString(transaction));
             }
