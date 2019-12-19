@@ -6,8 +6,6 @@ import finance.domain.Transaction
 import finance.domain.AccountType
 import finance.repositories.TransactionRepository
 import io.micrometer.core.instrument.MeterRegistry
-import mu.KotlinLogging
-import org.apache.logging.log4j.LogManager
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

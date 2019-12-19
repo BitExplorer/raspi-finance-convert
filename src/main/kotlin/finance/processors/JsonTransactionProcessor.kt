@@ -3,10 +3,8 @@ package finance.processors
 import com.fasterxml.jackson.databind.ObjectMapper
 import finance.domain.Transaction
 import io.micrometer.core.annotation.Timed
-import mu.KotlinLogging
 import org.apache.camel.Exchange
 import org.apache.camel.Processor
-import org.apache.logging.log4j.LogManager
 import org.slf4j.LoggerFactory
 import org.slf4j.Logger
 import org.springframework.stereotype.Component

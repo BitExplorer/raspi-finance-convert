@@ -3,8 +3,6 @@ package finance.services
 import com.fasterxml.jackson.databind.ObjectMapper
 import finance.domain.AccountType
 import finance.domain.Transaction
-import mu.KotlinLogging
-import org.apache.logging.log4j.LogManager
 import org.apache.poi.poifs.crypt.Decryptor
 import org.apache.poi.poifs.crypt.EncryptionInfo
 import org.apache.poi.poifs.filesystem.POIFSFileSystem
@@ -24,11 +22,9 @@ import java.sql.Date
 import java.sql.Timestamp
 import java.util.*
 import java.util.stream.IntStream
-//import kotlin.system.exitProcess
 
 @Service
 open class ExcelFileService @Autowired constructor(private val env: Environment) {
-    //private val logger = LoggerFactory.getLogger(this.javaClass)
     private val configFilePath = env.getProperty("custom.project.input.file-path") ?: throw RuntimeException("failed to set input file-path via config.")
     private val localTimeZone = env.getProperty("custom.project.time-zone") ?: throw RuntimeException("failed to set timezone via config.")
     private val jsonFilePath = env.getProperty("custom.project.camel-route.json-Files-Input-Path") ?: throw RuntimeException("failed to set timezone via config.")

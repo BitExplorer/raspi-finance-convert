@@ -4,8 +4,6 @@ import finance.domain.Category
 import finance.repositories.CategoryRepository
 import finance.utils.Constants.METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER
 import io.micrometer.core.instrument.MeterRegistry
-import mu.KotlinLogging
-import org.apache.logging.log4j.LogManager
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
