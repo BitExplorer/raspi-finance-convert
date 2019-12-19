@@ -3,8 +3,8 @@ package finance.services
 import com.github.javafaker.service.FakeValuesService
 import com.github.javafaker.service.RandomService
 import finance.helpers.TransactionDAO
-import finance.models.Transaction
-import finance.models.AccountType
+import finance.domain.Transaction
+import finance.domain.AccountType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification

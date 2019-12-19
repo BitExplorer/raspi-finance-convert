@@ -6,6 +6,9 @@ import finance.domain.Transaction
 import finance.domain.AccountType
 import finance.repositories.TransactionRepository
 import io.micrometer.core.instrument.MeterRegistry
+import mu.KotlinLogging
+import org.apache.logging.log4j.LogManager
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
@@ -25,8 +28,6 @@ open class TransactionService @Autowired constructor(
         private val validator: Validator,
         private val meterRegistry: MeterRegistry
 ) {
-    private val logger = LoggerFactory.getLogger(this.javaClass)
-
     //@Transactional
     //@Timed(value = "insert.transaction.timer")
     fun insertTransaction(transaction: Transaction): Boolean {
@@ -133,5 +134,9 @@ open class TransactionService @Autowired constructor(
         logger.info("METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER")
 
         return false
+    }
+
+    companion object {
+        val logger : Logger = LoggerFactory.getLogger(TransactionService::class.java)
     }
 }

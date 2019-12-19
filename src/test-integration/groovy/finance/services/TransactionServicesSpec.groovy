@@ -2,7 +2,7 @@ package finance.services
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import finance.helpers.TransactionDAO
-import finance.models.Transaction
+import finance.domain.Transaction
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Profile

@@ -3,6 +3,8 @@ package finance.services
 import com.fasterxml.jackson.databind.ObjectMapper
 import finance.domain.AccountType
 import finance.domain.Transaction
+import mu.KotlinLogging
+import org.apache.logging.log4j.LogManager
 import org.apache.poi.poifs.crypt.Decryptor
 import org.apache.poi.poifs.crypt.EncryptionInfo
 import org.apache.poi.poifs.filesystem.POIFSFileSystem
@@ -10,6 +12,7 @@ import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.DateUtil
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
@@ -25,7 +28,7 @@ import java.util.stream.IntStream
 
 @Service
 open class ExcelFileService @Autowired constructor(private val env: Environment) {
-    private val logger = LoggerFactory.getLogger(this.javaClass)
+    //private val logger = LoggerFactory.getLogger(this.javaClass)
     private val configFilePath = env.getProperty("custom.project.input.file-path") ?: throw RuntimeException("failed to set input file-path via config.")
     private val localTimeZone = env.getProperty("custom.project.time-zone") ?: throw RuntimeException("failed to set timezone via config.")
     private val jsonFilePath = env.getProperty("custom.project.camel-route.json-Files-Input-Path") ?: throw RuntimeException("failed to set timezone via config.")
@@ -181,16 +184,17 @@ open class ExcelFileService @Autowired constructor(private val env: Environment)
     }
 
     companion object {
-        private const val COL_TRANSACTION_ID = 0
-        private const val COL_GUID = 1
-        private const val COL_TRANSACTION_DATE = 2
-        private const val COL_DESCRIPTION = 3
-        private const val COL_CATEGORY = 4
-        private const val COL_AMOUNT = 5
-        private const val COL_CLEARED = 6
-        private const val COL_NOTES = 7
-        private const val COL_DATE_ADDED = 8
-        private const val COL_DATE_UPDATED = 9
-        private val mapper = ObjectMapper()
+        const val COL_TRANSACTION_ID = 0
+        const val COL_GUID = 1
+        const val COL_TRANSACTION_DATE = 2
+        const val COL_DESCRIPTION = 3
+        const val COL_CATEGORY = 4
+        const val COL_AMOUNT = 5
+        const val COL_CLEARED = 6
+        const val COL_NOTES = 7
+        const val COL_DATE_ADDED = 8
+        const val COL_DATE_UPDATED = 9
+        val mapper = ObjectMapper()
+        val logger : Logger = LoggerFactory.getLogger(ExcelFileService::class.java)
     }
 }

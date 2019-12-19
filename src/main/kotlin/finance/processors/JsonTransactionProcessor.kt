@@ -3,14 +3,17 @@ package finance.processors
 import com.fasterxml.jackson.databind.ObjectMapper
 import finance.domain.Transaction
 import io.micrometer.core.annotation.Timed
+import mu.KotlinLogging
 import org.apache.camel.Exchange
 import org.apache.camel.Processor
+import org.apache.logging.log4j.LogManager
 import org.slf4j.LoggerFactory
+import org.slf4j.Logger
 import org.springframework.stereotype.Component
 
 @Component
 open class JsonTransactionProcessor : Processor {
-    private val logger = LoggerFactory.getLogger(this.javaClass)
+    //private val logger = LoggerFactory.getLogger(javaClass)
 
     @Throws(Exception::class)
     @Timed("json.transaction.processor.timer")
@@ -25,5 +28,6 @@ open class JsonTransactionProcessor : Processor {
 
     companion object {
         val mapper = ObjectMapper()
+        val logger : Logger = LoggerFactory.getLogger(JsonTransactionProcessor::class.java)
     }
 }

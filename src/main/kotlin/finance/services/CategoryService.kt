@@ -4,7 +4,10 @@ import finance.domain.Category
 import finance.repositories.CategoryRepository
 import finance.utils.Constants.METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER
 import io.micrometer.core.instrument.MeterRegistry
+import mu.KotlinLogging
+import org.apache.logging.log4j.LogManager
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
@@ -18,7 +21,7 @@ open class CategoryService @Autowired constructor(
         private var categoryRepository: CategoryRepository<Category>,
         private var meterRegistry: MeterRegistry
 ) {
-    private val logger = LoggerFactory.getLogger(this.javaClass)
+    //private val logger = LoggerFactory.getLogger(this.javaClass)
 
     //@Timed("find.by.category.timer")
     fun findByCategory( category: String ): Optional<Category> {
@@ -44,5 +47,9 @@ open class CategoryService @Autowired constructor(
         }
 
         return true
+    }
+
+    companion object {
+        val logger : Logger = LoggerFactory.getLogger(CategoryService::class.java)
     }
 }

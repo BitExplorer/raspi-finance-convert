@@ -4,13 +4,14 @@ import finance.domain.Account
 import finance.repositories.AccountRepository
 import io.micrometer.core.instrument.MeterRegistry
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 import java.util.Optional
-import java.util.Optional.*
+import java.util.Optional.empty
 
 @Profile("!mongo")
 @Service
@@ -18,7 +19,10 @@ open class AccountService @Autowired constructor(
         private var accountRepository: AccountRepository<Account>,
         private var meterRegistry: MeterRegistry
 ) {
-    private val logger = LoggerFactory.getLogger(this.javaClass)
+    //private val logger = LoggerFactory.getLogger(this.javaClass)
+
+//    @Autowired
+//    private lateinit var logger: Logging
 
     fun findByAccountNameOwner( accountNameOwner: String ): Optional<Account> {
         logger.info(accountNameOwner)
@@ -47,5 +51,9 @@ open class AccountService @Autowired constructor(
             return false
         }
         return true
+    }
+
+    companion object {
+        val logger : Logger = LoggerFactory.getLogger(AccountService::class.java)
     }
 }

@@ -2,7 +2,7 @@ buildscript {
     ext {
         springBootVersion = '2.2.2.RELEASE'
         apacheCamelVersion = '2.24.2'
-        kotlinVersion = '1.3.50'
+        kotlinVersion = '1.3.60'
         groovyVersion = '2.5.8'
         //groovyVersion = '3.0.0-rc-1'
         qualityPluginVersion='3.0.0'
@@ -45,6 +45,7 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
         classpath("io.github.gradle-clojure:gradle-clojure-plugin:0.5.0-alpha.1")
+        classpath('com.netflix.nebula:gradle-lint-plugin:latest.release')
         //classpath("clojuresque:clojuresque:1.7.0")
     }
 }
@@ -55,6 +56,7 @@ apply plugin: 'groovy'
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'nebula.lint'
 //apply plugin: 'maven'
 //apply plugin: 'codenarc'
 
@@ -96,6 +98,8 @@ sourceSets {
     }
 }
 
+gradleLint.alwaysRun = false
+
 compileKotlin {
     //kotlinOptions.suppressWarnings = true
     kotlinOptions.jvmTarget = '1.8'
@@ -116,11 +120,12 @@ dependencies {
     compile("org.codehaus.groovy:groovy:${groovyVersion}")
 
     //Scala
-    compile ("org.scala-lang:scala-library:${scalaVersion}")
+    //compile ("org.scala-lang:scala-library:${scalaVersion}")
 
     //Spring Boot
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    //  { exclude module: "spring-boot-starter-tomcat" }
+    compile("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-logging:${springBootVersion}")
     //compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
     //compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
@@ -141,7 +146,7 @@ dependencies {
     compile("org.apache.camel:camel-spring-boot-starter:${apacheCamelVersion}")
     compile("org.apache.camel:camel-core:${apacheCamelVersion}")
     //compile("org.apache.camel:camel-sql:${apacheCamelVersion}")
-    compile("org.apache.camel:camel-kafka:${apacheCamelVersion}")
+    //compile("org.apache.camel:camel-kafka:${apacheCamelVersion}")
     //compile("org.apache.camel:camel-spring-boot:${apacheCamelVersion}")
     //compile("org.apache.camel:camel-ssh:${apacheCamelVersion}")
     //compile("org.apache.camel:camel-jdbc:${apacheCamelVersion}")
@@ -149,20 +154,21 @@ dependencies {
     //compile("org.apache.camel:camel-stream:${apacheCamelVersion}")
     //compile("org.apache.camel:camel-jpa:${apacheCamelVersion}")
     //compile("org.apache.camel:camel-spring-redis:${apacheCamelVersion}")
-    compile("org.apache.camel:camel-jms:${apacheCamelVersion}")
-    compile("org.apache.camel:camel-cdi:${apacheCamelVersion}")
+    //compile("org.apache.camel:camel-jms:${apacheCamelVersion}")
+    //compile("org.apache.camel:camel-cdi:${apacheCamelVersion}")
     //compile("org.apache.camel:camel-http:${apacheCamelVersion}")
     //compile("org.apache.camel:camel-http4:${apacheCamelVersion}")
     testCompile("org.apache.camel:camel-test:${apacheCamelVersion}")
     testCompile("org.apache.camel:camel-test-spring:${apacheCamelVersion}")
 
     //Logging
-    //compile ("org.slf4j:slf4j-api:2.11.1")
-    compile("net.logstash.logback:logstash-logback-encoder:5.2")
     compile("ch.qos.logback:logback-classic:1.2.3")
+    compile("ch.qos.logback:logback-core:1.2.3")
+    //compile("org.apache.logging.log4j:log4j-core:2.13.0")
+    //compile("io.github.microutils:kotlin-logging:1.7.7")
 
     //Lombock
-    compile("org.projectlombok:lombok:${lombokVersion}")
+    //compile("org.projectlombok:lombok:${lombokVersion}")
 
     //excel
     compile("org.apache.poi:poi:${poiVersion}")
@@ -180,13 +186,13 @@ dependencies {
     //compile("org.apache.activemq:activemq-kahadb-store:${activemqVersion}")
 
     //IBM MQ
-    compile("com.ibm.mq:com.ibm.mq.allclient:9.1.1.0")
+    //compile("com.ibm.mq:com.ibm.mq.allclient:9.1.1.0")
 
     //postgres
     compile("org.postgresql:postgresql:${postgresqlVersion}")
 
     //clojure
-    compile("org.clojure:clojure:${clojureVersion}")
+    //compile("org.clojure:clojure:${clojureVersion}")
     //compile("leiningen-core:leiningen-core:2.7.0")
     //compile("clojuresque:clojuresque:1.7.0")
 
@@ -197,36 +203,32 @@ dependencies {
     //rabbitmq
     //compile("com.rabbitmq:amqp-client:3.6.6")
 
-    compile("org.webjars:bootstrap:${bootstrapVersion}")
-    compile("org.webjars:jquery:${jqueryVersion}")
+    //compile("org.webjars:bootstrap:${bootstrapVersion}")
+    //compile("org.webjars:jquery:${jqueryVersion}")
     //compile("org.webjars:bootstrap-datepicker:1.0.1")
 
     //swagger
     //compile("io.springfox:springfox-swagger2:${swaggerVersion}")
     compile("io.swagger.core.v3:swagger-annotations:${swaggerVersion}")
 
-
     //ssh client
-    compile("com.jcraft:jsch:0.1.55")
+    //compile("com.jcraft:jsch:0.1.55")
 
     //graphql
-    compile("com.graphql-java:graphql-java:2019-03-15T05-33-44-d008832")
-
-    //IBM MQ
-    compile("com.ibm.mq:com.ibm.mq.allclient:9.1.1.0")
+    //compile("com.graphql-java:graphql-java:2019-03-15T05-33-44-d008832")
 
     //Spring
-    compile("org.springframework:spring-jms:${springJmsVersion}")
+    //compile("org.springframework:spring-jms:${springJmsVersion}")
     //compile("org.springframework.batch:spring-batch-core:3.0.8.RELEASE")
     //compile("org.springframework.data:spring-data-rest-core:2.0.0.RELEASE")
     //compile("org.springframework:spring-oxm:5.0.5.RELEASE")
 
     //Kafka
-    compile("org.apache.kafka:kafka-clients:${kafkaVersion}")
+    //compile("org.apache.kafka:kafka-clients:${kafkaVersion}")
     //compile("org.springframework.kafka:spring-kafka:1.0.2.RELEASE")
 
     //Jolokia
-    compile("org.jolokia:jolokia-core:${jolokiaVersion}")
+    //compile("org.jolokia:jolokia-core:${jolokiaVersion}")
 
     //oracle
     //compile("com.oracle:ojdbc7:12.1.0.2")
@@ -248,11 +250,11 @@ dependencies {
     //compile("org.thymeleaf:thymeleaf-spring4:3.0.10.RELEASE")
 
     //ftp
-    compile("commons-net:commons-net:3.6")
-    testCompile("org.mockftpserver:MockFtpServer:2.7.1")
+    //compile("commons-net:commons-net:3.6")
+    //testCompile("org.mockftpserver:MockFtpServer:2.7.1")
 
     //used for JdbcTemplate
-    compile ("org.springframework:spring-jdbc:5.1.5.RELEASE")
+    compile ("org.springframework:spring-jdbc:${jdbcTemplateVersion}")
 
     //onetime
 
@@ -265,9 +267,9 @@ dependencies {
     //compile("javax.persistence:persistence-api:1.0")
     //testCompile("junit:junit:4.12")
 
-    compile("org.powermock:powermock-core:2.0.2")
-    compile("org.powermock:powermock-api-mockito2:2.0.2")
-    compile("org.powermock:powermock-module-junit4:2.0.2")
+//    compile("org.powermock:powermock-core:2.0.2")
+//    compile("org.powermock:powermock-api-mockito2:2.0.2")
+//    compile("org.powermock:powermock-module-junit4:2.0.2")
 
     testCompile("com.github.javafaker:javafaker:0.18") { exclude module: 'org.yaml' }
     testCompile("io.github.benas:random-beans:3.7.0")
@@ -276,9 +278,9 @@ dependencies {
     testCompile("org.mockito:mockito-core:3.0.0")
     //testCompile("org.mockito:mockito-core:2.23.0")
 
-   testCompile("io.cucumber:cucumber-junit:${cucumberVersion}")
-   testCompile("io.cucumber:cucumber-java:${cucumberVersion}")
-   testCompile("io.cucumber:cucumber-spring:${cucumberVersion}")
+//   testCompile("io.cucumber:cucumber-junit:${cucumberVersion}")
+//   testCompile("io.cucumber:cucumber-java:${cucumberVersion}")
+//   testCompile("io.cucumber:cucumber-spring:${cucumberVersion}")
 
     testCompile("org.spockframework:spock-core:${spockVersion}")
     testCompile("org.spockframework:spock-spring:${spockVersion}")
@@ -298,8 +300,22 @@ dependencies {
     //compile("org.fluttercode.datafactory:datafactory:0.8")
     //compile("digest:digest:1.4.6")
 
-    compile("org.javassist:javassist:3.26.0-GA")
+    //compile("org.javassist:javassist:3.26.0-GA")
+}
 
+
+allprojects {
+    apply plugin: 'nebula.lint'
+    gradleLint.rules = ['all-dependency'] // Add as many rules here as you'd like
+}
+
+configurations.all {
+    //required for Kotlin
+    //exclude group: 'org.slf4j', module: 'slf4j-api'
+    //exclude group: "org.apache.logging.log4j", module: "log4j-slf4j-impl"
+    //exclude group: "org.apache.logging.log4j", module: "log4j-api-kotlin"
+    //exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    //exclude group: "commons-logging", module: "commons-logging"
 }
 
 compileJava {
