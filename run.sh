@@ -30,7 +30,7 @@ cp -v $HOME/finance_db_master.xlsm excel_in/
 
 cp finance_Application.xml .idea/runConfigurations/
 cp TransactionServicePerf.xml .idea/runConfigurations/
-git ls-files | ctags --links=no --languages=java -L-
+git ls-files | ctags --languages=java -L-
 
 touch config/account_credit_list.txt
 touch config/account_exclude_list.txt
