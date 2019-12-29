@@ -4,45 +4,37 @@
       "name": "custom.project.camelRoute.jsonFileWriterRoute",
       "type": "java.lang.String",
       "description": "Camel route for json file writer.",
-      "defaultValue": ""
     },
     {
       "name": "custom.project.camelRoute.processEachTransaction",
       "type": "java.lang.String",
       "description": "Camel for process each transaction.",
-      "defaultValue": ""
     },
     {
       "name": "custom.project.camelRoute.autoStartRoute",
       "type": "java.lang.String",
       "description": "Camel autoStartRoute.",
-      "defaultValue": ""
     },
     {
       "name": "custom.project.camelRoute.jsonFilesInputPath",
       "type": "java.lang.String",
       "description": "Camel jsonFilesInputPath.",
-      "defaultValue": ""
     },
     {
       "name": "custom.project.camelRoute.jsonFileReaderRouteId",
       "type": "java.lang.String",
       "description": "Camel jsonFileReaderRouteId.",
-      "defaultValue": ""
     },
     {
       "name": "custom.project.camelRoute.transactionToDatabaseRouteId",
       "type": "java.lang.String",
       "description": "Camel transactionToDatabaseRouteId.",
-      "defaultValue": ""
     },
     {
       "name": "custom.project.camelRoute.jsonFileWriterRouteId",
       "type": "java.lang.String",
       "description": "Camel jsonFileWriterRouteId.",
-      "defaultValue": ""
     },
-
     {
       "name": "custom.project.camel-route.excel-Files-Input-Path",
       "type": "java.lang.String",
