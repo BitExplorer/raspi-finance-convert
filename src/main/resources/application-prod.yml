@@ -88,9 +88,6 @@ camel:
 #kebab-case '-' separated
 
 management:
-  health:
-  security:
-    enabled: false
   endpoint:
     health:
       show-details: always

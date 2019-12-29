@@ -41,6 +41,37 @@
       "type": "java.lang.String",
       "description": "Camel jsonFileWriterRouteId.",
       "defaultValue": ""
+    },
+
+    {
+      "name": "custom.project.camel-route.excel-Files-Input-Path",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.excel-Files-Input-Path."
+    },
+    {
+      "name": "custom.project.camel-route.excel-File-Reader-Route-Id",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.excel-File-Reader-Route-Id."
+    },
+    {
+      "name": "custom.project.excel-password",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.excel-password."
+    },
+    {
+      "name": "custom.project.output.file-path",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.output.file-path."
+    },
+    {
+      "name": "custom.project.input.file-path",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.input.file-path."
+    },
+    {
+      "name": "custom.project.time-zone",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.time-zone."
     }
   ]
 }

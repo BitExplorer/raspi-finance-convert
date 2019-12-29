@@ -57,6 +57,7 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'nebula.lint'
+apply plugin: "org.jetbrains.kotlin.kapt"
 //apply plugin: 'maven'
 //apply plugin: 'codenarc'
 
@@ -121,6 +122,9 @@ dependencies {
 
     //Scala
     //compile ("org.scala-lang:scala-library:${scalaVersion}")
+
+    kapt "org.springframework.boot:spring-boot-configuration-processor"
+    //optional "org.springframework.boot:spring-boot-configuration-processor"
 
     //Spring Boot
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
