@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
-@Profile("!mongo")
 @Component
 open class InsertTransactionProcessor  @Autowired constructor(
         private var transactionService: TransactionService,
@@ -45,6 +44,7 @@ open class InsertTransactionProcessor  @Autowired constructor(
 
     companion object {
         val mapper = ObjectMapper()
-        val logger : Logger = LoggerFactory.getLogger(InsertTransactionProcessor::class.java)
+        val logger : Logger
+            get() = LoggerFactory.getLogger(InsertTransactionProcessor::class.java)
     }
 }

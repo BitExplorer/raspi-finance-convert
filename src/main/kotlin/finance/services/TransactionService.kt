@@ -135,6 +135,7 @@ open class TransactionService @Autowired constructor(
     }
 
     companion object {
-        val logger : Logger = LoggerFactory.getLogger(TransactionService::class.java)
+        val logger : Logger
+            get() = LoggerFactory.getLogger(TransactionService::class.java)
     }
 }

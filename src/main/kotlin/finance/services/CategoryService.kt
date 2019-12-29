@@ -13,14 +13,11 @@ import org.springframework.stereotype.Service
 import java.util.Optional
 import java.util.Optional.empty
 
-@Profile("!mongo")
 @Service
 open class CategoryService @Autowired constructor(
         private var categoryRepository: CategoryRepository<Category>,
         private var meterRegistry: MeterRegistry
 ) {
-    //private val logger = LoggerFactory.getLogger(this.javaClass)
-
     //@Timed("find.by.category.timer")
     fun findByCategory( category: String ): Optional<Category> {
         logger.debug("findByCategory")
@@ -48,6 +45,7 @@ open class CategoryService @Autowired constructor(
     }
 
     companion object {
-        val logger : Logger = LoggerFactory.getLogger(CategoryService::class.java)
+        val logger : Logger
+            get() = LoggerFactory.getLogger(CategoryService::class.java)
     }
 }

@@ -8,13 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
-@Profile("!mongo")
 @Component
 open class ExcelFileProcessor  @Autowired constructor(private var excelFileService: ExcelFileService)
     : Processor {
-
-    //private val logger = LoggerFactory.getLogger(this.javaClass)
-    //val logger = LoggerFactory.getLogger(MyClass::class.java)
 
     @Throws(Exception::class)
     override fun process(exchange: Exchange) {

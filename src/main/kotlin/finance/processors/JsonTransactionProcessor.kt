@@ -26,6 +26,7 @@ open class JsonTransactionProcessor : Processor {
 
     companion object {
         val mapper = ObjectMapper()
-        val logger : Logger = LoggerFactory.getLogger(JsonTransactionProcessor::class.java)
+        val logger : Logger
+            get() = LoggerFactory.getLogger(JsonTransactionProcessor::class.java)
     }
 }

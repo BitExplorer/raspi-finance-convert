@@ -13,17 +13,11 @@ import org.springframework.stereotype.Service
 import java.util.Optional
 import java.util.Optional.empty
 
-@Profile("!mongo")
 @Service
 open class AccountService @Autowired constructor(
         private var accountRepository: AccountRepository<Account>,
         private var meterRegistry: MeterRegistry
 ) {
-    //private val logger = LoggerFactory.getLogger(this.javaClass)
-
-//    @Autowired
-//    private lateinit var logger: Logging
-
     fun findByAccountNameOwner( accountNameOwner: String ): Optional<Account> {
         logger.info(accountNameOwner)
 
@@ -54,6 +48,7 @@ open class AccountService @Autowired constructor(
     }
 
     companion object {
-        val logger : Logger = LoggerFactory.getLogger(AccountService::class.java)
+        val logger : Logger
+            get() = LoggerFactory.getLogger(AccountService::class.java)
     }
 }

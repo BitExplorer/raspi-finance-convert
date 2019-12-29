@@ -191,6 +191,7 @@ open class ExcelFileService @Autowired constructor(private val env: Environment)
         const val COL_DATE_ADDED = 8
         const val COL_DATE_UPDATED = 9
         val mapper = ObjectMapper()
-        val logger : Logger = LoggerFactory.getLogger(ExcelFileService::class.java)
+        val logger : Logger
+            get() = LoggerFactory.getLogger(ExcelFileService::class.java)
     }
 }
