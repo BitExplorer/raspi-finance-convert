@@ -16,6 +16,10 @@
       <env name="DATASOURCE_USERNAME" value="henninb" />
       <env name="HIBERNATE_DDL" value="none" />
       <env name="JSON_FILES_INPUT_PATH" value="json_in" />
+      <env name="EXCEL_FILES_INPUT_PATH" value="excel_in" />
+      <env name="INPUT_FILEPATH" value="config" />
+      <env name="OUTPUT_FILEPATH" value="json_out" />
+      <env name="TIMEZONE" value="America/Chicago" />
       <env name="LOGS" value="logs" />
       <env name="SERVER_PORT" value="8080" />
       <env name="SPRING_PROFILES_ACTIVE" value="local" />

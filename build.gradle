@@ -123,7 +123,7 @@ dependencies {
     //Scala
     //compile ("org.scala-lang:scala-library:${scalaVersion}")
 
-    kapt "org.springframework.boot:spring-boot-configuration-processor"
+    //kapt "org.springframework.boot:spring-boot-configuration-processor"
     //optional "org.springframework.boot:spring-boot-configuration-processor"
 
     //Spring Boot
