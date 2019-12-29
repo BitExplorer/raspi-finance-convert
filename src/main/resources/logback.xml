@@ -25,7 +25,7 @@
         <!-- json logging -->
         <!--  <encoder class="net.logstash.logback.encoder.LogstashEncoder"/> -->
         <encoder>
-            <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} - %clr(%-5level) %clr(%-36.36logger{36}){cyan} - %msg%n</pattern>
+          <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr([%thread]){green} - %clr(%-5level){yellow} %clr(%-36.36logger{36}){cyan} - %msg%n</pattern>
 <!--            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
         </encoder>
     </appender>

@@ -30,7 +30,8 @@ cp -v $HOME/finance_db_master.xlsm excel_in/
 
 cp finance_Application.xml .idea/runConfigurations/
 cp TransactionServicePerf.xml .idea/runConfigurations/
-git ls-files | ctags --languages=java -L-
+#git ls-files | ctags --language=java
+#find . -name "*.java" | xargs ctags --language=java
 
 touch config/account_credit_list.txt
 touch config/account_exclude_list.txt
@@ -41,14 +42,12 @@ HOST_BASEDIR=$(pwd)
 GUEST_BASEDIR=/opt/${APP}
 #HOST_IP=$(ipconfig getifaddr en0) #MacOS
 HOST_IP=$(cat ip)
-LOGS=$BASEDIR/logs
 
 ./gradlew clean build
 if [ $? -ne 0 ]; then
   echo "gradle build failed."
   exit 1
 fi
-rm -rf LOGS_IS_UNDEFINED
 docker build -t $APP --build-arg TIMEZONE=${TIMEZONE} --build-arg APP=${APP} --build-arg USERNAME=${USERNAME} .
 if [ $? -ne 0 ]; then
   echo "docker build failed."
@@ -57,5 +56,9 @@ fi
 
 echo docker run -it -h ${APP} --add-host hornsup:$HOST_IP --env-file env.secrets --env-file env.$ENV -v $HOST_BASEDIR/logs:$GUEST_BASEDIR/logs -v $HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl -v $HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in -v $HOST_BASEDIR/config:$GUEST_BASEDIR/config -v $HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in --rm ${APP} bash
 docker run -it -h ${APP} --add-host hornsup:$HOST_IP -p 8081:8080 --env-file env.secrets --env-file env.$ENV -v $HOST_BASEDIR/logs:$GUEST_BASEDIR/logs -v $HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl -v $HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in -v $HOST_BASEDIR/config:$GUEST_BASEDIR/config -v $HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in --rm --name ${APP} ${APP}
+if [ $? -ne 0 ]; then
+  echo "docker run failed."
+  exit 1
+fi
 
 exit 0

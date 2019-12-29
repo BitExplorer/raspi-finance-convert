@@ -4,4 +4,3 @@ CREATE TABLE t_transaction_categories(
   date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
