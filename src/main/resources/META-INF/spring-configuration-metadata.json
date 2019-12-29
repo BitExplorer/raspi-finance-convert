@@ -3,37 +3,57 @@
     {
       "name": "custom.project.camelRoute.jsonFileWriterRoute",
       "type": "java.lang.String",
-      "description": "Camel route for json file writer.",
+      "description": "Camel route for json file writer."
     },
     {
       "name": "custom.project.camelRoute.processEachTransaction",
       "type": "java.lang.String",
-      "description": "Camel for process each transaction.",
+      "description": "Camel for process each transaction."
     },
     {
       "name": "custom.project.camelRoute.autoStartRoute",
       "type": "java.lang.String",
-      "description": "Camel autoStartRoute.",
+      "description": "Camel autoStartRoute."
     },
     {
       "name": "custom.project.camelRoute.jsonFilesInputPath",
       "type": "java.lang.String",
-      "description": "Camel jsonFilesInputPath.",
+      "description": "Camel jsonFilesInputPath."
     },
     {
       "name": "custom.project.camelRoute.jsonFileReaderRouteId",
       "type": "java.lang.String",
-      "description": "Camel jsonFileReaderRouteId.",
+      "description": "Camel jsonFileReaderRouteId."
     },
     {
       "name": "custom.project.camelRoute.transactionToDatabaseRouteId",
       "type": "java.lang.String",
-      "description": "Camel transactionToDatabaseRouteId.",
+      "description": "Camel transactionToDatabaseRouteId."
     },
     {
       "name": "custom.project.camelRoute.jsonFileWriterRouteId",
       "type": "java.lang.String",
-      "description": "Camel jsonFileWriterRouteId.",
+      "description": "Camel jsonFileWriterRouteId."
+    },
+    {
+      "name": "custom.project.time-zone",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.time-zone."
+    },
+    {
+      "name": "custom.project.input.file-path",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.input.file-path."
+    },
+    {
+      "name": "custom.project.output.file-path",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.output.file-path."
+    },
+    {
+      "name": "custom.project.excel-password",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.excel-password."
     },
     {
       "name": "custom.project.camel-route.excel-Files-Input-Path",
@@ -44,26 +64,6 @@
       "name": "custom.project.camel-route.excel-File-Reader-Route-Id",
       "type": "java.lang.String",
       "description": "Description for custom.project.camel-route.excel-File-Reader-Route-Id."
-    },
-    {
-      "name": "custom.project.excel-password",
-      "type": "java.lang.String",
-      "description": "Description for custom.project.excel-password."
-    },
-    {
-      "name": "custom.project.output.file-path",
-      "type": "java.lang.String",
-      "description": "Description for custom.project.output.file-path."
-    },
-    {
-      "name": "custom.project.input.file-path",
-      "type": "java.lang.String",
-      "description": "Description for custom.project.input.file-path."
-    },
-    {
-      "name": "custom.project.time-zone",
-      "type": "java.lang.String",
-      "description": "Description for custom.project.time-zone."
     }
   ]
 }
