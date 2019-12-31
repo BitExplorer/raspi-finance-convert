@@ -28,7 +28,7 @@ spring:
 # ===============================
 # Show or not log for each sql query
   jpa:
-    show-sql: true
+    show-sql: false
     open-in-view: false
     generate-ddl: true
     hibernate:
@@ -39,7 +39,14 @@ spring:
           time_zone: UTC
 
 logging:
-  level.org.hibernate.SQL: WARN
+  level:
+    org:
+      hibernate:
+        SQL: WARN
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
 
 #spring.jpa.hibernate.ddl-auto: none
 # Hibernate ddl auto (create, create-drop, update): with "create-drop" the database

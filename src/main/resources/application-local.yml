@@ -45,7 +45,16 @@ spring:
           time_zone: UTC
 
 logging:
-  level.org.hibernate.SQL: WARN
+  file: ${LOGS}/convert.log
+  level:
+    org:
+      hibernate:
+        SQL: WARN
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
 
 #spring.jpa.hibernate.ddl-auto: none
 # Hibernate ddl auto (create, create-drop, update): with "create-drop" the database
