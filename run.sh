@@ -40,8 +40,13 @@ touch ip
 
 HOST_BASEDIR=$(pwd)
 GUEST_BASEDIR=/opt/${APP}
-#HOST_IP=$(ipconfig getifaddr en0) #MacOS
-HOST_IP=$(cat ip)
+# "$OSTYPE" == "darwin"*
+if [ "$OS" = "Darwin" ]; then
+  HOST_IP=$(ipconfig getifaddr en0) #MacOS
+else
+  HOST_IP=$(cat ip)
+fi
+echo $HOST_IP
 
 ./gradlew clean build
 if [ $? -ne 0 ]; then
@@ -55,7 +60,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo docker run -it -h ${APP} --add-host hornsup:$HOST_IP --env-file env.secrets --env-file env.$ENV -v $HOST_BASEDIR/logs:$GUEST_BASEDIR/logs -v $HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl -v $HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in -v $HOST_BASEDIR/config:$GUEST_BASEDIR/config -v $HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in --rm ${APP} bash
-docker run -it -h ${APP} --add-host hornsup:$HOST_IP -p 8081:8080 --env-file env.secrets --env-file env.$ENV -v $HOST_BASEDIR/logs:$GUEST_BASEDIR/logs -v $HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl -v $HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in -v $HOST_BASEDIR/config:$GUEST_BASEDIR/config -v $HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in --rm --name ${APP} ${APP}
+docker run -it -h ${APP} --add-host hornsup:$HOST_IP -p 8082:8080 --env-file env.secrets --env-file env.$ENV -v $HOST_BASEDIR/logs:$GUEST_BASEDIR/logs -v $HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl -v $HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in -v $HOST_BASEDIR/config:$GUEST_BASEDIR/config -v $HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in --rm --name ${APP} ${APP}
 if [ $? -ne 0 ]; then
   echo "docker run failed."
   exit 1
