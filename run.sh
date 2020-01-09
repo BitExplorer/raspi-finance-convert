@@ -9,6 +9,8 @@ ENV=$1
 APP=raspi-finance-convert
 TIMEZONE='America/Chicago'
 USERNAME=henninb
+HOST_BASEDIR=$(pwd)
+GUEST_BASEDIR=/opt/${APP}
 
 if [ $ENV = "prod" ]; then
   echo prod
@@ -17,6 +19,22 @@ elif [ $ENV = "local" ]; then
 else
   echo "Usage: $0 <prod or local>"
   exit 2
+fi
+
+# "$OSTYPE" == "darwin"*
+if [ \( "$OS" = "Linux Mint" \) -o \(  "$OS" = "Ubuntu" \) ]; then
+  HOST_IP=$(hostname -I | awk '{print $1}')
+elif [ "$OS" = "Arch Linux" ]; then
+  HOST_IP=$(hostname -i | awk '{print $1}')
+elif [ "$OS" = "Fedora" ]; then
+  HOST_IP=192.168.100.130
+elif [ "$OS" = "Darwin" ]; then
+  HOST_IP=$(ipconfig getifaddr en0)
+elif [ "$OS" = "Gentoo" ]; then
+  HOST_IP=$(hostname -i | awk '{print $1}')
+else
+  echo $OS is not yet implemented.
+  exit 1
 fi
 
 mkdir -p .idea/runConfigurations/
@@ -36,17 +54,6 @@ cp TransactionServicePerf.xml .idea/runConfigurations/
 touch config/account_credit_list.txt
 touch config/account_exclude_list.txt
 touch env.secrets
-touch ip
-
-HOST_BASEDIR=$(pwd)
-GUEST_BASEDIR=/opt/${APP}
-# "$OSTYPE" == "darwin"*
-if [ "$OS" = "Darwin" ]; then
-  HOST_IP=$(ipconfig getifaddr en0) #MacOS
-else
-  HOST_IP=$(cat ip)
-fi
-echo $HOST_IP
 
 ./gradlew clean build
 if [ $? -ne 0 ]; then
