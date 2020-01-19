@@ -1,10 +1,11 @@
-package finance.services
+package finance
 
 import com.github.javafaker.service.FakeValuesService
 import com.github.javafaker.service.RandomService
 import finance.helpers.TransactionDAO
 import finance.domain.Transaction
 import finance.domain.AccountType
+import finance.services.TransactionService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
@@ -14,7 +15,7 @@ import java.sql.Timestamp
 import java.sql.Date
 
 @SpringBootTest
-class TransactionServicePerf extends Specification {
+class TransactionServicePerformanceSpec extends Specification {
 
     @Autowired
     private TransactionService transactionService
@@ -24,7 +25,7 @@ class TransactionServicePerf extends Specification {
 
     private FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"), new RandomService())
 
-    def "transactionServiceTest" () {
+    def "transaction service performance test" () {
         when:
         for( int idx = 0; idx < 5000; idx ++ ) {
             Transaction transaction = createTransaction()

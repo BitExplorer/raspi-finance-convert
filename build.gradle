@@ -134,8 +134,15 @@ dependencies {
     implementation("org.apache.poi:poi:${poiVersion}")
     implementation("org.apache.poi:poi-ooxml:${poiVersion}")
 
+    //postgres
+    implementation("org.postgresql:postgresql:${postgresqlVersion}")
+
     //h2 database
     implementation("com.h2database:h2:${h2Version}")
+
+    //hibernate
+    implementation("org.hibernate:hibernate-core:${hibernateVersion}")
+    implementation("org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final")
 
     //Logging
     implementation("ch.qos.logback:logback-classic:1.2.3")
