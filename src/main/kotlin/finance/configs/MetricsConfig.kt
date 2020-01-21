@@ -42,7 +42,7 @@ open class MetricsConfig {
             .register(meterRegistry)
 
     @Bean
-    open fun vaildateFailedCounter(meterRegistry: MeterRegistry): Counter = Counter
+    open fun validateFailedCounter(meterRegistry: MeterRegistry): Counter = Counter
             .builder(METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER)
             .description("Counter for failed validations.")
             .register(meterRegistry)

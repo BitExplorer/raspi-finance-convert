@@ -4,11 +4,9 @@ import finance.domain.Category
 import finance.repositories.CategoryRepository
 import finance.utils.Constants.METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER
 import io.micrometer.core.instrument.MeterRegistry
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.util.Optional
 import java.util.Optional.empty
@@ -35,7 +33,7 @@ open class CategoryService @Autowired constructor(
 
         try {
             categoryRepository.saveAndFlush(category)
-        } catch ( e: JdbcSQLIntegrityConstraintViolationException) {
+        } catch ( e: Exception) {
             meterRegistry.counter(METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER).increment()
             logger.info("categoryRepository.saveAndFlush(category) - JdbcSQLIntegrityConstraintViolationException")
             return false

@@ -3,11 +3,9 @@ package finance.services
 import finance.domain.Account
 import finance.repositories.AccountRepository
 import io.micrometer.core.instrument.MeterRegistry
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Profile
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 import java.util.Optional
@@ -33,10 +31,10 @@ open class AccountService @Autowired constructor(
         logger.debug("insertAccount")
         try {
             accountRepository.saveAndFlush(account)
-        } catch ( jsicv: JdbcSQLIntegrityConstraintViolationException) {
-            //meterRegistry.counter(Constants.METRIC_DUPLICATE_ACCOUNT_INSERT_ATTEMPT_COUNTER).increment()
-            logger.info("accountRepository.saveAndFlush(account) - JdbcSQLIntegrityConstraintViolationException")
-            return false
+//        } catch ( jsicv: JdbcSQLIntegrityConstraintViolationException) {
+//            //meterRegistry.counter(Constants.METRIC_DUPLICATE_ACCOUNT_INSERT_ATTEMPT_COUNTER).increment()
+//            logger.info("accountRepository.saveAndFlush(account) - JdbcSQLIntegrityConstraintViolationException")
+//            return false
         } catch (dive: DataIntegrityViolationException)  {
             logger.info("accountRepository.saveAndFlush(account)" + dive.message)
             return false

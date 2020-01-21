@@ -11,15 +11,15 @@ spring:
   # = DATA SOURCE
   # ===============================
   datasource:
-    url: ${DATASOURCE}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
-    driver-class-name: ${DATASOURCE_DRIVER}
+    url: jdbc:postgresql://192.168.100.97:5432/finance_db
+    username: henninb
+    password: monday1
+    driver-class-name: org.postgresql.Driver
     # testWhileIdle to persist the connection when idle for a long period of time
     tomcat:
       test-While-Idle: true
       validation-Query: SELECT 1
-    platform: ${DATASOURCE_PLATFORM}
+    platform: postgresql
     continue-On-Error: false
     # enable initialization-mode flag to always if you want to utilize data.sql and schema.sql
     #initialization-mode: always

@@ -1,14 +1,16 @@
 package finance.services
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import finance.Application
 import finance.helpers.TransactionDAO
 import finance.domain.Transaction
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Profile
+import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
-@SpringBootTest
+@ActiveProfiles("test")
+@SpringBootTest(classes = Application, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TransactionServicesSpec extends Specification {
 
     def jsonPayload = "{\"guid\":\"0a23fec3-18c8-4b89-a5af-68fab8db8620\",\"accountType\":\"credit\",\"accountNameOwner\":\"amex_brian\",\"transactionDate\":1475647200000,\"description\":\"Cafe Roale\",\"category\":\"online\",\"amount\":33.08,\"cleared\":1,\"reoccurring\":false,\"notes\":\"\",\"dateUpdated\":1475588992000,\"dateAdded\":1475588992000,\"sha256\":\"\"}"

@@ -79,6 +79,13 @@ repositories {
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
 
+    unitTest {
+        groovy.srcDirs = ['src/test/unit/groovy']
+        compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
+        runtimeClasspath += output + compileClasspath + configurations.testRuntimeClasspath
+        resources.srcDir file('src/main/resources')
+    }
+
     integrationTest {
         groovy.srcDirs = ['src/test/integration/groovy']
         compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
@@ -135,10 +142,10 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:${poiVersion}")
 
     //postgres
-    implementation("org.postgresql:postgresql:${postgresqlVersion}")
+    runtimeOnly("org.postgresql:postgresql:${postgresqlVersion}")
 
     //h2 database
-    implementation("com.h2database:h2:${h2Version}")
+    runtimeOnly("com.h2database:h2:${h2Version}")
 
     //hibernate
     implementation("org.hibernate:hibernate-core:${hibernateVersion}")
@@ -158,8 +165,13 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 
+task unitTest(type: Test) {
+    testClassesDirs = project.sourceSets.unitTest.output.classesDirs
+    classpath = sourceSets.unitTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
 task integrationTest(type: Test) {
-    environment "LOGS", "logs"
     environment "CAMEL_ROUTE_ENABLED", "true"
     environment "JSON_FILES_INPUT_PATH", "json_in"
     environment "JSON_FILES_INPUT_PATH", "excel_in"
@@ -177,7 +189,6 @@ task functionalTest(type: Test) {
 }
 
 task performanceTest(type: Test) {
-    environment "LOGS", "logs"
     testClassesDirs = project.sourceSets.performanceTest.output.classesDirs
     classpath = sourceSets.performanceTest.runtimeClasspath
     outputs.upToDateWhen { false }
