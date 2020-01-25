@@ -59,9 +59,9 @@ ext['groovy.version'] = '${gradleVersion}'
 
 repositories {
     mavenCentral()
-//    flatDir {
-//        dirs 'libs'
-//    }
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 sourceSets {
