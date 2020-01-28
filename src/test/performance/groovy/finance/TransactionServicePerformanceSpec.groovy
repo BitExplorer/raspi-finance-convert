@@ -1,13 +1,14 @@
 package finance
 
-import com.github.javafaker.service.FakeValuesService
-import com.github.javafaker.service.RandomService
+//import com.github.javafaker.service.FakeValuesService
+//import com.github.javafaker.service.RandomService
 import finance.helpers.TransactionDAO
 import finance.domain.Transaction
 import finance.domain.AccountType
 import finance.services.TransactionService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils
 import spock.lang.Specification
 
 import java.math.RoundingMode
@@ -23,7 +24,8 @@ class TransactionServicePerformanceSpec extends Specification {
     @Autowired
     private TransactionDAO transactionDAO;
 
-    private FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"), new RandomService())
+    //private FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"), new RandomService())
+    //def password = org.apache.commons.lang.RandomStringUtils.randomAlphanumeric(length)
 
     def "transaction service performance test" () {
         when:
@@ -38,18 +40,17 @@ class TransactionServicePerformanceSpec extends Specification {
 
     private Transaction createTransaction() {
         Transaction transaction = new Transaction()
-        transaction.setGuid(fakeValuesService.regexify("[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}"))
-        transaction.setAccountNameOwner(fakeValuesService.regexify("[a-z]{8}_[a-z]{4}"))
-        transaction.setDescription(fakeValuesService.regexify("[a-z]{25}"))
-        transaction.setCategory(fakeValuesService.regexify("[a-z]{20}"))
-        transaction.setNotes(fakeValuesService.regexify("[a-z]{40}"))
+        transaction.setGuid("[0-9a-z]{8}" + '-' + "[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}")
+        transaction.setAccountNameOwner(RandomStringUtils.randomAlphabetic(8) + '_' + RandomStringUtils.randomAlphabetic(4))
+        transaction.setDescription(RandomStringUtils.randomAlphabetic(25))
+        transaction.setCategory(RandomStringUtils.randomAlphabetic(20))
+        transaction.setNotes(RandomStringUtils.randomAlphabetic(40))
         transaction.setReoccurring(Boolean.parseBoolean(fakeValuesService.regexify("(true|false)")))
         transaction.setAccountType(AccountType.valueOf(fakeValuesService.regexify("(Credit|Debit)")))
         transaction.setTransactionDate(new Date(1553600000 + Integer.parseInt(fakeValuesService.regexify("[0-9]{5}"))))
         transaction.setDateUpdated(new Timestamp(1553600000000 + Integer.parseInt(fakeValuesService.regexify("[0-9]{5}000"))))
         transaction.setDateAdded(new Timestamp(1553600000000 + Integer.parseInt(fakeValuesService.regexify("[0-9]{5}000"))))
         transaction.setAmount(new BigDecimal(fakeValuesService.regexify($/[0-9]{2}\.[0-9]{2}/$)).setScale(2, RoundingMode.HALF_UP))
-
         transaction.setCleared(1)
 
         return transaction
