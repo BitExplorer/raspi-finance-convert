@@ -1,8 +1,11 @@
 #!/bin/sh
 
+touch env.secrets
+touch env.console
+
 set -a
-source env.secrets
-source env.console
+. ./env.console
+. ./env.secrets
 set +a
 
 ./gradlew clean bootRun
