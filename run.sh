@@ -22,7 +22,7 @@ else
 fi
 
 # "$OSTYPE" == "darwin"*
-if [ \( "$OS" = "Linux Mint" \) -o \(  "$OS" = "Ubuntu" \) ]; then
+if [ \( "$OS" = "Linux Mint" \) -o \(  "$OS" = "Ubuntu" \) -o \(  "$OS" = "Raspbian GNU/Linux" \) ]; then
   HOST_IP=$(hostname -I | awk '{print $1}')
 elif [ "$OS" = "Arch Linux" ]; then
   HOST_IP=$(hostname -i | awk '{print $1}')
