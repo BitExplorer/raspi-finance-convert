@@ -47,7 +47,6 @@ spring:
           time_zone: UTC
 
 logging:
-  file: ${LOGS}/convert.log
   level:
     org:
       hibernate:
@@ -56,7 +55,8 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
-
+  file:
+    name: ${LOGS}/hibernate.log
 
 #spring.jpa.hibernate.ddl-auto: none
 # Hibernate ddl auto (create, create-drop, update): with "create-drop" the database
@@ -95,45 +95,9 @@ camel:
     name: raspi-finance-convert
   health.check.routes.enabled: false
 
-# ===============================
-# = Thymeleaf
-# ===============================
-#spring.thymeleaf.check-template-location=true
-#spring.thymeleaf.prefix=classpath:/templates/
-#spring.thymeleaf.suffix=.html
-#spring.thymeleaf.mode=HTML5
-#spring.thymeleaf.encoding=UTF-8
-#spring.thymeleaf.content-type=text/html
-#spring.thymeleaf.cache=false
-
 #kebab-case '-' separated
 
 management:
   endpoint:
     health:
       show-details: always
-
-#management:
-#  endpoints:
-#    #beans:
-#      #enabled: true
-#    web:
-#      exposure:
-#        include: "*"
-#  metrics:
-#    #web:
-#      #server:
-#        #auto-time-requests: true
-#    tags.host: hornsup
-#    tags.environment: local
-#    tags.application: raspi-finance-convert
-#    export:
-#      influx:
-#        enabled: false
-#        auto-create-db: false
-#        db: metrics
-#        compressed: false
-#        step: 1m
-#        uri: http://hornsup::8086
-  #health:
-  #  show-details: always

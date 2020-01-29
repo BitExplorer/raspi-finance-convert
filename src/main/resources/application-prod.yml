@@ -83,45 +83,7 @@ camel:
     name: RaspiFinance
   health.check.routes.enabled: false
 
-# ===============================
-# = Thymeleaf
-# ===============================
-#spring.thymeleaf.check-template-location=true
-#spring.thymeleaf.prefix=classpath:/templates/
-#spring.thymeleaf.suffix=.html
-#spring.thymeleaf.mode=HTML5
-#spring.thymeleaf.encoding=UTF-8
-#spring.thymeleaf.content-type=text/html
-#spring.thymeleaf.cache=false
-
-#kebab-case '-' separated
-
 management:
   endpoint:
     health:
       show-details: always
-
-# management:
-#   endpoints:
-# #    beans:
-# #      enabled: true
-#     web:
-#       exposure:
-#         include: "*"
-#   metrics:
-# #    web:
-# #      server:
-# #        auto-time-requests: true
-#     tags.host: hornsup
-#     tags.environment: prod
-#     tags.application: raspi-finance-convert
-#     export:
-#       influx:
-#         enabled: false
-#         auto-create-db: false
-#         db: metrics
-#         compressed: false
-#         step: 1m
-#         uri: http://hornsup::8086
-#  health:
-#    show-details: always

@@ -1,4 +1,4 @@
-import org.springframework.boot.gradle.tasks.run.BootRun
+//import org.springframework.boot.gradle.tasks.run.BootRun
 
 buildscript {
 }
@@ -123,34 +123,32 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:${logbackVersion}")
 }
 
-//tasks.withType(bootRun) {
-//bootRun {
-//    System.setProperty('spring.profiles.active', 'local')
+
+//Properties localBootRunProperties() {
+//    Properties properties = new Properties()
+//    properties.load(
+//            new FileInputStream(file(project.projectDir).absolutePath + "/application-local.yml"))
+//    return properties
 //}
 
-//task bootRunDev(type: org.springframework.boot.gradle.tasks.run.BootRun, dependsOn: 'build') {
-task bootRunLocal(type: BootRun, dependsOn: 'build') {
+bootRun {
     group = 'Application'
-//
     doFirst() {
         main = bootJar.mainClassName
-        classpath = sourceSets.main.runtimeClasspath
-        //systemProperty 'spring.profiles.active', 'local'
-        environment "SPRING_PROFILES_ACTIVE", "local"
-        environment "LOGS", "logs"
-        environment "SERVER_PORT", "8080"
-        environment "CAMEL_ROUTE_ENABLED", "true"
-        environment "HIBERNATE_DDL", "none"
-        environment "JSON_FILES_INPUT_PATH", "json_in"
-        environment "EXCEL_FILES_INPUT_PATH", "excel_in"
-        environment "INPUT_FILEPATH", "config"
-        environment "TIMEZONE", "America/Chicago"
-        environment "OUTPUT_FILEPATH", "json_out"
+        //bootRun.systemProperties = localBootRunProperties() as Map<String, String>
     }
-    //System.setProperty('spring.profiles.active', 'local')
 }
+
+//task bootRunLocal(type: BootRun, dependsOn: 'build') {
+//    group = 'Application'
+//    doFirst() {
+//        main = bootJar.mainClassName
+//        classpath = sourceSets.main.runtimeClasspath
+//        environment 'SPRING_PROFILES_ACTIVE', 'local'
+//        environment 'LOGS', 'logs'
+//    }
+//}
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
-
