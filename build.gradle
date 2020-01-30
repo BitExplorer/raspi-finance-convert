@@ -129,13 +129,13 @@ dependencies {
 //    return properties
 //}
 
-bootRun {
-    group = 'Application'
-    doFirst() {
-        main = bootJar.mainClassName
-        //bootRun.systemProperties = localBootRunProperties() as Map<String, String>
-    }
-}
+//bootRun {
+//    group = 'Application'
+//    doFirst() {
+//        main = bootJar.mainClassName
+//        //bootRun.systemProperties = localBootRunProperties() as Map<String, String>
+//    }
+//}
 
 //task bootRunLocal(type: BootRun, dependsOn: 'build') {
 //    group = 'Application'

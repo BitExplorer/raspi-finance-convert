@@ -8,6 +8,6 @@ set -a
 . ./env.secrets
 set +a
 
-./gradlew clean bootRun
+./gradlew clean build bootRun
 
 exit 0

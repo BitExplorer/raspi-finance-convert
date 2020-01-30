@@ -77,11 +77,11 @@ if [ -x "$(command -v docker)" ]; then
   fi
 else
   set -a
-  source env.secrets
-  source env.console
+  . /env.secrets
+  . ./env.console
   set +a
   #./gradlew -Dspring.profiles.active=local clean bootRun
-  ./gradlew clean bootRun
+  ./gradlew clean build bootRun
 fi
 
 exit 0
