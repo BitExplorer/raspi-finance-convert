@@ -1,12 +1,11 @@
 #!/bin/sh
 
-#macos
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.0.2.jdk/Contents/Home
-
-# redhat
-export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
-#export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.fc31.x86_64/
+if [ "$OSTYPE" = "linux-gnu" ]; then
+  export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
+else
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.0.2.jdk/Contents/Home
+fi
 
 echo $JAVA_HOME
 
