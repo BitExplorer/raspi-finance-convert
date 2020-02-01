@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
   export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
