@@ -9,10 +9,8 @@ import finance.repositories.TransactionRepository
 import finance.helpers.AccountBuilder
 import finance.helpers.TransactionBuilder
 import io.micrometer.core.instrument.MeterRegistry
-import spock.lang.PendingFeature
 import spock.lang.Specification
 
-import javax.validation.ConstraintViolation
 import javax.validation.Validator
 
 class TransactionServiceSpec extends Specification {

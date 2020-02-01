@@ -41,17 +41,29 @@ else
   exit 1
 fi
 
-mkdir -p .idea/runConfigurations/
+mkdir -p src/main/scala
+mkdir -p src/main/java
+mkdir -p src/main/kotlin
+mkdir -p src/test/unit/groovy
+mkdir -p src/test/unit/java
+mkdir -p src/test/integration/groovy
+mkdir -p src/test/integration/java
+mkdir -p src/test/functional/groovy
+mkdir -p src/test/functional/java
+mkdir -p src/test/performance/groovy
+mkdir -p src/test/performance/java
+
 mkdir -p logs
 mkdir -p ssl
 mkdir -p json_in
 mkdir -p json_out
 mkdir -p excel_in
 mkdir -p config
+mkdir -p .idea/runConfigurations/
 cp -v $HOME/finance_db_master.xlsm excel_in/
 
-cp finance_Application.xml .idea/runConfigurations/
-cp TransactionServicePerf.xml .idea/runConfigurations/
+cp -v finance_Application.xml .idea/runConfigurations/
+cp -v TransactionServicePerf.xml .idea/runConfigurations/
 #git ls-files | ctags --language=java
 #find . -name "*.java" | xargs ctags --language=java
 
@@ -84,7 +96,6 @@ else
   . /env.secrets
   . ./env.console
   set +a
-  #./gradlew -Dspring.profiles.active=local clean bootRun
   ./gradlew clean build bootRun
 fi
 
