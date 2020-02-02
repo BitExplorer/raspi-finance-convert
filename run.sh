@@ -2,14 +2,12 @@
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
   #export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
-  export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)) || readlink $(which javac))))
+  export JAVA_HOME=$(dirname $(dirname $(readlink -f  $(readlink -f  $(which javac)) || readlink -f  $(which javac))))
 else
   # macos
   export JAVA_HOME=$(/usr/libexec/java_home)
   #export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.0.2.jdk/Contents/Home
 fi
-
-echo $JAVA_HOME
 
 export PATH=${JAVA_HOME}/bin:${PATH}
 
@@ -43,6 +41,8 @@ elif [ "$OS" = "Fedora" ]; then
   HOST_IP=192.168.100.130
 elif [ "$OS" = "Darwin" ]; then
   HOST_IP=$(ipconfig getifaddr en0)
+elif [ "$OS" = "void" ]; then
+  HOST_IP=127.0.0.1
 elif [ "$OS" = "Gentoo" ]; then
   HOST_IP=$(hostname -i | awk '{print $1}')
 else
