@@ -81,6 +81,8 @@ touch config/account_exclude_list.txt
 touch env.secrets
 touch env.console
 
+chmod +x gradle/wrapper/gradle-wrapper.jar
+
 ./gradlew clean build
 if [ $? -ne 0 ]; then
   echo "gradle build failed."
