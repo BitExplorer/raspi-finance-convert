@@ -26,6 +26,7 @@ json_out/
 *.gz
 *.jks
 *.pem
+*.log
 *.p12
 *.ks
 *.der
