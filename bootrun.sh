@@ -2,7 +2,7 @@
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
 #  export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
-  JAVA_HOME=$(dirname $(dirname $(readlink -f $(readlink -f $(which javac)) || readlink -f $(which javac))))
+  JAVA_HOME=$(dirname "$(dirname "$(readlink -f "$(readlink -f "$(which javac)")" || readlink -f "$(which javac)")")")
 else
   # macos
   JAVA_HOME=$(/usr/libexec/java_home)
@@ -17,8 +17,10 @@ touch env.secrets
 touch env.console
 
 set -a
-. ./env.console
-. ./env.secrets
+# shellcheck disable=SC1091
+source env.console
+# shellcheck disable=SC1091
+source env.secrets
 set +a
 
 ./gradlew clean build bootRun
