@@ -69,7 +69,7 @@ mkdir -p json_out
 mkdir -p excel_in
 mkdir -p config
 mkdir -p .idea/runConfigurations/
-cp -v $HOME/finance_db_master.xlsm excel_in/
+cp -v "$HOME/finance_db_master.xlsm" excel_in/
 
 cp -v finance_Application.xml .idea/runConfigurations/
 cp -v TransactionServicePerf.xml .idea/runConfigurations/
