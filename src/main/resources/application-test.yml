@@ -1,11 +1,18 @@
 server:
   port: ${SERVER_PORT}
+  ssl:
+    key-store: ${SSL_KEYSTORE}
+    key-store-password: ${KEYSTORE_PASSWORD}
+    key-password: ${KEY_PASSWORD}
 
 spring:
   application:
     name: raspi-finance-convert
   profiles:
     active: test
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_nulls
 
   # ===============================
   # = DATA SOURCE

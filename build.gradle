@@ -57,6 +57,7 @@ ext['httpBuilderVersion'] = '1.0.4'
 ext['randomBeanVersion'] = '3.7.0'
 ext['jacksonKotlinVersion'] = '2.9.7'
 ext['hibernateJpaVersion'] = '1.0.0.Final'
+ext['jacksonVersion'] = '2.10.2'
 
 ext['groovy.version'] = '${gradleVersion}'
 
@@ -123,6 +124,9 @@ dependencies {
 
     //h2 database
     runtimeOnly("com.h2database:h2:${h2Version}")
+
+    //json parser
+    implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
 
     //hibernate
     implementation("org.hibernate:hibernate-core:${hibernateVersion}")

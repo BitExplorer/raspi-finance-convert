@@ -1,11 +1,17 @@
 server:
   port: ${SERVER_PORT}
-
+  ssl:
+    key-store: ${SSL_KEYSTORE}
+    key-store-password: ${KEYSTORE_PASSWORD}
+    key-password: ${KEY_PASSWORD}
 spring:
   application:
     name: raspi-finance-convert
   profiles:
     active: prod
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_null
 
   # ===============================
   # = DATA SOURCE
@@ -74,6 +80,8 @@ custom:
       json-File-Writer-Route-Id: jsonFileWriterRoute
       process-each-transaction: direct:processEachTransaction
       json-file-writer-route: direct:jsonFileWriterRoute
+
+
 
 # ===============================
 # = Camel

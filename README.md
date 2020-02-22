@@ -45,3 +45,11 @@ java -jar build/libs/raspi_finance*.jar --spring.config.location=src/main/resour
 ## gradle command to find dependencies
 ./gradlew :dependencies > dependencies.txt
 ./gradlew :dependencies --configuration compile > dependencies_compile.txt
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+Also for better performance:
+objectMapper = new ObjectMapper();
+objectMapper.registerModule(new AfterburnerModule());   // Speeds up serialization.
+
+You need the dependency in your build.gradle:
+implementation "com.fasterxml.jackson.module:jackson-module-afterburner:${jacksonVersion}"
