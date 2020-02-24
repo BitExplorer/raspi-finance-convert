@@ -31,6 +31,7 @@ json_out/
 *.ks
 *.der
 *.ts
+*.secrets
 
 ### others ###
 .settings/
