@@ -12,6 +12,7 @@ spring:
     active: test
   jackson:
     property-naming-strategy: SNAKE_CASE
+#TODO: fix
     default-property-inclusion: non_nulls
 
   # ===============================
