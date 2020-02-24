@@ -1,5 +1,5 @@
 [user]
   email = henninb@msn.com
   name = Brian Henning
-[filter "secrets-pw"]
+[filter "secrets"]
   clean = "sed -e 's/_PASSWORD=\".*\"/_PASSWORD=\"********\"/'"
