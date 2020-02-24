@@ -2,4 +2,4 @@
   email = henninb@msn.com
   name = Brian Henning
 [filter "secrets-pw"]
-  clean = "sed -e 's/EXCEL_PASSWORD=\".*\"/EXCEL_PASSWORD=\"********\"/'"
+  clean = "sed -e 's/_PASSWORD=\".*\"/_PASSWORD=\"********\"/'"
