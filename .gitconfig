@@ -1,0 +1,2 @@
+[filter "secrets-pw"]
+  clean = "sed -e 's/EXCEL_PASSWORD=\".*\"/EXCEL_PASSWORD=\"********\"/'"
