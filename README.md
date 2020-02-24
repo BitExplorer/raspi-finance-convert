@@ -53,3 +53,7 @@ objectMapper.registerModule(new AfterburnerModule());   // Speeds up serializati
 
 You need the dependency in your build.gradle:
 implementation "com.fasterxml.jackson.module:jackson-module-afterburner:${jacksonVersion}"
+
+
+
+git config --global filter.updateSecretToken.clean 'sed "s/_PASSWORD=\".*\"/_PASSWORD=\"********\"/'
