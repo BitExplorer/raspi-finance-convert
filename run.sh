@@ -2,7 +2,7 @@
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
   #export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
-  JAVA_HOME=$(dirname "$(dirname "$(readlink -f "$(readlink -f "$(which javac)")" || readlink -f "$(which javac)")")")
+  JAVA_HOME=$(dirname "$(dirname "$(readlink -f "$(readlink -f "$(command -v javac)")" || readlink -f "$(command -v javac)")")")
 else
   # macos
   JAVA_HOME=$(/usr/libexec/java_home)

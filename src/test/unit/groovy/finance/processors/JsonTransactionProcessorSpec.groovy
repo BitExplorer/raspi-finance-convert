@@ -9,7 +9,7 @@ import spock.lang.Specification
 
 class JsonTransactionProcessorSpec extends Specification {
 
-    private static ObjectMapper mapper1 = new ObjectMapper()
+    //private static ObjectMapper mapper1 = new ObjectMapper()
 
     def "test JsonTransactionProcessor" () {
         Exchange exchange = Mock(Exchange)
