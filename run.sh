@@ -19,10 +19,10 @@ fi
 ENV=$1
 
 APP=raspi-finance-convert
-TIMEZONE='America/Chicago'
-USERNAME=henninb
-HOST_BASEDIR=$(pwd)
-GUEST_BASEDIR=/opt/${APP}
+# TIMEZONE='America/Chicago'
+# USERNAME=henninb
+# HOST_BASEDIR=$(pwd)
+# GUEST_BASEDIR=/opt/${APP}
 
 if [ "$ENV" = "prod" ]; then
   echo prod
@@ -91,16 +91,13 @@ if ! ./gradlew clean build ; then
   exit 1
 fi
 
-if [ -x "$(command -v docker)" ]; then
-  if ! docker build -t $APP --build-arg TIMEZONE=${TIMEZONE} --build-arg APP=${APP} --build-arg USERNAME=${USERNAME} . ; then
-    echo "docker build failed."
+if [ -x "$(command -v docker-compose)" ]; then
+  if ! docker-compose -f docker-compose.yml -f "docker-compose-${ENV}.yml" build; then
+    echo "docker-compose build failed."
     exit 1
   fi
-
-  echo docker-compose -f docker-compose.yml -f docker-compose-local.yml up
-  #echo docker run -it -h ${APP} --add-host hornsup:$HOST_IP --env-file env.secrets --env-file env.$ENV -v $HOST_BASEDIR/logs:$GUEST_BASEDIR/logs -v $HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl -v $HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in -v $HOST_BASEDIR/config:$GUEST_BASEDIR/config -v $HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in --rm ${APP} bash
-  if ! docker run -it -h ${APP} --add-host "hornsup:$HOST_IP" -p 8082:8080 --env-file env.secrets --env-file "env.$ENV" -v "$HOST_BASEDIR/logs:$GUEST_BASEDIR/logs" -v "$HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl" -v "$HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in" -v "$HOST_BASEDIR/config:$GUEST_BASEDIR/config" -v "$HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in" --rm --name ${APP} ${APP} ; then
-    echo "docker run failed."
+  if ! docker-compose -f docker-compose.yml -f "docker-compose-${ENV}.yml" up; then
+    echo "docker-compose up failed."
     exit 1
   fi
 else
