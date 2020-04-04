@@ -97,6 +97,7 @@ if [ -x "$(command -v docker)" ]; then
     exit 1
   fi
 
+  echo docker-compose -f docker-compose.yml -f docker-compose-local.yml up
   #echo docker run -it -h ${APP} --add-host hornsup:$HOST_IP --env-file env.secrets --env-file env.$ENV -v $HOST_BASEDIR/logs:$GUEST_BASEDIR/logs -v $HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl -v $HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in -v $HOST_BASEDIR/config:$GUEST_BASEDIR/config -v $HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in --rm ${APP} bash
   if ! docker run -it -h ${APP} --add-host "hornsup:$HOST_IP" -p 8082:8080 --env-file env.secrets --env-file "env.$ENV" -v "$HOST_BASEDIR/logs:$GUEST_BASEDIR/logs" -v "$HOST_BASEDIR/ssl:$GUEST_BASEDIR/ssl" -v "$HOST_BASEDIR/json_in:$GUEST_BASEDIR/json_in" -v "$HOST_BASEDIR/config:$GUEST_BASEDIR/config" -v "$HOST_BASEDIR/excel_in:$GUEST_BASEDIR/excel_in" --rm --name ${APP} ${APP} ; then
     echo "docker run failed."
