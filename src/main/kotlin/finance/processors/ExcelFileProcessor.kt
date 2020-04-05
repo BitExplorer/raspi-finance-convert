@@ -5,7 +5,6 @@ import finance.services.ExcelFileService
 import org.apache.camel.Exchange
 import org.apache.camel.Processor
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
 @Component

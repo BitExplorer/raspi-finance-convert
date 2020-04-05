@@ -11,8 +11,8 @@ open class RouteUriProperties {
     @NotNull
     lateinit var autoStartRoute: String
 
-    @NotNull
-    lateinit var jsonFilesInputPath: String
+//    @NotNull
+//    lateinit var jsonFilesInputPath: String
 
     @NotNull
     lateinit var jsonFileReaderRouteId: String
@@ -32,7 +32,7 @@ open class RouteUriProperties {
     @NotNull
     lateinit var jsonFileWriterRoute: String
 
-    @NotNull
-    lateinit var excelFilesInputPath: String
+//    @NotNull
+//    lateinit var excelFilesInputPath: String
 
 }

@@ -16,11 +16,6 @@
       "description": "Camel autoStartRoute."
     },
     {
-      "name": "custom.project.camelRoute.jsonFilesInputPath",
-      "type": "java.lang.String",
-      "description": "Camel jsonFilesInputPath."
-    },
-    {
       "name": "custom.project.camelRoute.jsonFileReaderRouteId",
       "type": "java.lang.String",
       "description": "Camel jsonFileReaderRouteId."
@@ -41,29 +36,34 @@
       "description": "Description for custom.project.time-zone."
     },
     {
-      "name": "custom.project.input.file-path",
-      "type": "java.lang.String",
-      "description": "Description for custom.project.input.file-path."
-    },
-    {
-      "name": "custom.project.output.file-path",
-      "type": "java.lang.String",
-      "description": "Description for custom.project.output.file-path."
-    },
-    {
       "name": "custom.project.excel-password",
       "type": "java.lang.String",
       "description": "Description for custom.project.excel-password."
     },
     {
-      "name": "custom.project.camel-route.excel-Files-Input-Path",
-      "type": "java.lang.String",
-      "description": "Description for custom.project.camel-route.excel-Files-Input-Path."
-    },
-    {
       "name": "custom.project.camel-route.excel-File-Reader-Route-Id",
       "type": "java.lang.String",
       "description": "Description for custom.project.camel-route.excel-File-Reader-Route-Id."
+    },
+    {
+      "name": "custom.project.credit-accounts",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.credit-accounts."
+    },
+    {
+      "name": "custom.project.excluded-accounts",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.excluded-accounts."
+    },
+    {
+      "name": "custom.project.json-Input-File-Path",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.json-Input-File-Path."
+    },
+    {
+      "name": "custom.project.excel-Input-File-Path",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.excel-Input-File-Path."
     }
   ]
 }
