@@ -1,11 +1,11 @@
 package finance.routes
 
-import finance.configs.RouteUriProperties
+import finance.configs.CamelProperties
 import spock.lang.PendingFeature
 import spock.lang.Specification
 
 class JsonFileWriterRouteSpec extends Specification {
-    def mockRouteUriProperties = Mock(RouteUriProperties)
+    def mockRouteUriProperties = Mock(CamelProperties)
     def route = new JsonFileWriterRoute(mockRouteUriProperties)
     //def MockEndpoint mockEndpoint;
 
