@@ -7,9 +7,7 @@ import finance.domain.Transaction
 import org.apache.poi.poifs.crypt.Decryptor
 import org.apache.poi.poifs.crypt.EncryptionInfo
 import org.apache.poi.poifs.filesystem.POIFSFileSystem
-import org.apache.poi.ss.usermodel.CellType
-import org.apache.poi.ss.usermodel.DateUtil
-import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.ss.usermodel.*
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -49,92 +47,115 @@ open class ExcelFileService @Autowired constructor(private val customProperties:
         var blank = false
         val transactionList: MutableList<Transaction> = ArrayList()
 
+        traverseEachWorksheet(datatypeSheet, workbook, sheetNumber, blank, transactionList)
+        return transactionList
+    }
+
+    private fun traverseEachWorksheet(datatypeSheet: Sheet, workbook: Workbook, sheetNumber: Int, blank: Boolean, transactionList: MutableList<Transaction>) {
+        var blank1 = blank
         for (currentRow in datatypeSheet) {
             val tz = TimeZone.getTimeZone(customProperties.timeZone)
             val transaction = Transaction()
             transaction.accountNameOwner = workbook.getSheetName(sheetNumber).trim { it <= ' ' }.replace(".", "-")
             transaction.accountType = getAccountType(customProperties.creditAccounts, workbook.getSheetName(sheetNumber).trim { it <= ' ' })
-            for (currentCell in currentRow) {
-                val col = currentCell.columnIndex
-                blank = false
-                if (col == COL_GUID && currentCell.stringCellValue.trim { it <= ' ' } == "") {
-                    blank = true
-                    break
-                }
-                if (currentCell.address.row != 0) {
-                    if (currentCell.cellType == CellType.STRING) {
-                        when (col) {
-                            COL_GUID -> {
-                                val `val` = currentCell.stringCellValue.trim { it <= ' ' }
-                                transaction.guid = `val`
-                            }
-                            COL_DESCRIPTION -> {
-                                val `val` = capitalizeWords(currentCell.stringCellValue.trim { it <= ' ' })
-                                transaction.description = `val`
-                            }
-                            COL_CATEGORY -> {
-                                val `val` = currentCell.stringCellValue.trim { it <= ' ' }
-                                transaction.category = `val`
-                            }
-                            COL_NOTES -> {
-                                val `val` = capitalizeWords(currentCell.stringCellValue.trim { it <= ' ' })
-                                transaction.notes = `val`
-                                transaction.reoccurring = `val`.startsWith("reoccur")
-                            }
-                            else -> {
-                                logger.warn("currentCell.getCellType()=" + currentCell.cellType)
-                                throw RuntimeException("currentCell.getCellType()=" + currentCell.cellType)
-                            }
-                        }
-                    } else if (currentCell.cellType == CellType.NUMERIC) {
-                        when (col) {
-                            COL_CLEARED -> {
-                                val `val` = currentCell.numericCellValue.toInt()
-                                transaction.cleared = `val`
-                            }
-                            COL_DATE_UPDATED -> {
-                                val date = DateUtil.getJavaDate(currentCell.numericCellValue, tz)
-                                transaction.dateUpdated = Timestamp(date.time)
-                            }
-                            COL_DATE_ADDED -> {
-                                val date = DateUtil.getJavaDate(currentCell.numericCellValue, tz)
-                                transaction.dateAdded = Timestamp(date.time)
-                            }
-                            COL_TRANSACTION_DATE -> {
-                                val date = DateUtil.getJavaDate(currentCell.numericCellValue, tz)
-                                transaction.transactionDate = Date(date.time)
-                            }
-                            COL_AMOUNT -> {
-                                val `val` = BigDecimal.valueOf(currentCell.numericCellValue)
-                                val displayVal = `val`.setScale(2, RoundingMode.HALF_EVEN)
-                                transaction.amount = displayVal
-                            }
-                            else -> {
-                                logger.warn("currentCell.getCellType()=" + currentCell.cellType)
-                                throw RuntimeException("currentCell.getCellType()=" + currentCell.cellType)
-                            }
-                        }
-                    } else if (currentCell.cellType == CellType.BLANK) {
-                        if (col != COL_TRANSACTION_ID) {
-                            logger.info("blank: $col")
-                        }
-                    } else if (currentCell.cellType == CellType.FORMULA) {
-                        logger.warn(transaction.guid)
-                        logger.info("formula needs to be changed to the actual value.")
-                        throw RuntimeException("formula needs to be changed to the actual value.")
-                    } else {
-                        logger.info("currentCell.getCellType()=" + currentCell.cellType)
-                        throw RuntimeException("currentCell.getCellType()=" + currentCell.cellType)
-                    }
-                }
-            }
-            if (!blank) {
-                if ( transaction.guid.isNotEmpty() ) {
+            blank1 = traverseEachRow(currentRow, blank1, transaction, tz)
+            if (!blank1) {
+                if (transaction.guid.isNotEmpty()) {
                     transactionList.add(transaction)
                 }
             }
         }
-        return transactionList
+    }
+
+    private fun traverseEachRow(currentRow: Row, blank: Boolean, transaction: Transaction, tz: TimeZone?): Boolean {
+        var blank1 = blank
+        for (currentCell in currentRow) {
+            val col = currentCell.columnIndex
+            blank1 = false
+            if (col == COL_GUID && currentCell.stringCellValue.trim { it <= ' ' } == "") {
+                blank1 = true
+                break
+            }
+            loadColumns(currentCell, col, transaction, tz)
+        }
+        return blank1
+    }
+
+    private fun loadColumns(currentCell: Cell, col: Int, transaction: Transaction, tz: TimeZone?) {
+        if (currentCell.address.row != 0) {
+            if (currentCell.cellType == CellType.STRING) {
+                loadStringValueColumns(col, currentCell, transaction)
+            } else if (currentCell.cellType == CellType.NUMERIC) {
+                loadNumericValueColumns(col, currentCell, transaction, tz)
+            } else if (currentCell.cellType == CellType.BLANK) {
+                if (col != COL_TRANSACTION_ID) {
+                    logger.info("blank: $col")
+                }
+            } else if (currentCell.cellType == CellType.FORMULA) {
+                logger.warn(transaction.guid)
+                logger.info("formula needs to be changed to the actual value.")
+                throw RuntimeException("formula needs to be changed to the actual value.")
+            } else {
+                logger.info("currentCell.getCellType()=" + currentCell.cellType)
+                throw RuntimeException("currentCell.getCellType()=" + currentCell.cellType)
+            }
+        }
+    }
+
+    private fun loadNumericValueColumns(col: Int, currentCell: Cell, transaction: Transaction, tz: TimeZone?) {
+        when (col) {
+            COL_CLEARED -> {
+                val `val` = currentCell.numericCellValue.toInt()
+                transaction.cleared = `val`
+            }
+            COL_DATE_UPDATED -> {
+                val date = DateUtil.getJavaDate(currentCell.numericCellValue, tz)
+                transaction.dateUpdated = Timestamp(date.time)
+            }
+            COL_DATE_ADDED -> {
+                val date = DateUtil.getJavaDate(currentCell.numericCellValue, tz)
+                transaction.dateAdded = Timestamp(date.time)
+            }
+            COL_TRANSACTION_DATE -> {
+                val date = DateUtil.getJavaDate(currentCell.numericCellValue, tz)
+                transaction.transactionDate = Date(date.time)
+            }
+            COL_AMOUNT -> {
+                val `val` = BigDecimal.valueOf(currentCell.numericCellValue)
+                val displayVal = `val`.setScale(2, RoundingMode.HALF_EVEN)
+                transaction.amount = displayVal
+            }
+            else -> {
+                logger.warn("currentCell.getCellType()=" + currentCell.cellType)
+                throw RuntimeException("currentCell.getCellType()=" + currentCell.cellType)
+            }
+        }
+    }
+
+    private fun loadStringValueColumns(col: Int, currentCell: Cell, transaction: Transaction) {
+        when (col) {
+            COL_GUID -> {
+                val `val` = currentCell.stringCellValue.trim { it <= ' ' }
+                transaction.guid = `val`
+            }
+            COL_DESCRIPTION -> {
+                val `val` = capitalizeWords(currentCell.stringCellValue.trim { it <= ' ' })
+                transaction.description = `val`
+            }
+            COL_CATEGORY -> {
+                val `val` = currentCell.stringCellValue.trim { it <= ' ' }
+                transaction.category = `val`
+            }
+            COL_NOTES -> {
+                val `val` = capitalizeWords(currentCell.stringCellValue.trim { it <= ' ' })
+                transaction.notes = `val`
+                transaction.reoccurring = `val`.startsWith("reoccur")
+            }
+            else -> {
+                logger.warn("currentCell.getCellType()=" + currentCell.cellType)
+                throw RuntimeException("currentCell.getCellType()=" + currentCell.cellType)
+            }
+        }
     }
 
     private fun capitalizeWords(str: String): String {
