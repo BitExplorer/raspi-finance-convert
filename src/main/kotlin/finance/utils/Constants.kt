@@ -17,4 +17,14 @@ object Constants {
     const val METRIC_INSERT_TRANSACTION_TIMER = "insert.transaction.timer"
     const val METRIC_DUPLICATE_ACCOUNT_INSERT_ATTEMPT_COUNTER = "duplicate.account.insert.attempt.counter"
     const val METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER = "duplicate.category.insert.attempt.counter"
+
+    const val TRANSACTION_UPDATE_CLEARED_COUNTER = "transaction.update.cleared.counter"
+    const val TRANSACTION_RECEIVED_EVENT_COUNTER = "transaction.received.event.counter"
+    const val TRANSACTION_ALREADY_EXISTS_COUNTER = "transaction.already.exists.counter"
+    const val TRANSACTION_SUCCESSFULLY_INSERTED_COUNTER = "transaction.successfully.inserted.counter"
+    const val ERROR_COUNTER = "error.counter"
+    const val ERROR_TYPE_TAG = "error.type"
+    const val ACCOUNT_NAME_TAG = "account.name"
+
+
 }

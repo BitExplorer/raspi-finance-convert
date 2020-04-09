@@ -62,6 +62,9 @@ logging:
 #none is build from schema.sql (no Java classes)
 #update only add new tables in the schema.sql (starting from Java classes)
 
+# ===============================
+# = Custom Configuration
+# ===============================
 custom:
   project:
     time-zone: ${TIMEZONE}
@@ -146,7 +149,20 @@ camel:
     name: RaspiFinance
   health.check.routes.enabled: false
 
+# ===============================
+# = Health and Metrics
+# ===============================
 management:
   endpoint:
     health:
       show-details: always
+  metrics:
+    export:
+      influx:
+        enabled: true
+        auto-create-db: true
+        db: metrics
+        compressed: false
+        uri: http://hornsup:8086
+        user-name: henninb
+        password: monday1

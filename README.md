@@ -57,3 +57,10 @@ implementation "com.fasterxml.jackson.module:jackson-module-afterburner:${jackso
 
 
 git config --global filter.updateSecretToken.clean 'sed "s/_PASSWORD=\".*\"/_PASSWORD=\"********\"/'
+
+influx
+curl https://s3.amazonaws.com/noaa.water-database/NOAA_data.txt -o NOAA_data.txt
+influx -import -path=NOAA_data.txt -precision=s -database=NOAA_water_database
+
+influx -username henninb -password password --host hornsup
+select sum(value) from transaction_received_event_counter;

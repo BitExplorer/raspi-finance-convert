@@ -17,8 +17,24 @@ services:
       - ./excel_in:/opt/raspi-finance-convert/excel_in
       - ./json_in:/opt/raspi-finance-convert/json_in
       - ./config:/opt/raspi-finance-convert/config
-    # env_file:
-    #   - env.prod
-    #   - env.secrets
     extra_hosts:
       - "hornsup:192.168.100.97"
+    depends_on:
+      - influxdb
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+      - "8090:8090"
+    expose:
+      - "8086"
+      - "8083"
+      - "8090"
+    environment:
+    - INFLUXDB_ADMIN_USER=henninb
+    - INFLUXDB_ADMIN_PASSWORD=monday1
+    - INFLUXDB_DB=metrics
+    - INFLUXDB_HTTP_ENABLED=true
+    - INFLUXDB_HTTP_AUTH_ENABLED=true

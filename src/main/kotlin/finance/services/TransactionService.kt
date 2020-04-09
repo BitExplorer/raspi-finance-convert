@@ -5,11 +5,9 @@ import finance.domain.Category
 import finance.domain.Transaction
 import finance.domain.AccountType
 import finance.repositories.TransactionRepository
-import io.micrometer.core.instrument.MeterRegistry
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.sql.Timestamp
 import java.util.Optional
@@ -17,19 +15,19 @@ import java.util.Optional.empty
 import javax.validation.ConstraintViolation
 import javax.validation.Validator
 
-@Profile("!mongo")
 @Service
 open class TransactionService @Autowired constructor(
         private val transactionRepository: TransactionRepository<Transaction>,
         private val accountService: AccountService,
         private val categoryService: CategoryService,
         private val validator: Validator,
-        private val meterRegistry: MeterRegistry
+        private val meterService: MeterService
 ) {
     //@Transactional
     //@Timed(value = "insert.transaction.timer")
     fun insertTransaction(transaction: Transaction): Boolean {
-        logger.debug("insertTransaction")
+        logger.info("*** insert transaction ***")
+        meterService.incrementTransactionReceivedCounter(transaction.accountNameOwner)
         val transactionOptional = findByGuid(transaction.guid)
 
         val constraintViolations: Set<ConstraintViolation<Transaction>> = validator.validate(transaction)
@@ -37,16 +35,25 @@ open class TransactionService @Autowired constructor(
             //TODO: handle the violation
 
             logger.info("validation issue for<${transaction}>")
-            //meterRegistry.counter(METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER).increment()
+            meterService.incrementErrorCounter(transaction.accountNameOwner, MeterService.ErrorType.VALIDATION_ERROR)
             logger.info("METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER")
         }
 
         if (transactionOptional.isPresent) {
             val transactionDb = transactionOptional.get()
-            
+            logger.info("*** update transaction ***")
             return updateTransaction(transactionDb, transaction)
         }
 
+        processAccount(transaction)
+        processCategory(transaction)
+        transactionRepository.saveAndFlush(transaction)
+        logger.info("*** inserted transaction ***")
+        meterService.incrementTransactionSuccessfullyInsertedCounter(transaction.accountNameOwner)
+        return true
+    }
+
+    private fun processAccount(transaction: Transaction) {
         var accountOptional = accountService.findByAccountNameOwner(transaction.accountNameOwner)
         if (accountOptional.isPresent) {
             logger.info("METRIC_ACCOUNT_ALREADY_EXISTS_COUNTER")
@@ -62,7 +69,9 @@ open class TransactionService @Autowired constructor(
             transaction.accountId = accountOptional.get().accountId
             //meterRegistry.counter(METRIC_ACCOUNT_NOT_FOUND_COUNTER).increment()
         }
+    }
 
+    private fun processCategory(transaction: Transaction) {
         when {
             transaction.category != "" -> {
                 val optionalCategory = categoryService.findByCategory(transaction.category)
@@ -75,12 +84,6 @@ open class TransactionService @Autowired constructor(
                 }
             }
         }
-        logger.debug("will insert transaction")
-        transactionRepository.saveAndFlush(transaction)
-        //transactionRepository.count()
-        logger.debug("inserted transaction")
-        //meterRegistry.counter(METRIC_TRANSACTION_DATABASE_INSERT_COUNTER).increment()
-        return true
     }
 
     //@Timed("find.by.guid.timer")
@@ -116,11 +119,13 @@ open class TransactionService @Autowired constructor(
 
             if( transactionDb.amount != transaction.amount ) {
                 logger.info("discrepancy in the amount for <${transactionDb.guid}>")
+                //TODO: metric for this
                 transactionRepository.setAmountByGuid(transaction.amount, transaction.guid)
                 return true
             }
 
             if( transactionDb.cleared != transaction.cleared ) {
+                meterService.incrementTransactionUpdateClearedCounter(transaction.accountNameOwner)
                 logger.info("discrepancy in the cleared value for <${transactionDb.guid}>")
                 transactionRepository.setClearedByGuid(transaction.cleared, transaction.guid)
                 return true
@@ -128,8 +133,7 @@ open class TransactionService @Autowired constructor(
         }
 
         logger.info("transaction already exists, no transaction data inserted.")
-        //meterRegistry.counter(METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER).increment()
-        logger.info("METRIC_TRANSACTION_ALREADY_EXISTS_COUNTER")
+        meterService.incrementTransactionAlreadyExistsCounter(transaction.accountNameOwner)
 
         return false
     }
