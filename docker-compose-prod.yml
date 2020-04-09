@@ -3,4 +3,3 @@ services:
   raspi-finance-convert:
     env_file:
       - env.prod
-      - env.secrets
