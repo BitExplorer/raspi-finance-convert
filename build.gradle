@@ -59,6 +59,7 @@ ext['randomBeanVersion'] = '3.7.0'
 ext['jacksonKotlinVersion'] = '2.9.7'
 ext['hibernateJpaVersion'] = '1.0.0.Final'
 ext['jacksonVersion'] = '2.10.2'
+ext['micrometerInfluxVersion'] = '1.4.1'
 
 ext['groovy.version'] = '${gradleVersion}'
 
@@ -128,7 +129,7 @@ dependencies {
     runtimeOnly("com.h2database:h2:${h2Version}")
 
     //influx
-    implementation(group: 'io.micrometer', name: 'micrometer-registry-influx', version: '1.4.1')
+    implementation("io.micrometer:micrometer-registry-influx:${micrometerInfluxVersion}")
 
     //json parser
     implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
