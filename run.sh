@@ -91,6 +91,14 @@ if ! ./gradlew clean build ; then
   exit 1
 fi
 
+INFLUX_CONTAINER=$(docker ps -a -f 'name=influxdb' --format "{{.ID}}") 2> /dev/null
+
+if [ ! -z "${INFLUX_CONTAINER}" ]; then
+  echo docker rm $INFLUX_CONTAINER
+  docker rm $INFLUX_CONTAINER  2> /dev/null
+fi
+
+
 echo docker run -it -h influxdb-server --net=raspi-bridge -p 8086:8086 --rm --name influxdb-server -d influxdb
 echo curl -i -XPOST http://localhost:8086/query -u "henninb:monday1" --data-urlencode "q=CREATE DATABASE metrics"
 

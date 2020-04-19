@@ -3,6 +3,7 @@ services:
   raspi-finance-convert:
     build:
       context: ./
+      dockerfile: Dockerfile
       args:
        - APP=raspi-finance-convert
        - TIMEZONE=America/Chicago
@@ -18,12 +19,15 @@ services:
       - ./json_in:/opt/raspi-finance-convert/json_in
     env_file:
       env.secrets
+    # environment:
+    #   - DOCKER_HOST_IP=${DOCKER_HOST_IP}
     extra_hosts:
       - "hornsup:192.168.100.97"
     depends_on:
       - influxdb
   influxdb:
     image: influxdb:latest
+    # restart: always
     container_name: influxdb
     ports:
       - "8086:8086"
@@ -32,3 +36,6 @@ services:
     env_file:
     - env.influx
     - env.secrets
+networks:
+  default:
+    name: convert-net
