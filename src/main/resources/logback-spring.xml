@@ -15,16 +15,14 @@
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
 
-        <!-- json logging -->
-        <!--  <encoder class="net.logstash.logback.encoder.LogstashEncoder"/> -->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
+        <!-- logstash logging -->
+         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <!-- <encoder> -->
+        <!--     <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern> -->
+        <!-- </encoder> -->
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- json logging -->
-        <!--  <encoder class="net.logstash.logback.encoder.LogstashEncoder"/> -->
         <encoder>
           <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss}){blue} %clr([%thread]){green} - %clr(%-5level){yellow} %clr(%-36.36logger{36}){cyan} - %clr(%msg){magenta}%n</pattern>
         </encoder>
