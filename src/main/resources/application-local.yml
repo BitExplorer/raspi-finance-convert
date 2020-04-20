@@ -179,3 +179,8 @@ management:
         uri: http://hornsup:8086
         user-name: henninb
         password: monday1
+#elasticsearch:
+#  clustername = finance-cluster
+#  host = hornsup
+#  port = 9300
+debug: false
