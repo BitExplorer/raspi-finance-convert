@@ -72,7 +72,6 @@ mkdir -p ssl
 mkdir -p json_in
 mkdir -p json_out
 mkdir -p excel_in
-mkdir -p config
 mkdir -p .idea/runConfigurations/
 cp -v "$HOME/finance_db_master.xlsm" excel_in/
 
@@ -81,8 +80,6 @@ cp -v TransactionServicePerf.xml .idea/runConfigurations/
 #git ls-files | ctags --language=java
 #find . -name "*.java" | xargs ctags --language=java
 
-touch config/account_credit_list.txt
-touch config/account_exclude_list.txt
 touch env.secrets
 touch env.console
 
