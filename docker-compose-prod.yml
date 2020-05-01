@@ -3,3 +3,7 @@ services:
   raspi-finance-convert:
     env_file:
       - env.prod
+    environment:
+      - EXAMPLE=example
+      # - SPRING_PROFILES_ACTIVE=prod
+      # - PROPERTIES_FILE=application.yml

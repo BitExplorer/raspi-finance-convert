@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <springProperty scope="context" name="APPNAME" source="spring.application.name"/>
 
@@ -84,4 +83,3 @@
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
-

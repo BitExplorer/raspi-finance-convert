@@ -131,8 +131,9 @@ dependencies {
     //influx
     implementation("io.micrometer:micrometer-registry-influx:${micrometerInfluxVersion}")
 
+     implementation("com.ibm.mq:com.ibm.mq.allclient:9.1.1.0")
     //logstash
-    runtimeOnly("net.logstash.logback:logstash-logback-encoder:5.2")
+    // runtimeOnly("net.logstash.logback:logstash-logback-encoder:5.2")
 
     //json parser
     implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
