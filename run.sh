@@ -1,28 +1,13 @@
 #!/usr/bin/env bash
 
-if [ "$OSTYPE" = "linux-gnu" ]; then
-  #export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
-  JAVA_HOME=$(dirname "$(dirname "$(readlink -f "$(readlink -f "$(command -v javac)")" || readlink -f "$(command -v javac)")")")
-else
-  # macos
-  JAVA_HOME=$(/usr/libexec/java_home)
-  #export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.0.2.jdk/Contents/Home
-fi
-
-export JAVA_HOME
-export PATH=${JAVA_HOME}/bin:${PATH}
-
 if [ $# -ne 1 ]; then
   echo "Usage: $0 <prod or local>"
   exit 1
 fi
+
 ENV=$1
 
 APP=raspi-finance-convert
-# TIMEZONE='America/Chicago'
-# USERNAME=henninb
-# HOST_BASEDIR=$(pwd)
-# GUEST_BASEDIR=/opt/${APP}
 
 if [ "$ENV" = "prod" ]; then
   echo prod
@@ -64,8 +49,8 @@ mkdir -p src/test/integration/groovy
 mkdir -p src/test/integration/java
 mkdir -p src/test/functional/groovy
 mkdir -p src/test/functional/java
-mkdir -p src/test/performance/groovy
-mkdir -p src/test/performance/java
+mkdir -p 'src/test/performance/groovy'
+mkdir -p 'src/test/performance/java'
 
 mkdir -p logs
 mkdir -p ssl
@@ -73,10 +58,11 @@ mkdir -p json_in
 mkdir -p json_out
 mkdir -p excel_in
 mkdir -p .idea/runConfigurations/
+
 cp -v "$HOME/finance_db_master.xlsm" excel_in/
 
-cp -v finance_Application.xml .idea/runConfigurations/
-cp -v TransactionServicePerf.xml .idea/runConfigurations/
+# cp -v finance_Application.xml .idea/runConfigurations/
+# cp -v TransactionServicePerf.xml .idea/runConfigurations/
 #git ls-files | ctags --language=java
 #find . -name "*.java" | xargs ctags --language=java
 
