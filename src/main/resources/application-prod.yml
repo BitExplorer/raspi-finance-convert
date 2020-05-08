@@ -47,6 +47,7 @@ spring:
           time_zone: UTC
 
 logging:
+  config: classpath:logback-spring.xml
   level:
     org:
       hibernate:
