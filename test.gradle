@@ -47,6 +47,7 @@ dependencies {
     //testImplementation("org.scalatest:scalatest_2.11:3.0.0")
     //testImplementation("com.github.javafaker:javafaker:${javaFakerVersion}") { exclude module: 'org.yaml' }
     //testImplementation("io.github.benas:${randomBeanVersion}")
+    testImplementation("org.apache.camel:camel-test:${apacheCamelVersion}")
     testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 

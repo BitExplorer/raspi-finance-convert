@@ -16,9 +16,16 @@ open class TransactionToDatabaseRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties
 ) : RouteBuilder() {
 
+
     @Throws(Exception::class)
     override fun configure() {
-        from(camelProperties.processEachTransaction)
+
+        onException(Exception::class.java)
+                .handled(true)
+                .log(LoggingLevel.INFO, "major failure in the TransactionToDatabaseRoute.")
+                .end()
+
+        from(camelProperties.transactionToDatabaseRoute)
                 .autoStartup(camelProperties.autoStartRoute)
                 .routeId(camelProperties.transactionToDatabaseRouteId)
                 .split(body())

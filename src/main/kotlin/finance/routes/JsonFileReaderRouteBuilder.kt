@@ -23,7 +23,7 @@ class JsonFileReaderRouteBuilder @Autowired constructor(
     override fun configure() {
 
         // first route
-        from("file:${customProperties.jsonInputFilePath}?delete=true&moveFailed=.failedWithErrors")
+        from(camelProperties.jsonFileReaderRoute)
                 .autoStartup(camelProperties.autoStartRoute)
                 .routeId(camelProperties.jsonFileReaderRouteId)
                 .log(camelProperties.jsonFileReaderRouteId)
@@ -31,7 +31,7 @@ class JsonFileReaderRouteBuilder @Autowired constructor(
                 .`when`(header("CamelFileName").endsWith(".json"))
                   .log(LoggingLevel.INFO, "\$simple{file:onlyname.noext}_\$simple{date:now:yyyy-MM-dd}.json")
                   .process(jsonTransactionProcessor)
-                  .to(camelProperties.processEachTransaction)
+                  .to(camelProperties.transactionToDatabaseRoute)
                   .log(LoggingLevel.INFO, "JSON file processed successfully.")
                 .otherwise()
                   .to("file:${customProperties.jsonInputFilePath}${File.separator}.notJsonAndNotProcessed")
@@ -40,14 +40,14 @@ class JsonFileReaderRouteBuilder @Autowired constructor(
                 .end()
 
         // first route
-        from("file:${customProperties.excelInputFilePath}?delete=true&moveFailed=.failedWithErrors")
+        from(camelProperties.excelFileReaderRoute)
                 .autoStartup(camelProperties.autoStartRoute)
                 .routeId(camelProperties.excelFileReaderRouteId)
                 .choice()
                 .`when`(header("CamelFileName").endsWith(".xlsm"))
                   .setBody(simple("\${file:absolute.path}"))
                   .process(excelFileProcessor)
-                  .to("file:${customProperties.excelInputFilePath}${File.separator}.processed")
+                  .to("file:${customProperties.excelInputFilePath}/.processed")
                   .log(LoggingLevel.INFO, "Excel file processed successfully.")
                 .otherwise()
                   .log(LoggingLevel.INFO, "Not an Excel file, NOT processed successfully.")
