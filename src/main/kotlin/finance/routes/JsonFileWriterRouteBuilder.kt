@@ -22,7 +22,7 @@ open class JsonFileWriterRouteBuilder @Autowired constructor(
         println(camelProperties.savedFileEndpoint)
 
         onException(Exception::class.java)
-                .log(LoggingLevel.INFO, "major failure in the FileWriterRoute.")
+                .log(LoggingLevel.INFO, "Exception trapped :: \${exception.message}")
                 .handled(true)
                 .end()
 
@@ -30,7 +30,7 @@ open class JsonFileWriterRouteBuilder @Autowired constructor(
                 .autoStartup(camelProperties.autoStartRoute)
                 .routeId(camelProperties.jsonFileWriterRouteId)
                 //TODO: bh fix this to address the unique file name
-                .setHeader(Exchange.FILE_NAME, constant("guid"))
+                .setHeader(Exchange.FILE_NAME, header("guid"))
                 //.setHeader(Exchange.FILE_NAME, "\${exchangeProperty.guid}")
                 .log(LoggingLevel.INFO, "wrote processed data to file.")
         //message.setHeader(Exchange.FILE_NAME, filename);

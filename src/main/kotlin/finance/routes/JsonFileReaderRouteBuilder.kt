@@ -9,13 +9,12 @@ import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.File
+import java.util.LinkedHashMap
 
 @Component
-class JsonFileReaderRouteBuilder @Autowired constructor(
-        private var jsonTransactionProcessor: JsonTransactionProcessor,
-        private var excelFileProcessor: ExcelFileProcessor,
-        private var camelProperties: CamelProperties
-        //, private var meterRegistry: MeterRegistry
+open class JsonFileReaderRouteBuilder @Autowired constructor(
+        private var camelProperties: CamelProperties,
+        private var jsonTransactionProcessor: JsonTransactionProcessor
 ) : RouteBuilder() {
 
     @Throws(Exception::class)
