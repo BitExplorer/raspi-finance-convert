@@ -5,14 +5,14 @@ import finance.processors.InsertTransactionProcessor
 import spock.lang.PendingFeature
 import spock.lang.Specification
 
-class TransactionToDatabaseRouteSpec extends Specification {
+class TransactionToDatabaseRouteBuilderSpec extends Specification {
     def mockRouteUriProperties = Mock(CamelProperties)
     def mockInsertTransactionProcessor = Mock(InsertTransactionProcessor)
     def mockStringTransactionProcessor = Mock(StringTransactionProcessor)
 
 
     def setup() {
-        def route = new TransactionToDatabaseRoute()
+        def route = new TransactionToDatabaseRouteBuilder()
         route.insertTransactionProcessor = mockInsertTransactionProcessor
         route.stringTransactionProcessor = mockStringTransactionProcessor
     }

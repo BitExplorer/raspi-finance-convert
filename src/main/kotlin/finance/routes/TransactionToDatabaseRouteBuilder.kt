@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-open class TransactionToDatabaseRoute @Autowired constructor(
+open class TransactionToDatabaseRouteBuilder @Autowired constructor(
         private var stringTransactionProcessor: StringTransactionProcessor,
         private var insertTransactionProcessor: InsertTransactionProcessor,
         private var camelProperties: CamelProperties

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-open class JsonFileWriterRoute @Autowired constructor(
+open class JsonFileWriterRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties,
         private var customProperties: CustomProperties
 ) : RouteBuilder() {

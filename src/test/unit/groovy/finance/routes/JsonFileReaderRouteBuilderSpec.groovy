@@ -4,11 +4,11 @@ import finance.processors.JsonTransactionProcessor
 import spock.lang.PendingFeature
 import spock.lang.Specification
 
-class JsonFileReaderRouteSpec extends Specification {
+class JsonFileReaderRouteBuilderSpec extends Specification {
     def mockJsonTransactionProcessor = Mock(JsonTransactionProcessor)
 
     def setup() {
-        def route = new JsonFileReaderRoute()
+        def route = new JsonFileReaderRouteBuilder()
         route.jsonTransactionProcessor = mockJsonTransactionProcessor
     }
 

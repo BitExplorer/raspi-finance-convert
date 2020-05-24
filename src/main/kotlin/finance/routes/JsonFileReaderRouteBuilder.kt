@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-class JsonFileReaderRoute @Autowired constructor(
+class JsonFileReaderRouteBuilder @Autowired constructor(
         private var jsonTransactionProcessor: JsonTransactionProcessor,
         private var excelFileProcessor: ExcelFileProcessor,
         private var camelProperties: CamelProperties,
