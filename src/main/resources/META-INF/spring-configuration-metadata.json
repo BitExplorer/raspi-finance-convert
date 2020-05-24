@@ -64,6 +64,38 @@
       "name": "custom.project.excel-Input-File-Path",
       "type": "java.lang.String",
       "description": "Description for custom.project.excel-Input-File-Path."
+    },
+    {
+      "name": "custom.project.camel-route.saved-file-Endpoint",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.saved-file-Endpoint."
+    },
+    {
+      "name": "custom.project.camel-route.transaction-To-Database-Route",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.transaction-To-Database-Route."
+    },
+    {
+      "name": "custom.project.camel-route.json-File-Reader-Route",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.json-File-Reader-Route."
+    },
+    {
+      "name": "custom.project.camel-route.excel-File-Reader-Route",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.excel-File-Reader-Route."
+    },
+    {
+      "name": "custom.project.camel-route.failed-Excel-File-Endpoint",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.failed-Excel-File-Endpoint."
+    },
+    {
+      "name": "custom.project.camel-route.failed-Json-File-Endpoint",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.failed-Json-File-Endpoint."
     }
+
+
   ]
 }

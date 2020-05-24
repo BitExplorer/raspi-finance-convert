@@ -11,29 +11,27 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-class JsonFileReaderRouteBuilder @Autowired constructor(
+class ExcelFileReaderRouteBuilder @Autowired constructor(
         private var jsonTransactionProcessor: JsonTransactionProcessor,
         private var excelFileProcessor: ExcelFileProcessor,
         private var camelProperties: CamelProperties
-        //, private var meterRegistry: MeterRegistry
 ) : RouteBuilder() {
 
     @Throws(Exception::class)
     override fun configure() {
 
-        from(camelProperties.jsonFileReaderRoute)
+        // first route
+        from(camelProperties.excelFileReaderRoute)
                 .autoStartup(camelProperties.autoStartRoute)
-                .routeId(camelProperties.jsonFileReaderRouteId)
-                .log(camelProperties.jsonFileReaderRouteId)
+                .routeId(camelProperties.excelFileReaderRouteId)
                 .choice()
-                .`when`(header("CamelFileName").endsWith(".json"))
-                  .log(LoggingLevel.INFO, "\$simple{file:onlyname.noext}_\$simple{date:now:yyyy-MM-dd}.json")
-                  .process(jsonTransactionProcessor)
-                  .to(camelProperties.transactionToDatabaseRoute)
-                  .log(LoggingLevel.INFO, "JSON file processed successfully.")
+                .`when`(header("CamelFileName").endsWith(".xlsm"))
+                  .setBody(simple("\${file:absolute.path}"))
+                  .process(excelFileProcessor)
+                  .log(LoggingLevel.INFO, "Excel file processed successfully.")
                 .otherwise()
-                  .to(camelProperties.failedJsonFileEndpoint)
-                  .log(LoggingLevel.WARN, "Not a JSON file, NOT processed successfully.")
+                  .log(LoggingLevel.WARN, "Not an Excel file, NOT processed successfully.")
+                  .to(camelProperties.failedExcelFileEndpoint)
                 .endChoice()
                 .end()
     }

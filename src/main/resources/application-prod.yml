@@ -81,8 +81,10 @@ custom:
       transaction-To-Database-Route-Id: transactionToDatabaseRoute
       transaction-To-Database-Route: direct:transactionToDatabaseRoute
       json-File-Writer-Route-Id: jsonFileWriterRoute
-      json-file-writer-route: direct:jsonFileWriterRoute
-      saved-file-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.processed"
+      json-File-writer-route: direct:jsonFileWriterRoute
+      saved-File-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.processed"
+      failed-Excel-File-Endpoint: "file:${EXCEL_FILES_INPUT_PATH}/.notExcelAndNotProcessed"
+      failed-Json-File-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.notExcelAndNotProcessed"
     credit-accounts:
       - amazon_brian
       - amazon.store_brian

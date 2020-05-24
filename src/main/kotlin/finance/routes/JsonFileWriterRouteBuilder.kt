@@ -5,14 +5,14 @@ import finance.configs.CamelProperties
 import org.apache.camel.Exchange
 import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
+import org.apache.camel.support.component.PropertyConfigurerSupport.property
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
 open class JsonFileWriterRouteBuilder @Autowired constructor(
-        private var camelProperties: CamelProperties,
-        private var customProperties: CustomProperties
+        private var camelProperties: CamelProperties
 ) : RouteBuilder() {
 
     //val x = UUID.randomUUID()
@@ -29,6 +29,8 @@ open class JsonFileWriterRouteBuilder @Autowired constructor(
         from(camelProperties.jsonFileWriterRoute)
                 .autoStartup(camelProperties.autoStartRoute)
                 .routeId(camelProperties.jsonFileWriterRouteId)
+                //TODO: bh fix this to address the unique file name
+                .setHeader(Exchange.FILE_NAME, constant("guid"))
                 //.setHeader(Exchange.FILE_NAME, "\${exchangeProperty.guid}")
                 .log(LoggingLevel.INFO, "wrote processed data to file.")
         //message.setHeader(Exchange.FILE_NAME, filename);
