@@ -18,4 +18,6 @@ open class CamelProperties(
         var savedFileEndpoint: String = "",
         var failedExcelFileEndpoint: String = "",
         var failedJsonFileEndpoint: String = ""
-)
+) {
+    constructor() : this(savedFileEndpoint = "")
+}
