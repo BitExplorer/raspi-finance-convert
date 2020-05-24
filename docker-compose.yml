@@ -11,7 +11,7 @@ services:
       dockerfile: Dockerfile
     container_name: raspi-finance-convert
     ports:
-      - "8080:8080"
+      - "8099:8080"
     volumes:
       - ./logs:/opt/raspi-finance-convert/logs
       - ./ssl:/opt/raspi-finance-convert/ssl

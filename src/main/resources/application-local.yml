@@ -90,6 +90,7 @@ custom:
       json-File-Writer-Route-Id: jsonFileWriterRoute
       process-each-transaction: direct:processEachTransaction
       json-file-writer-route: direct:jsonFileWriterRoute
+#      saved-file-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.processed?fileName=\${exchangeProperty.guid}.json&autoCreate=true"
     credit-accounts:
       - amazon_brian
       - amazon.store_brian
@@ -172,7 +173,7 @@ management:
   metrics:
     export:
       influx:
-        enabled: true
+        enabled: false
         auto-create-db: true
         db: metrics
         compressed: false

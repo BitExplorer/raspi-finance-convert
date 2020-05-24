@@ -18,11 +18,13 @@ open class JsonFileWriterRoute @Autowired constructor(
 
     @Throws(Exception::class)
     override fun configure() {
+        println(camelProperties.savedFileEndpoint)
         from(camelProperties.jsonFileWriterRoute)
                 .autoStartup(camelProperties.autoStartRoute)
                 .routeId(camelProperties.jsonFileWriterRouteId)
                 .log(LoggingLevel.INFO, "wrote json file based on guid. \${exchangeProperty.guid}")
-                .to("file:${customProperties.jsonInputFilePath}${File.separator}.processed?fileName=\${exchangeProperty.guid}.json&autoCreate=true")
+                //.to("file:${customProperties.jsonInputFilePath}${File.separator}.processed?fileName=\${exchangeProperty.guid}.json&autoCreate=true")
+                .to(camelProperties.savedFileEndpoint)
                 .end()
     }
 }

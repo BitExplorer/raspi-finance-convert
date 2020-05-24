@@ -12,5 +12,6 @@ open class CamelProperties(
     var jsonFileWriterRouteId: String = "",
     var transactionToDatabaseRouteId: String = "",
     var processEachTransaction: String = "",
-    var jsonFileWriterRoute: String = ""
+    var jsonFileWriterRoute: String = "",
+    var savedFileEndpoint: String = ""
 )
