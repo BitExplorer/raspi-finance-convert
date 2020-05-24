@@ -8,24 +8,20 @@ import finance.repositories.CategoryRepository
 import finance.repositories.TransactionRepository
 import finance.helpers.AccountBuilder
 import finance.helpers.TransactionBuilder
-import io.micrometer.core.instrument.MeterRegistry
 import spock.lang.Specification
 
 import javax.validation.Validator
 
 class TransactionServiceSpec extends Specification {
     TransactionRepository transactionRepository = Mock(TransactionRepository)
-    MeterRegistry meterRegistry = Mock(MeterRegistry)
+    MeterService meterService = Mock(MeterService)
     AccountRepository accountRepository = Mock(AccountRepository)
-    AccountService accountService = new AccountService(accountRepository,meterRegistry)
+    AccountService accountService = new AccountService(accountRepository, meterService)
     CategoryRepository categoryRepository = Mock(CategoryRepository)
-    CategoryService categoryService = new CategoryService(categoryRepository, meterRegistry)
+    CategoryService categoryService = new CategoryService(categoryRepository, meterService)
     Validator validator = Mock(Validator)
 
-    TransactionService service = new TransactionService(transactionRepository, accountService, categoryService, validator, meterRegistry)
-
-    void setup() {
-    }
+    TransactionService service = new TransactionService(transactionRepository, accountService, categoryService, validator, meterService)
 
     def "test findByGuid returns a transaction"() {
 
@@ -76,7 +72,8 @@ class TransactionServiceSpec extends Specification {
         1 * accountRepository.findByAccountNameOwner(transaction.accountNameOwner) >> Optional.of(account)
         1 * categoryRepository.findByCategory(transaction.category) >> Optional.of(category)
         1 * transactionRepository.saveAndFlush(transaction) >> true
-        //1 * meterRegistry.counter('transaction.record.inserted.count', [])
+        1 * meterService.incrementTransactionReceivedCounter(transaction.accountNameOwner)
+        1 * meterService.incrementTransactionSuccessfullyInsertedCounter(transaction.accountNameOwner)
         0 * _
     }
 }

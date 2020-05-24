@@ -16,9 +16,7 @@ import org.springframework.stereotype.Component
 
 @Component
 open class InsertTransactionProcessor  @Autowired constructor(
-        private var transactionService: TransactionService,
-        private var meterRegistry: MeterRegistry
-
+        private var transactionService: TransactionService
 ) :Processor {
     //private val logger = LoggerFactory.getLogger(this.javaClass)
     //private val logger = LoggerFactory.getLogger(javaClass)

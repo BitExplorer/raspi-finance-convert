@@ -12,15 +12,13 @@ import java.io.File
 
 @Component
 class ExcelFileReaderRouteBuilder @Autowired constructor(
-        private var jsonTransactionProcessor: JsonTransactionProcessor,
-        private var excelFileProcessor: ExcelFileProcessor,
-        private var camelProperties: CamelProperties
+        private var camelProperties: CamelProperties,
+        private var excelFileProcessor: ExcelFileProcessor
 ) : RouteBuilder() {
 
     @Throws(Exception::class)
     override fun configure() {
 
-        // first route
         from(camelProperties.excelFileReaderRoute)
                 .autoStartup(camelProperties.autoStartRoute)
                 .routeId(camelProperties.excelFileReaderRouteId)

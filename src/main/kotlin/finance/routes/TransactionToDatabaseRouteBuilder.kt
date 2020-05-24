@@ -2,6 +2,7 @@ package finance.routes
 
 import finance.configs.CamelProperties
 import finance.domain.Transaction
+import finance.processors.ExceptionProcessor
 import finance.processors.InsertTransactionProcessor
 import finance.processors.StringTransactionProcessor
 import org.apache.camel.LoggingLevel
@@ -11,9 +12,10 @@ import org.springframework.stereotype.Component
 
 @Component
 open class TransactionToDatabaseRouteBuilder @Autowired constructor(
+        private var camelProperties: CamelProperties,
         private var stringTransactionProcessor: StringTransactionProcessor,
         private var insertTransactionProcessor: InsertTransactionProcessor,
-        private var camelProperties: CamelProperties
+        private var exceptionProcessor: ExceptionProcessor
 ) : RouteBuilder() {
 
 
@@ -21,8 +23,9 @@ open class TransactionToDatabaseRouteBuilder @Autowired constructor(
     override fun configure() {
 
         onException(Exception::class.java)
+                .log(LoggingLevel.INFO, "Exception trapped :: \${exception.message}")
+                .process(exceptionProcessor)
                 .handled(true)
-                .log(LoggingLevel.INFO, "major failure in the TransactionToDatabaseRoute.")
                 .end()
 
         from(camelProperties.transactionToDatabaseRoute)

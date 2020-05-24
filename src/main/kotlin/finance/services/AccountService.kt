@@ -14,7 +14,7 @@ import java.util.Optional.empty
 @Service
 open class AccountService @Autowired constructor(
         private var accountRepository: AccountRepository<Account>,
-        private var meterRegistry: MeterRegistry
+        private val meterService: MeterService
 ) {
     fun findByAccountNameOwner( accountNameOwner: String ): Optional<Account> {
         logger.info(accountNameOwner)

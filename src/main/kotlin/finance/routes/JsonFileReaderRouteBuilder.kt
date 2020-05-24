@@ -1,8 +1,11 @@
 package finance.routes
 
+import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import finance.configs.CustomProperties
 import finance.configs.CamelProperties
 import finance.processors.ExcelFileProcessor
+import finance.processors.ExceptionProcessor
 import finance.processors.JsonTransactionProcessor
 import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
@@ -14,11 +17,31 @@ import java.util.LinkedHashMap
 @Component
 open class JsonFileReaderRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties,
-        private var jsonTransactionProcessor: JsonTransactionProcessor
+        private var jsonTransactionProcessor: JsonTransactionProcessor,
+        private var exceptionProcessor: ExceptionProcessor
 ) : RouteBuilder() {
 
     @Throws(Exception::class)
     override fun configure() {
+
+        onException(JsonParseException::class.java)
+                .log(LoggingLevel.INFO, "Exception trapped :: \${exception.message}")
+                .process(exceptionProcessor)
+                .handled(true)
+                .end()
+
+        onException(UnrecognizedPropertyException::class.java)
+                .log(LoggingLevel.INFO, "Exception trapped :: \${exception.message}")
+                .process(exceptionProcessor)
+                .handled(true)
+                .end()
+
+        onException(Exception::class.java)
+                .log(LoggingLevel.INFO, "Exception trapped :: \${exception.message}")
+                .process(exceptionProcessor)
+                .handled(true)
+                .end()
+
 
         from(camelProperties.jsonFileReaderRoute)
                 .autoStartup(camelProperties.autoStartRoute)
@@ -26,13 +49,13 @@ open class JsonFileReaderRouteBuilder @Autowired constructor(
                 .log(camelProperties.jsonFileReaderRouteId)
                 .choice()
                 .`when`(header("CamelFileName").endsWith(".json"))
-                  .log(LoggingLevel.INFO, "\$simple{file:onlyname.noext}_\$simple{date:now:yyyy-MM-dd}.json")
+                  .log(LoggingLevel.INFO, "new file name: \$simple{file:onlyname.noext}_\$simple{date:now:yyyy-MM-dd}.json")
                   .process(jsonTransactionProcessor)
                   .to(camelProperties.transactionToDatabaseRoute)
                   .log(LoggingLevel.INFO, "JSON file processed successfully.")
                 .otherwise()
                   .to(camelProperties.failedJsonFileEndpoint)
-                  .log(LoggingLevel.WARN, "Not a JSON file, NOT processed successfully.")
+                  .log(LoggingLevel.INFO, "Not a JSON file, NOT processed successfully.")
                 .endChoice()
                 .end()
     }

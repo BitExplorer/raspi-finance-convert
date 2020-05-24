@@ -8,11 +8,10 @@ import spock.lang.Specification
 
 class AccountServiceSpec extends Specification {
     AccountRepository accountRepository = Mock(AccountRepository)
-    MeterRegistry meterRegistry = Mock(MeterRegistry)
-    AccountService accountService = new AccountService(accountRepository, meterRegistry)
+    MeterService meterService = Mock(MeterService)
+    AccountService accountService = new AccountService(accountRepository, meterService)
 
     def "test findByAccountNameOwner"() {
-
         given:
         Account account = AccountBuilder.builder().build()
 

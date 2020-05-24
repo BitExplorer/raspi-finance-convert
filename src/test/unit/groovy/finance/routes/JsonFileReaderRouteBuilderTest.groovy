@@ -1,16 +1,15 @@
 package finance.routes
 
 import finance.configs.CamelProperties
+import finance.processors.ExceptionProcessor
 import finance.processors.JsonTransactionProcessor
 import org.apache.camel.EndpointInject
 import org.apache.camel.Exchange
-import org.apache.camel.Header
 import org.apache.camel.Produce
 import org.apache.camel.ProducerTemplate
 import org.apache.camel.builder.RouteBuilder
 import org.apache.camel.component.mock.MockEndpoint
 import org.apache.camel.test.junit4.CamelTestSupport
-import org.junit.Ignore
 import org.junit.Test
 
 class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
@@ -21,37 +20,128 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
     @EndpointInject(value = 'mock:toSavedFileEndpoint')
     MockEndpoint toSavedFileEndpoint
 
-    CamelProperties camelProperties = new CamelProperties("true", "jsonFileReaderRoute",
+    @EndpointInject(value = 'mock:toFailedJsonFileEndpoint')
+    MockEndpoint toFailedJsonFileEndpoint
+
+    @EndpointInject(value = 'mock:toTransactionToDatabaseRoute')
+    MockEndpoint toTransactionToDatabaseRoute
+
+
+    String json = '''
+    [
+    {"guid":"aa08f2bb-29a6-4f71-b866-ff8f625e1b04","accountNameOwner":"foo_brian",
+    "description":"Bullseye cafe","category":"restaurant","amount":4.42,"cleared":1,
+    "reoccurring":false,"notes":"","sha256":"","transactionId":0,"accountId":0,
+    "accountType":"credit",
+    "transactionDate":1337058000000,"dateUpdated":1487301459000,"dateAdded":1487301459000},
+    {"guid":"bb08f2bb-29a6-4f71-b866-ff8f625e1b04","accountNameOwner":"foo_brian",
+    "description":"Bullseye cafe","category":"restaurant","amount":4.42,"cleared":1,
+    "reoccurring":false,"notes":"","sha256":"","transactionId":0,"accountId":0,
+    "accountType":"credit",
+    "transactionDate":1337058000000,"dateUpdated":1487301459000,"dateAdded":1487301459000}
+    ]
+    '''
+
+    String jsonBad = '''
+    [
+    {"guid":"aa08f2bb-29a6-4f71-b866-ff8f625e1b04","accountNameOwner":"foo_brian",
+    "description":"Bullseye cafe","category":"restaurant","amount":4.42,"cleared":1,
+    "reoccurring":false,"notes":"","sha256":"","transactionId":0,"accountId":0,
+    "accountType":"credit",
+    "transactionDate":1337058000000,"dateUpdated":1487301459000,"dateAdded":1487301459000},
+    {"guid":"bb08f2bb-29a6-4f71-b866-ff8f625e1b04","accountNameOwner_bad":"foo_brian",
+    "description":"Bullseye cafe","category":"restaurant","amount":4.42,"cleared":1,
+    "reoccurring":false,"notes":"","sha256":"","transactionId":0,"accountId":0,
+    "accountType":"credit",
+    "transactionDate":1337058000000,"dateUpdated":1487301459000,"dateAdded":1487301459000},
+    {"guid":"cc08f2bb-29a6-4f71-b866-ff8f625e1b04","accountNameOwner":"foo_brian",
+    "description":"Bullseye cafe","category":"restaurant","amount":4.42,"cleared":1,
+    "reoccurring":false,"notes":"","sha256":"","transactionId":0,"accountId":0,
+    "accountType":"credit",
+    "transactionDate":1337058000000,"dateUpdated":1487301459000,"dateAdded":1487301459000}
+    ]
+    '''
+
+    CamelProperties camelProperties = new CamelProperties("true",
+            "jsonFileReaderRoute",
             "direct:routeFromLocal",
-            "excelFileReaderRoute", "direct:routeFromLocal", "fileWriterRoute",
+            "excelFileReaderRoute",
+            "direct:routeFromLocal",
+            "fileWriterRoute",
             "transactionToDatabaseRoute",
-            "", "direct:routeFromLocal", "mock:toSavedFileEndpoint", "",
-            "")
+            "mock:toTransactionToDatabaseRoute",
+            "direct:routeFromLocal",
+            "mock:toSavedFileEndpoint",
+            "mock:toFailedExcelFileEndpoint",
+            "mock:toFailedJsonFileEndpoint")
 
     JsonTransactionProcessor jsonTransactionProcessor = new JsonTransactionProcessor()
+    ExceptionProcessor exceptionProcessor = new ExceptionProcessor()
 
     @Override
     RouteBuilder createRouteBuilder() {
         new JsonFileReaderRouteBuilder (
                 camelProperties,
-                jsonTransactionProcessor
+                jsonTransactionProcessor,
+                exceptionProcessor
         )
     }
 
-    @Ignore
+
     @Test
     void testJsonFileReaderRouteBuilder() {
-        String payload = "payload"
-        Header header = {
-            getProperty() {
-                return ""
-            }
-        } as Header
+        String payload = json
 
-        routeFromLocal.sendBody(payload)
-        int exchangeCount = toSavedFileEndpoint.receivedExchanges.size()
+        println "payload = $payload"
+        Map<String, Object> headers = new HashMap<>()
+        headers.put(Exchange.FILE_NAME, "file_brian.json")
+        routeFromLocal.sendBodyAndHeaders(payload, headers)
+        int exchangeCount = toTransactionToDatabaseRoute.receivedExchanges.size()
         println "exchangeCount = $exchangeCount"
         assertEquals(exchangeCount, 1)
+    }
+
+
+    @Test
+    void testJsonFileReaderRouteBuilderNotJson() {
+        String payload = json
+
+        println "payload = $payload"
+        Map<String, Object> headers = new HashMap<>()
+        headers.put(Exchange.FILE_NAME, "foo_brian.notjsonfile")
+        routeFromLocal.sendBodyAndHeaders(payload, headers)
+        int exchangeCount = toFailedJsonFileEndpoint.receivedExchanges.size()
+        println "exchangeCount = $exchangeCount"
+        assertEquals(1, exchangeCount)
+    }
+
+    @Test
+    void testJsonFileReaderRouteBuilderBadJsonField() {
+        String payload = jsonBad
+
+        println "payload = $payload"
+        Map<String, Object> headers = new HashMap<>()
+        headers.put(Exchange.FILE_NAME, "foo_brian.json")
+
+        routeFromLocal.sendBodyAndHeaders(payload, headers)
+        int exchangeCount = toTransactionToDatabaseRoute.receivedExchanges.size()
+        println "exchangeCount = $exchangeCount"
+        assertEquals(0, exchangeCount)
+    }
+
+
+    @Test
+    void testJsonFileReaderRouteBuilderBadJson() {
+        String payload = "foo"
+
+        println "payload = $payload"
+        Map<String, Object> headers = new HashMap<>()
+        headers.put(Exchange.FILE_NAME, "foo_brian.json")
+
+        routeFromLocal.sendBodyAndHeaders(payload, headers)
+        int exchangeCount = toTransactionToDatabaseRoute.receivedExchanges.size()
+        println "exchangeCount = $exchangeCount"
+        assertEquals(0, exchangeCount)
     }
 
 }

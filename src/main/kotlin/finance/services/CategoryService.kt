@@ -2,8 +2,6 @@ package finance.services
 
 import finance.domain.Category
 import finance.repositories.CategoryRepository
-import finance.utils.Constants.METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER
-import io.micrometer.core.instrument.MeterRegistry
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +12,7 @@ import java.util.Optional.empty
 @Service
 open class CategoryService @Autowired constructor(
         private var categoryRepository: CategoryRepository<Category>,
-        private var meterRegistry: MeterRegistry
+        private val meterService: MeterService
 ) {
     //@Timed("find.by.category.timer")
     fun findByCategory( category: String ): Optional<Category> {
@@ -34,7 +32,7 @@ open class CategoryService @Autowired constructor(
         try {
             categoryRepository.saveAndFlush(category)
         } catch ( e: Exception) {
-            meterRegistry.counter(METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER).increment()
+            //meterRegistry.counter(METRIC_DUPLICATE_CATEGORY_INSERT_ATTEMPT_COUNTER).increment()
             logger.info("categoryRepository.saveAndFlush(category) - JdbcSQLIntegrityConstraintViolationException")
             return false
         }
