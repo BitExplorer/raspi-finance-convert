@@ -44,3 +44,4 @@ tags
 finance_db_master.xlsm
 additional-spring-configuration-metadata.json
 env.secrets
+docker-compose-run.yml

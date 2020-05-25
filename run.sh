@@ -22,7 +22,7 @@ fi
 if [ "$OS" = "Linux Mint" ] || [ "$OS" = "Ubuntu" ] || [ "$OS" = "Raspbian GNU/Linux" ]; then
   HOST_IP=$(hostname -I | awk '{print $1}')
 elif [ "$OS" = "Arch Linux" ]; then
-  HOST_IP=$(hostname -i | awk '{print $1}')
+  HOST_IP=192.168.100.207
 elif [ "$OS" = "openSUSE Tumbleweed" ]; then
   HOST_IP=192.168.100.193
 elif [ "$OS" = "Solus" ]; then
@@ -93,14 +93,22 @@ echo curl -G 'http://localhost:8086/query?pretty=true' --data-urlencode "db=metr
 echo curl -G 'http://localhost:8086/query?pretty=true' --data-urlencode "db=metrics" -u "henninb:monday1" --data-urlencode "q=SHOW measurements on metrics"
 
 if [ -x "$(command -v docker-compose)" ]; then
-  if ! docker-compose -f docker-compose.yml -f "docker-compose-${ENV}.yml" build; then
+
+  if ! docker-compose -f docker-compose.yml -f "docker-compose-${ENV}.yml" config > docker-compose-run.yml; then
+    echo "docker-compose config failed."
+    exit 1
+  fi
+
+  if ! docker-compose -f docker-compose-run.yml build; then
     echo "docker-compose build failed."
     exit 1
   fi
-  if ! docker-compose -f docker-compose.yml -f "docker-compose-${ENV}.yml" up; then
+
+  if ! docker-compose -f docker-compose-run.yml up; then
     echo "docker-compose up failed."
     exit 1
   fi
+  rm docker-compose-run.yml
 else
   set -a
   # shellcheck disable=SC1091
