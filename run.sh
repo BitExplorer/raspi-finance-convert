@@ -110,7 +110,7 @@ if [ -x "$(command -v docker-compose)" ]; then
     echo "docker-compose up failed."
     exit 1
   fi
-#  rm docker-compose-run.yml
+  rm docker-compose-run.yml
 else
   set -a
   # shellcheck disable=SC1091

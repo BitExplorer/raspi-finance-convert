@@ -60,6 +60,7 @@ ext['jacksonKotlinVersion'] = '2.9.7'
 ext['hibernateJpaVersion'] = '1.0.0.Final'
 ext['jacksonVersion'] = '2.10.2'
 ext['micrometerInfluxVersion'] = '1.4.1'
+ext['validationVersion'] = '2.0.1.Final'
 
 ext['groovy.version'] = '${gradleVersion}'
 
@@ -134,6 +135,8 @@ dependencies {
      //Messaging
      // implementation("com.ibm.mq:com.ibm.mq.allclient:9.1.1.0")
      // implementation("org.springframework:spring-jms:5.2.6.RELEASE")
+
+     implementation("javax.validation:validation-api:${validationVersion}")
 
     //logstash
     runtimeOnly("net.logstash.logback:logstash-logback-encoder:5.2")
