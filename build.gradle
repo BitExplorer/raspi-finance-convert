@@ -140,9 +140,6 @@ dependencies {
      //Validation
      implementation("javax.validation:validation-api:${validationVersion}")
 
-    //Logs
-    runtimeOnly("net.logstash.logback:logstash-logback-encoder:5.2")
-
     //json parser
     implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
 
@@ -152,6 +149,7 @@ dependencies {
 
     //Logging
     implementation("ch.qos.logback:logback-classic:${logbackVersion}")
+    runtimeOnly("net.logstash.logback:logstash-logback-encoder:5.2")
 }
 
 
