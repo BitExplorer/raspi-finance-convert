@@ -45,7 +45,10 @@ spring:
       hibernate:
         jdbc:
           time_zone: UTC
-
+#      javax:
+#        persistence:
+#          validation:
+#            mode: none
 logging:
   config: classpath:logback-spring.xml
   level:
@@ -177,3 +180,6 @@ management:
 #  host = hornsup
 #  port = 9300
 debug: false
+
+
+
