@@ -40,15 +40,17 @@ else
   exit 1
 fi
 
-mkdir -p src/main/scala
-mkdir -p src/main/java
-mkdir -p src/main/kotlin
-mkdir -p src/test/unit/groovy
-mkdir -p src/test/unit/java
-mkdir -p src/test/integration/groovy
-mkdir -p src/test/integration/java
-mkdir -p src/test/functional/groovy
-mkdir -p src/test/functional/java
+export HOST_IP
+
+mkdir -p 'src/main/scala'
+mkdir -p 'src/main/java'
+mkdir -p 'src/main/kotlin'
+mkdir -p 'src/test/unit/groovy'
+mkdir -p 'src/test/unit/java'
+mkdir -p 'src/test/integration/groovy'
+mkdir -p 'src/test/integration/java'
+mkdir -p 'src/test/functional/groovy'
+mkdir -p 'src/test/functional/java'
 mkdir -p 'src/test/performance/groovy'
 mkdir -p 'src/test/performance/java'
 
@@ -79,8 +81,8 @@ fi
 INFLUX_CONTAINER=$(docker ps -a -f 'name=influxdb' --format "{{.ID}}") 2> /dev/null
 
 if [ ! -z "${INFLUX_CONTAINER}" ]; then
-  echo docker rm -f $INFLUX_CONTAINER
-  docker rm -f $INFLUX_CONTAINER  2> /dev/null
+  echo docker rm -f "${INFLUX_CONTAINER}"
+  docker rm -f "${INFLUX_CONTAINER}"  2> /dev/null
 fi
 
 echo docker run -it -h influxdb-server --net=raspi-bridge -p 8086:8086 --rm --name influxdb-server -d influxdb
@@ -108,7 +110,7 @@ if [ -x "$(command -v docker-compose)" ]; then
     echo "docker-compose up failed."
     exit 1
   fi
-  rm docker-compose-run.yml
+#  rm docker-compose-run.yml
 else
   set -a
   # shellcheck disable=SC1091

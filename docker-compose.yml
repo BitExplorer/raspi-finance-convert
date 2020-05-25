@@ -23,6 +23,7 @@ services:
     #   - DOCKER_HOST_IP=${DOCKER_HOST_IP}
     environment:
       - EXAMPLE=example
+      - FOO=${FOO}
       # - SPRING_PROFILES_ACTIVE=prod
       # - PROPERTIES_FILE=application.yml
     extra_hosts:

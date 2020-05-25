@@ -85,12 +85,16 @@ custom:
     camel-route:
       auto-Start-Route: ${CAMEL_ROUTE_ENABLED}
       json-File-Reader-Route-Id: jsonFileReaderRoute
+      json-File-Reader-Route: "file:${JSON_FILES_INPUT_PATH}?delete=true&moveFailed=.failedWithErrors"
       excel-File-Reader-Route-Id: excelFileReaderRoute
+      excel-File-Reader-Route: "file:${EXCEL_FILES_INPUT_PATH}?delete=true&moveFailed=.failedWithErrors"
       transaction-To-Database-Route-Id: transactionToDatabaseRoute
+      transaction-To-Database-Route: direct:transactionToDatabaseRoute
       json-File-Writer-Route-Id: jsonFileWriterRoute
-      process-each-transaction: direct:processEachTransaction
-      json-file-writer-route: direct:jsonFileWriterRoute
-#      saved-file-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.processed?fileName=\${exchangeProperty.guid}.json&autoCreate=true"
+      json-File-writer-route: direct:jsonFileWriterRoute
+      saved-File-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.processed"
+      failed-Excel-File-Endpoint: "file:${EXCEL_FILES_INPUT_PATH}/.notExcelAndNotProcessed"
+      failed-Json-File-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.notExcelAndNotProcessed"
     credit-accounts:
       - amazon_brian
       - amazon.store_brian
