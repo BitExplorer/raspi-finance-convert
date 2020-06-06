@@ -64,3 +64,7 @@ influx -import -path=NOAA_data.txt -precision=s -database=NOAA_water_database
 
 influx -username henninb -password password --host hornsup
 select sum(value) from transaction_received_event_counter;
+
+## testing examples
+./gradlew test --tests "finance.routes.JsonFileReaderRouteBuilderSpec.testExample"
+./gradlew test --tests "finance.processors.InsertTransactionProcessorSpec.test InsertTransactionProcessor"

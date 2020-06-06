@@ -11,6 +11,7 @@ import org.apache.camel.builder.RouteBuilder
 import org.apache.camel.component.mock.MockEndpoint
 import org.apache.camel.test.junit4.CamelTestSupport
 import org.junit.Test
+//import org.junit.jupiter.api.Test
 
 class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
 
@@ -76,6 +77,11 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
             "mock:toFailedJsonFileEndpoint")
 
     JsonTransactionProcessor jsonTransactionProcessor = new JsonTransactionProcessor()
+
+//    jsonTransactionProcessor = new JsonTransactionProcessor() {
+//        @Override void process(Exchange exchange) {  }
+//    };
+
     ExceptionProcessor exceptionProcessor = new ExceptionProcessor()
 
     @Override
@@ -86,7 +92,6 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
                 exceptionProcessor
         )
     }
-
 
     @Test
     void testJsonFileReaderRouteBuilder() {
@@ -100,7 +105,6 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
         println "exchangeCount = $exchangeCount"
         assertEquals(exchangeCount, 1)
     }
-
 
     @Test
     void testJsonFileReaderRouteBuilderNotJson() {
