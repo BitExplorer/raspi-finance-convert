@@ -11,8 +11,8 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
 
     ModelCamelContext camelContext
     //CamelProperties camelProperties = Mock(CamelProperties)
-    JsonTransactionProcessor jsonTransactionProcessor = Mock(JsonTransactionProcessor)
-    ExceptionProcessor exceptionProcessor = Mock(ExceptionProcessor)
+    JsonTransactionProcessor mockJsonTransactionProcessor = Mock(JsonTransactionProcessor)
+    ExceptionProcessor mockExceptionProcessor = Mock(ExceptionProcessor)
 
     //MockEndpoint mockTestOutputEndpoint
 
@@ -31,7 +31,7 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
 
     def setup() {
         camelContext = new DefaultCamelContext()
-        def router = new JsonFileReaderRouteBuilder(camelProperties, jsonTransactionProcessor, exceptionProcessor)
+        def router = new JsonFileReaderRouteBuilder(camelProperties, mockJsonTransactionProcessor, mockExceptionProcessor)
 
         //mockMongoEndpoint = createMockEndpoint(camelContext, 'mock:mongo')
 

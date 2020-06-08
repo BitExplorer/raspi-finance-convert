@@ -15,18 +15,18 @@ import spock.lang.Specification
 import javax.validation.Validator
 
 class InsertTransactionProcessorSpec extends Specification {
-    Message message = Mock(Message)
-    Exchange exchange = Mock(Exchange)
-    MeterService meterService = Mock(MeterService)
-    TransactionRepository transactionRepository = Mock(TransactionRepository)
-    AccountRepository accountRepository = Mock(AccountRepository)
-    AccountService accountService = new AccountService(accountRepository, meterService)
-    CategoryRepository categoryRepository = Mock(CategoryRepository)
-    CategoryService categoryService = new CategoryService(categoryRepository, meterService)
-    Validator validator = Mock(Validator)
+    Message mockMessage = Mock(Message)
+    Exchange mockExchange = Mock(Exchange)
+    MeterService mockMeterService = Mock(MeterService)
+    TransactionRepository mockTransactionRepository = Mock(TransactionRepository)
+    AccountRepository mockAccountRepository = Mock(AccountRepository)
+    AccountService accountService = new AccountService(mockAccountRepository, mockMeterService)
+    CategoryRepository mockCategoryRepository = Mock(CategoryRepository)
+    CategoryService categoryService = new CategoryService(mockCategoryRepository, mockMeterService)
+    Validator mockValidator = Mock(Validator)
     ObjectMapper mapper = new ObjectMapper()
 
-    TransactionService transactionService = new TransactionService(transactionRepository, accountService, categoryService, validator, meterService)
+    TransactionService transactionService = new TransactionService(mockTransactionRepository, accountService, categoryService, mockValidator, mockMeterService)
     InsertTransactionProcessor processor = new InsertTransactionProcessor(transactionService)
 
     def "test InsertTransactionProcessor" () {
@@ -40,18 +40,18 @@ class InsertTransactionProcessorSpec extends Specification {
         def guid = transaction.guid
 
         when:
-        processor.process(exchange)
+        processor.process(mockExchange)
 
         then:
-        1 * exchange.getIn() >> message
-        1 * message.getBody(String.class) >> payload
+        1 * mockExchange.getIn() >> mockMessage
+        1 * mockMessage.getBody(String.class) >> payload
         //1 * meterRegistry.timer('insert.transaction.timer', []) >> timer
         //1 * timer.record(_ as Object)
-        1 * meterService.incrementTransactionReceivedCounter(transaction.accountNameOwner)
-        1 * meterService.incrementTransactionAlreadyExistsCounter(transaction.accountNameOwner)
-        1 * transactionRepository.findByGuid(guid) >> Optional.of(transaction)
-        1 * validator.validate(_ as Object) >> new HashSet()
-        1 * message.setBody(_ as Object)
+        1 * mockMeterService.incrementTransactionReceivedCounter(transaction.accountNameOwner)
+        1 * mockMeterService.incrementTransactionAlreadyExistsCounter(transaction.accountNameOwner)
+        1 * mockTransactionRepository.findByGuid(guid) >> Optional.of(transaction)
+        1 * mockValidator.validate(_ as Object) >> new HashSet()
+        1 * mockMessage.setBody(_ as Object)
         0 * _
     }
 }
