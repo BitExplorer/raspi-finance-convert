@@ -10,7 +10,7 @@ import org.slf4j.Logger
 import org.springframework.stereotype.Component
 
 @Component
-open class JsonTransactionProcessor : Processor {
+class JsonTransactionProcessor : Processor {
     //private val logger = LoggerFactory.getLogger(javaClass)
 
     @Throws(Exception::class)

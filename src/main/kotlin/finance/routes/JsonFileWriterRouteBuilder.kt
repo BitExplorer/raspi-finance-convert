@@ -7,11 +7,13 @@ import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
 import org.apache.camel.support.component.PropertyConfigurerSupport.property
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
 import java.io.File
 
+@ConditionalOnProperty( name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
 @Component
-open class JsonFileWriterRouteBuilder @Autowired constructor(
+class JsonFileWriterRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties
 ) : RouteBuilder() {
 

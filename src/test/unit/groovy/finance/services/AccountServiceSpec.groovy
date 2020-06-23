@@ -6,8 +6,8 @@ import finance.helpers.AccountBuilder
 import spock.lang.Specification
 
 class AccountServiceSpec extends Specification {
-    AccountRepository mockAccountRepository = Mock(AccountRepository)
-    MeterService mockMeterService = Mock(MeterService)
+    AccountRepository mockAccountRepository = GroovyMock(AccountRepository)
+    MeterService mockMeterService = GroovyMock(MeterService)
     AccountService accountService = new AccountService(mockAccountRepository, mockMeterService)
 
     def "test findByAccountNameOwner"() {
@@ -29,9 +29,10 @@ class AccountServiceSpec extends Specification {
         Account account = AccountBuilder.builder().build()
 
         when:
-        accountService.insertAccount(account)
+        def result = accountService.insertAccount(account)
 
         then:
+        result.is(true)
         1 * mockAccountRepository.saveAndFlush(account) >> true
         0 * _
     }

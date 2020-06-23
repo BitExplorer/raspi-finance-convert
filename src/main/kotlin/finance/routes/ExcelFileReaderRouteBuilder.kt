@@ -7,9 +7,11 @@ import finance.processors.JsonTransactionProcessor
 import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
 import java.io.File
 
+@ConditionalOnProperty( name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
 @Component
 class ExcelFileReaderRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties,

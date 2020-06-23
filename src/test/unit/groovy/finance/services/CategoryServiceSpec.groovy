@@ -6,8 +6,8 @@ import spock.lang.Specification
 
 class CategoryServiceSpec extends Specification {
 
-    CategoryRepository mockCategoryRepository = Mock(CategoryRepository)
-    MeterService mockMeterService = Mock(MeterService)
+    CategoryRepository mockCategoryRepository = GroovyMock(CategoryRepository)
+    MeterService mockMeterService = GroovyMock(MeterService)
     CategoryService categoryService = new CategoryService(mockCategoryRepository, mockMeterService)
 
     def "test findByCategory"() {

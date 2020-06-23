@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-open class ExcelFileProcessor  @Autowired constructor(private var excelFileService: ExcelFileService)
+class ExcelFileProcessor  @Autowired constructor(private var excelFileService: ExcelFileService)
     : Processor {
 
     @Throws(Exception::class)

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 import kotlin.system.exitProcess
 
 @Component
-open class ExceptionProcessor  @Autowired constructor() : Processor {
+class ExceptionProcessor  @Autowired constructor() : Processor {
     override fun process(exchange: Exchange) {
         //TODO("Not yet implemented")
         val message = exchange.`in`

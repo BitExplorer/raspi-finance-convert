@@ -10,12 +10,14 @@ import finance.processors.JsonTransactionProcessor
 import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
 import java.io.File
 import java.util.LinkedHashMap
 
+@ConditionalOnProperty( name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
 @Component
-open class JsonFileReaderRouteBuilder @Autowired constructor(
+class JsonFileReaderRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties,
         private var jsonTransactionProcessor: JsonTransactionProcessor,
         private var exceptionProcessor: ExceptionProcessor

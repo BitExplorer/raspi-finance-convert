@@ -8,20 +8,25 @@ import finance.repositories.CategoryRepository
 import finance.repositories.TransactionRepository
 import finance.helpers.AccountBuilder
 import finance.helpers.TransactionBuilder
+import finance.utils.Constants
+import io.micrometer.core.instrument.Counter
+import io.micrometer.core.instrument.MeterRegistry
 import spock.lang.Specification
 
 import javax.validation.Validator
 
 class TransactionServiceSpec extends Specification {
-    TransactionRepository mockTransactionRepository = Mock(TransactionRepository)
-    MeterService mockMeterService = Mock(MeterService)
-    AccountRepository mockAccountRepository = Mock(AccountRepository)
-    AccountService accountService = new AccountService(mockAccountRepository, mockMeterService)
-    CategoryRepository mockCategoryRepository = Mock(CategoryRepository)
-    CategoryService categoryService = new CategoryService(mockCategoryRepository, mockMeterService)
-    Validator validator = Mock(Validator)
+    TransactionRepository mockTransactionRepository = GroovyMock(TransactionRepository)
+    MeterRegistry mockMeterRegistry = GroovyMock(MeterRegistry)
+    MeterService meterService = new MeterService(mockMeterRegistry)
+    AccountRepository mockAccountRepository = GroovyMock(AccountRepository)
+    AccountService accountService = new AccountService(mockAccountRepository, meterService)
+    CategoryRepository mockCategoryRepository = GroovyMock(CategoryRepository)
+    CategoryService categoryService = new CategoryService(mockCategoryRepository, meterService)
+    Validator validator = GroovyMock(Validator)
+    Counter mockCounter = GroovyMock(Counter)
 
-    TransactionService service = new TransactionService(mockTransactionRepository, accountService, categoryService, validator, mockMeterService)
+    TransactionService service = new TransactionService(mockTransactionRepository, accountService, categoryService, validator, meterService)
 
     def "test findByGuid returns a transaction"() {
 
@@ -54,6 +59,7 @@ class TransactionServiceSpec extends Specification {
     }
 
     //@PendingFeature
+    //TODO: fix meterRegistry
     def "test new insertTransaction"() {
         Category category = new Category()
         category.category = "online"
@@ -72,11 +78,11 @@ class TransactionServiceSpec extends Specification {
         1 * mockAccountRepository.findByAccountNameOwner(transaction.accountNameOwner) >> Optional.of(account)
         1 * mockCategoryRepository.findByCategory(transaction.category) >> Optional.of(category)
         1 * mockTransactionRepository.saveAndFlush(transaction) >> true
-        1 * mockMeterService.incrementTransactionReceivedCounter(transaction.accountNameOwner)
-        1 * mockMeterService.incrementTransactionSuccessfullyInsertedCounter(transaction.accountNameOwner)
+        1 * mockMeterRegistry.counter('transaction.successfully.inserted.counter', ['account.name', transaction.accountNameOwner]) >> mockCounter
+        1 * mockMeterRegistry.counter('transaction.received.event.counter', ['account.name', transaction.accountNameOwner]) >> mockCounter
+        2 * mockCounter.increment()
         0 * _
     }
-
 
     def "test insert valid transaction - account name does not exist"() {
         given:
@@ -101,10 +107,10 @@ class TransactionServiceSpec extends Specification {
         1 * mockAccountRepository.findByAccountNameOwner(accountName) >> accountOptional
         1 * mockCategoryRepository.findByCategory(categoryName) >> categoryOptional
         1 * mockTransactionRepository.saveAndFlush(transaction) >> true
-        1 * mockMeterService.incrementTransactionReceivedCounter(accountName)
         1 * validator.validate(transaction) >> new HashSet()
-        1 * mockMeterService.incrementTransactionSuccessfullyInsertedCounter(accountName)
+        1 * mockMeterRegistry.counter(Constants.TRANSACTION_RECEIVED_EVENT_COUNTER, ['account.name', 'my-account-name']) >> mockCounter
+        1 * mockMeterRegistry.counter('transaction.successfully.inserted.counter', ['account.name', 'my-account-name']) >> mockCounter
+        2 * mockCounter.increment()
         0 * _
     }
-
 }

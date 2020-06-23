@@ -8,6 +8,6 @@ import java.util.*
 
 @Profile("!mongo")
 @Repository
-interface AccountRepository<T : Account> : JpaRepository<T, Long> {
+interface AccountRepository : JpaRepository<Account, Long> {
     fun findByAccountNameOwner(accountNameOwner: String): Optional<Account>
 }

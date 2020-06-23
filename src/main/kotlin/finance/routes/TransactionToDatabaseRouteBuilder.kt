@@ -8,10 +8,12 @@ import finance.processors.StringTransactionProcessor
 import org.apache.camel.LoggingLevel
 import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
 
+@ConditionalOnProperty( name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
 @Component
-open class TransactionToDatabaseRouteBuilder @Autowired constructor(
+class TransactionToDatabaseRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties,
         private var stringTransactionProcessor: StringTransactionProcessor,
         private var insertTransactionProcessor: InsertTransactionProcessor,

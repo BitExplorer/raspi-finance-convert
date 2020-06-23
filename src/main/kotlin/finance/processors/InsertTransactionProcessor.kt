@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
 @Component
-open class InsertTransactionProcessor  @Autowired constructor(
+class InsertTransactionProcessor  @Autowired constructor(
         private var transactionService: TransactionService
 ) :Processor {
     //private val logger = LoggerFactory.getLogger(this.javaClass)

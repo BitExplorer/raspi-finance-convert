@@ -22,7 +22,7 @@ import java.util.*
 import java.util.stream.IntStream
 
 @Service
-open class ExcelFileService @Autowired constructor(private val customProperties: CustomProperties) {
+class ExcelFileService @Autowired constructor(private val customProperties: CustomProperties) {
     @Throws(Exception::class)
     fun processProtectedExcelFile(inputExcelFileName: String ) {
         val fs = POIFSFileSystem(FileInputStream(inputExcelFileName))

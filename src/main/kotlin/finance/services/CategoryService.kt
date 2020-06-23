@@ -10,8 +10,8 @@ import java.util.Optional
 import java.util.Optional.empty
 
 @Service
-open class CategoryService @Autowired constructor(
-        private var categoryRepository: CategoryRepository<Category>,
+class CategoryService @Autowired constructor(
+        private val categoryRepository: CategoryRepository,
         private val meterService: MeterService
 ) {
     //@Timed("find.by.category.timer")

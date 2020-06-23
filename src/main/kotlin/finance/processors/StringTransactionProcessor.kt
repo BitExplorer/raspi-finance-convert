@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import org.slf4j.LoggerFactory
 
 @Component
-open class StringTransactionProcessor : Processor {
+class StringTransactionProcessor : Processor {
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
     @Throws(Exception::class)

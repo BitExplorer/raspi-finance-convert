@@ -12,7 +12,7 @@ import java.math.BigDecimal
 
 @Profile("!mongo")
 @Repository
-interface TransactionRepository<T : Transaction> : JpaRepository<T, Long> {
+interface TransactionRepository : JpaRepository<Transaction, Long> {
     //TODO: add LIMIT 1 result
     fun findByGuid(guid: String): Optional<Transaction>
 

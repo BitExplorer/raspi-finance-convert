@@ -16,8 +16,8 @@ import javax.validation.ConstraintViolation
 import javax.validation.Validator
 
 @Service
-open class TransactionService @Autowired constructor(
-        private val transactionRepository: TransactionRepository<Transaction>,
+class TransactionService @Autowired constructor(
+        private val transactionRepository: TransactionRepository,
         private val accountService: AccountService,
         private val categoryService: CategoryService,
         private val validator: Validator,

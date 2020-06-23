@@ -8,6 +8,6 @@ import java.util.*
 
 @Profile("!mongo")
 @Repository
-interface CategoryRepository<T : Category> : JpaRepository<T, Long> {
+interface CategoryRepository : JpaRepository<Category, Long> {
     fun findByCategory(category: String): Optional<Category>
 }

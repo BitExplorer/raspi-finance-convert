@@ -10,11 +10,8 @@ import spock.lang.Specification
 class JsonFileReaderRouteBuilderSpec extends Specification {
 
     ModelCamelContext camelContext
-    //CamelProperties camelProperties = Mock(CamelProperties)
-    JsonTransactionProcessor mockJsonTransactionProcessor = Mock(JsonTransactionProcessor)
-    ExceptionProcessor mockExceptionProcessor = Mock(ExceptionProcessor)
-
-    //MockEndpoint mockTestOutputEndpoint
+    JsonTransactionProcessor mockJsonTransactionProcessor = GroovyMock(JsonTransactionProcessor)
+    ExceptionProcessor mockExceptionProcessor = GroovyMock(ExceptionProcessor)
 
     CamelProperties camelProperties = new CamelProperties("true",
             "jsonFileReaderRoute",
@@ -108,6 +105,7 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
         producer.sendBody('direct:routeFromLocal', invalidJsonPayload)
         then:
         1==1
+        0 * _
     }
 
     def "test with invalid json payload"() {
@@ -118,6 +116,7 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
         producer.sendBody('direct:routeFromLocal', json)
         then:
         1==1
+        0 * _
         //mockTestOutputEndpoint.assertIsSatisfied()
     }
 
