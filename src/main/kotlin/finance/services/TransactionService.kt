@@ -1,16 +1,16 @@
 package finance.services
 
 import finance.domain.Account
+import finance.domain.AccountType
 import finance.domain.Category
 import finance.domain.Transaction
-import finance.domain.AccountType
 import finance.repositories.TransactionRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.sql.Timestamp
-import java.util.Optional
+import java.util.*
 import java.util.Optional.empty
 import javax.validation.ConstraintViolation
 import javax.validation.Validator

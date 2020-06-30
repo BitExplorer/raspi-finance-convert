@@ -2,9 +2,7 @@ package finance.routes
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
-import finance.configs.CustomProperties
 import finance.configs.CamelProperties
-import finance.processors.ExcelFileProcessor
 import finance.processors.ExceptionProcessor
 import finance.processors.JsonTransactionProcessor
 import org.apache.camel.LoggingLevel
@@ -12,8 +10,6 @@ import org.apache.camel.builder.RouteBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
-import java.io.File
-import java.util.LinkedHashMap
 
 @ConditionalOnProperty(name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
 @Component

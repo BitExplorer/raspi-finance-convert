@@ -4,7 +4,6 @@ import org.apache.camel.Exchange
 import org.apache.camel.Processor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import kotlin.system.exitProcess
 
 @Component
 class ExceptionProcessor @Autowired constructor() : Processor {
