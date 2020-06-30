@@ -5,8 +5,8 @@ import io.micrometer.core.annotation.Timed
 import org.apache.camel.Exchange
 import org.apache.camel.Processor
 import org.slf4j.Logger
-import org.springframework.stereotype.Component
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 
 @Component
 class StringTransactionProcessor : Processor {
@@ -25,7 +25,7 @@ class StringTransactionProcessor : Processor {
     }
 
     companion object {
-        val logger : Logger
+        val logger: Logger
             get() = LoggerFactory.getLogger(StringTransactionProcessor::class.java)
     }
 }

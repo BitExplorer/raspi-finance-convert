@@ -104,7 +104,7 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
         when:
         producer.sendBody('direct:routeFromLocal', invalidJsonPayload)
         then:
-        1==1
+        1 == 1
         0 * _
     }
 
@@ -115,7 +115,7 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
         when:
         producer.sendBody('direct:routeFromLocal', json)
         then:
-        1==1
+        1 == 1
         0 * _
         //mockTestOutputEndpoint.assertIsSatisfied()
     }

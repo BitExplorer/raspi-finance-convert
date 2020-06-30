@@ -5,19 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import finance.domain.Transaction
 import finance.services.TransactionService
 import io.micrometer.core.annotation.Timed
-import io.micrometer.core.instrument.MeterRegistry
 import org.apache.camel.Exchange
 import org.apache.camel.Processor
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
 @Component
-class InsertTransactionProcessor  @Autowired constructor(
+class InsertTransactionProcessor @Autowired constructor(
         private var transactionService: TransactionService
-) :Processor {
+) : Processor {
     //private val logger = LoggerFactory.getLogger(this.javaClass)
     //private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -25,7 +23,7 @@ class InsertTransactionProcessor  @Autowired constructor(
     @Timed("insert.transaction.processor.timer")
     override fun process(exchange: Exchange) {
         val message = exchange.`in`
-        val payload  = message.getBody(String::class.java)
+        val payload = message.getBody(String::class.java)
         logger.info("payload=$payload")
         val transaction = mapper.readValue(payload, Transaction::class.java)
         logger.info("will call to insertTransaction(), guid=${transaction.guid} description=${transaction.description}")
@@ -42,7 +40,7 @@ class InsertTransactionProcessor  @Autowired constructor(
 
     companion object {
         val mapper = ObjectMapper()
-        val logger : Logger
+        val logger: Logger
             get() = LoggerFactory.getLogger(InsertTransactionProcessor::class.java)
     }
 }

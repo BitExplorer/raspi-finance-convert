@@ -5,8 +5,8 @@ import finance.domain.Transaction
 import io.micrometer.core.annotation.Timed
 import org.apache.camel.Exchange
 import org.apache.camel.Processor
-import org.slf4j.LoggerFactory
 import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
@@ -26,7 +26,7 @@ class JsonTransactionProcessor : Processor {
 
     companion object {
         val mapper = ObjectMapper()
-        val logger : Logger
+        val logger: Logger
             get() = LoggerFactory.getLogger(JsonTransactionProcessor::class.java)
     }
 }

@@ -58,20 +58,20 @@ class AccountSpec extends Specification {
         given:
         Account account = new AccountBuilder()
         //.transactionId(transactionId)
-                //.guid(guid)
-                //.accountId(accountId)
+        //.guid(guid)
+        //.accountId(accountId)
                 .accountType(accountType)
                 .accountNameOwner(accountNameOwner)
-                //.transactionDate(transactionDate)
-                //.description(description)
-                //.category(category)
-                //.amount(amount)
-                //.cleared(cleared)
-                //.reoccurring(reoccurring)
-                //.notes(notes)
-                //.dateAdded(dateAdded)
-                //.dateUpdated(dateUpdated)
-                //.sha256(sha256)
+        //.transactionDate(transactionDate)
+        //.description(description)
+        //.category(category)
+        //.amount(amount)
+        //.cleared(cleared)
+        //.reoccurring(reoccurring)
+        //.notes(notes)
+        //.dateAdded(dateAdded)
+        //.dateUpdated(dateUpdated)
+        //.sha256(sha256)
                 .build()
 
         when:
@@ -86,8 +86,8 @@ class AccountSpec extends Specification {
         violations.iterator().next().getInvalidValue() == account.getProperties()[invalidField]
 
         where:
-        invalidField |  accountType | accountNameOwner | moniker |expectedError | errorCount
+        invalidField       | accountType        | accountNameOwner   | moniker | expectedError                              | errorCount
         //'accountType'  |  AccountType.Undefined | 'blah.chase_brian' | '0000' |'must be greater than or equal to 0'                   | 1
-        'accountNameOwner'  |  AccountType.Credit | 'blah_chase_brian' | '0000' |'must be alpha separated by an underscore'                   | 1
+        'accountNameOwner' | AccountType.Credit | 'blah_chase_brian' | '0000'  | 'must be alpha separated by an underscore' | 1
     }
 }

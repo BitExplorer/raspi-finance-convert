@@ -104,7 +104,7 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
 
     @Override
     RouteBuilder createRouteBuilder() {
-        new JsonFileReaderRouteBuilder (
+        new JsonFileReaderRouteBuilder(
                 camelProperties,
                 jsonTransactionProcessor,
                 exceptionProcessor
@@ -150,7 +150,7 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
         println "exchangeCount = $exchangeCount"
         assertEquals(0, exchangeCount)
     }
-    
+
     @Test
     void testJsonFileReaderRouteBuilderBadJson() {
         String payload = "foo"

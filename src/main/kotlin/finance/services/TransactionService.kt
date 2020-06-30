@@ -1,16 +1,16 @@
 package finance.services
 
 import finance.domain.Account
+import finance.domain.AccountType
 import finance.domain.Category
 import finance.domain.Transaction
-import finance.domain.AccountType
 import finance.repositories.TransactionRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.sql.Timestamp
-import java.util.Optional
+import java.util.*
 import java.util.Optional.empty
 import javax.validation.ConstraintViolation
 import javax.validation.Validator
@@ -115,16 +115,16 @@ class TransactionService @Autowired constructor(
     }
 
     private fun updateTransaction(transactionDb: Transaction, transaction: Transaction): Boolean {
-        if(transactionDb.accountNameOwner.trim() == transaction.accountNameOwner) {
+        if (transactionDb.accountNameOwner.trim() == transaction.accountNameOwner) {
 
-            if( transactionDb.amount != transaction.amount ) {
+            if (transactionDb.amount != transaction.amount) {
                 logger.info("discrepancy in the amount for <${transactionDb.guid}>")
                 //TODO: metric for this
                 transactionRepository.setAmountByGuid(transaction.amount, transaction.guid)
                 return true
             }
 
-            if( transactionDb.cleared != transaction.cleared ) {
+            if (transactionDb.cleared != transaction.cleared) {
                 meterService.incrementTransactionUpdateClearedCounter(transaction.accountNameOwner)
                 logger.info("discrepancy in the cleared value for <${transactionDb.guid}>")
                 transactionRepository.setClearedByGuid(transaction.cleared, transaction.guid)
@@ -139,7 +139,7 @@ class TransactionService @Autowired constructor(
     }
 
     companion object {
-        val logger : Logger
+        val logger: Logger
             get() = LoggerFactory.getLogger(TransactionService::class.java)
     }
 }

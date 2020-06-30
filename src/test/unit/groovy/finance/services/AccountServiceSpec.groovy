@@ -1,8 +1,8 @@
 package finance.services
 
 import finance.domain.Account
-import finance.repositories.AccountRepository
 import finance.helpers.AccountBuilder
+import finance.repositories.AccountRepository
 import spock.lang.Specification
 
 class AccountServiceSpec extends Specification {
@@ -23,7 +23,7 @@ class AccountServiceSpec extends Specification {
         0 * _
     }
 
-    def "test insertAccount" () {
+    def "test insertAccount"() {
 
         given:
         Account account = AccountBuilder.builder().build()
