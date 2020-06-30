@@ -15,9 +15,9 @@ import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
 @Component
-class InsertTransactionProcessor  @Autowired constructor(
+class InsertTransactionProcessor @Autowired constructor(
         private var transactionService: TransactionService
-) :Processor {
+) : Processor {
     //private val logger = LoggerFactory.getLogger(this.javaClass)
     //private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -25,7 +25,7 @@ class InsertTransactionProcessor  @Autowired constructor(
     @Timed("insert.transaction.processor.timer")
     override fun process(exchange: Exchange) {
         val message = exchange.`in`
-        val payload  = message.getBody(String::class.java)
+        val payload = message.getBody(String::class.java)
         logger.info("payload=$payload")
         val transaction = mapper.readValue(payload, Transaction::class.java)
         logger.info("will call to insertTransaction(), guid=${transaction.guid} description=${transaction.description}")
@@ -42,7 +42,7 @@ class InsertTransactionProcessor  @Autowired constructor(
 
     companion object {
         val mapper = ObjectMapper()
-        val logger : Logger
+        val logger: Logger
             get() = LoggerFactory.getLogger(InsertTransactionProcessor::class.java)
     }
 }

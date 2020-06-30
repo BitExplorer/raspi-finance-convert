@@ -25,7 +25,7 @@ class StringTransactionProcessor : Processor {
     }
 
     companion object {
-        val logger : Logger
+        val logger: Logger
             get() = LoggerFactory.getLogger(StringTransactionProcessor::class.java)
     }
 }

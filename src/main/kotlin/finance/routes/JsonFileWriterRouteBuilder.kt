@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
 import java.io.File
 
-@ConditionalOnProperty( name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
 @Component
 class JsonFileWriterRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties
@@ -35,8 +35,8 @@ class JsonFileWriterRouteBuilder @Autowired constructor(
                 .setHeader(Exchange.FILE_NAME, header("guid"))
                 //.setHeader(Exchange.FILE_NAME, "\${exchangeProperty.guid}")
                 .log(LoggingLevel.INFO, "wrote processed data to file.")
-        //message.setHeader(Exchange.FILE_NAME, filename);
-        //.to("file:${customProperties.jsonInputFilePath}${File.separator}.processed?fileName=\${exchangeProperty.guid}.json&autoCreate=true")
+                //message.setHeader(Exchange.FILE_NAME, filename);
+                //.to("file:${customProperties.jsonInputFilePath}${File.separator}.processed?fileName=\${exchangeProperty.guid}.json&autoCreate=true")
                 .to(camelProperties.savedFileEndpoint)
                 .end()
     }

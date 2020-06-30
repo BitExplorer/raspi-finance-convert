@@ -25,7 +25,7 @@ import javax.validation.constraints.*
 @Proxy(lazy = false)
 @Table(name = "t_transaction")
 //@JsonIgnoreProperties(ignoreUnknown = true)
-data class Transaction (
+data class Transaction(
 //TODO: the field activeStatus
 
         @Id

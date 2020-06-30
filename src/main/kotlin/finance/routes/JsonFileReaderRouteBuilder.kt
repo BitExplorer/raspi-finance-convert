@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 import java.util.LinkedHashMap
 
-@ConditionalOnProperty( name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
 @Component
 class JsonFileReaderRouteBuilder @Autowired constructor(
         private var camelProperties: CamelProperties,
@@ -51,13 +51,13 @@ class JsonFileReaderRouteBuilder @Autowired constructor(
                 .log(camelProperties.jsonFileReaderRouteId)
                 .choice()
                 .`when`(header("CamelFileName").endsWith(".json"))
-                  .log(LoggingLevel.INFO, "new file name: \$simple{file:onlyname.noext}_\$simple{date:now:yyyy-MM-dd}.json")
-                  .process(jsonTransactionProcessor)
-                  .to(camelProperties.transactionToDatabaseRoute)
-                  .log(LoggingLevel.INFO, "JSON file processed successfully.")
+                .log(LoggingLevel.INFO, "new file name: \$simple{file:onlyname.noext}_\$simple{date:now:yyyy-MM-dd}.json")
+                .process(jsonTransactionProcessor)
+                .to(camelProperties.transactionToDatabaseRoute)
+                .log(LoggingLevel.INFO, "JSON file processed successfully.")
                 .otherwise()
-                  .to(camelProperties.failedJsonFileEndpoint)
-                  .log(LoggingLevel.INFO, "Not a JSON file, NOT processed successfully.")
+                .to(camelProperties.failedJsonFileEndpoint)
+                .log(LoggingLevel.INFO, "Not a JSON file, NOT processed successfully.")
                 .endChoice()
                 .end()
     }

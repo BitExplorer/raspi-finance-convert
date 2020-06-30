@@ -115,16 +115,16 @@ class TransactionService @Autowired constructor(
     }
 
     private fun updateTransaction(transactionDb: Transaction, transaction: Transaction): Boolean {
-        if(transactionDb.accountNameOwner.trim() == transaction.accountNameOwner) {
+        if (transactionDb.accountNameOwner.trim() == transaction.accountNameOwner) {
 
-            if( transactionDb.amount != transaction.amount ) {
+            if (transactionDb.amount != transaction.amount) {
                 logger.info("discrepancy in the amount for <${transactionDb.guid}>")
                 //TODO: metric for this
                 transactionRepository.setAmountByGuid(transaction.amount, transaction.guid)
                 return true
             }
 
-            if( transactionDb.cleared != transaction.cleared ) {
+            if (transactionDb.cleared != transaction.cleared) {
                 meterService.incrementTransactionUpdateClearedCounter(transaction.accountNameOwner)
                 logger.info("discrepancy in the cleared value for <${transactionDb.guid}>")
                 transactionRepository.setClearedByGuid(transaction.cleared, transaction.guid)
@@ -139,7 +139,7 @@ class TransactionService @Autowired constructor(
     }
 
     companion object {
-        val logger : Logger
+        val logger: Logger
             get() = LoggerFactory.getLogger(TransactionService::class.java)
     }
 }

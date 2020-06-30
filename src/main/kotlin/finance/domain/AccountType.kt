@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 enum class AccountType {
     @JsonProperty("credit")
     Credit,
+
     @JsonProperty("debit")
     Debit,
     Undefined;

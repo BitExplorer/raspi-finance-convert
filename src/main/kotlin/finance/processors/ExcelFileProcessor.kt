@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class ExcelFileProcessor  @Autowired constructor(private var excelFileService: ExcelFileService)
+class ExcelFileProcessor @Autowired constructor(private var excelFileService: ExcelFileService)
     : Processor {
 
     @Throws(Exception::class)
@@ -17,6 +17,7 @@ class ExcelFileProcessor  @Autowired constructor(private var excelFileService: E
         val inputExcelFileName = message.getBody(String::class.java)
         excelFileService.processProtectedExcelFile(inputExcelFileName)
     }
+
     companion object {
         val mapper = ObjectMapper()
     }
