@@ -11,7 +11,6 @@ import org.apache.camel.builder.RouteBuilder
 import org.apache.camel.component.mock.MockEndpoint
 import org.apache.camel.test.junit4.CamelTestSupport
 import org.junit.Test
-//import org.junit.jupiter.api.Test
 
 class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
 
@@ -43,20 +42,21 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
     ]
     '''
 
-    String jsonBad = '''
+    String jsonBadInputData = '''
     [
     {"guid":"aa08f2bb-29a6-4f71-b866-ff8f625e1b04",
     "accountNameOwner":"foo_brian",
     "description":"Bullseye cafe",
-    "category":"restaurant",
-    "amount":4.42,"cleared":1,
+    "category":"restaurant lot and lots and lots and lots and lots and lots and lots and lots and lots and lots",
+    "amount":4.42,
+    "cleared":1,
     "reoccurring":false,
     "notes":"","sha256":"","transactionId":0,"accountId":0,
-    "accountType":"credit",
+    "accountType":"creditShouldCauseAParsingError",
     "transactionDate":1337058000000,
     "dateUpdated":1487301459000,"dateAdded":1487301459000},
     {"guid":"bb08f2bb-29a6-4f71-b866-ff8f625e1b04",
-    "accountNameOwner_bad":"foo_brian",
+    "accountNameOwner":"foo_brian",
     "description":"Bullseye cafe","category":"restaurant",
     "amount":4.42,"cleared":1,
     "reoccurring":false,"notes":"","sha256":"",
@@ -125,7 +125,7 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
     }
 
     @Test
-    void testJsonFileReaderRouteBuilderNotJson() {
+    void testJsonFileReaderRouteBuilderNotJsonFileName() {
         String payload = json
 
         println "payload = $payload"
@@ -138,8 +138,8 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
     }
 
     @Test
-    void testJsonFileReaderRouteBuilderBadJsonField() {
-        String payload = jsonBad
+    void testJsonFileReaderRouteBuilderBadJsonFieldValue() {
+        String payload = jsonBadInputData
 
         println "payload = $payload"
         Map<String, Object> headers = new HashMap<>()
@@ -150,8 +150,7 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
         println "exchangeCount = $exchangeCount"
         assertEquals(0, exchangeCount)
     }
-
-
+    
     @Test
     void testJsonFileReaderRouteBuilderBadJson() {
         String payload = "foo"
@@ -165,5 +164,4 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
         println "exchangeCount = $exchangeCount"
         assertEquals(0, exchangeCount)
     }
-
 }
