@@ -45,21 +45,39 @@ class JsonFileReaderRouteBuilderTest extends CamelTestSupport {
 
     String jsonBad = '''
     [
-    {"guid":"aa08f2bb-29a6-4f71-b866-ff8f625e1b04","accountNameOwner":"foo_brian",
-    "description":"Bullseye cafe","category":"restaurant","amount":4.42,"cleared":1,
-    "reoccurring":false,"notes":"","sha256":"","transactionId":0,"accountId":0,
+    {"guid":"aa08f2bb-29a6-4f71-b866-ff8f625e1b04",
+    "accountNameOwner":"foo_brian",
+    "description":"Bullseye cafe",
+    "category":"restaurant",
+    "amount":4.42,"cleared":1,
+    "reoccurring":false,
+    "notes":"","sha256":"","transactionId":0,"accountId":0,
     "accountType":"credit",
-    "transactionDate":1337058000000,"dateUpdated":1487301459000,"dateAdded":1487301459000},
-    {"guid":"bb08f2bb-29a6-4f71-b866-ff8f625e1b04","accountNameOwner_bad":"foo_brian",
-    "description":"Bullseye cafe","category":"restaurant","amount":4.42,"cleared":1,
-    "reoccurring":false,"notes":"","sha256":"","transactionId":0,"accountId":0,
+    "transactionDate":1337058000000,
+    "dateUpdated":1487301459000,"dateAdded":1487301459000},
+    {"guid":"bb08f2bb-29a6-4f71-b866-ff8f625e1b04",
+    "accountNameOwner_bad":"foo_brian",
+    "description":"Bullseye cafe","category":"restaurant",
+    "amount":4.42,"cleared":1,
+    "reoccurring":false,"notes":"","sha256":"",
+    "transactionId":0,"accountId":0,
     "accountType":"credit",
-    "transactionDate":1337058000000,"dateUpdated":1487301459000,"dateAdded":1487301459000},
-    {"guid":"cc08f2bb-29a6-4f71-b866-ff8f625e1b04","accountNameOwner":"foo_brian",
-    "description":"Bullseye cafe","category":"restaurant","amount":4.42,"cleared":1,
-    "reoccurring":false,"notes":"","sha256":"","transactionId":0,"accountId":0,
+    "transactionDate":1337058000000,
+    "dateUpdated":1487301459000
+    ,"dateAdded":1487301459000},
+    {"guid":"cc08f2bb-29a6-4f71-b866-ff8f625e1b04",
+    "accountNameOwner":"foo_brian",
+    "description":"Bullseye cafe",
+    "category":"restaurant",
+    "amount":4.42,
+    "cleared":1,
+    "reoccurring":false,
+    "notes":"","sha256":"","transactionId":0,"accountId":0,
     "accountType":"credit",
-    "transactionDate":1337058000000,"dateUpdated":1487301459000,"dateAdded":1487301459000}
+    "transactionDate":1337058000000,
+    "dateUpdated":1487301459000,
+    "dateAdded":1487301459000
+    }
     ]
     '''
 
