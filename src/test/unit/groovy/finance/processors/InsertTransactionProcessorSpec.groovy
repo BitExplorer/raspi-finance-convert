@@ -14,6 +14,7 @@ import io.micrometer.core.instrument.MeterRegistry
 import org.apache.camel.Exchange
 import org.apache.camel.Message
 import spock.lang.Specification
+
 import javax.validation.Validator
 
 class InsertTransactionProcessorSpec extends Specification {
@@ -33,7 +34,7 @@ class InsertTransactionProcessorSpec extends Specification {
     TransactionService transactionService = new TransactionService(mockTransactionRepository, accountService, categoryService, mockValidator, meterService)
     InsertTransactionProcessor processor = new InsertTransactionProcessor(transactionService)
 
-    def "test InsertTransactionProcessor" () {
+    def "test InsertTransactionProcessor"() {
         String payload = "{\"guid\":\"0a23fec3-18c8-4b89-a5af-68fab8db8620\",\"accountType\":\"credit\",\"accountNameOwner\":\"amex_brian\",\"transactionDate\":1475647200000,\"description\":\"Cafe Roale\",\"category\":\"online\",\"amount\":33.08,\"cleared\":1,\"reoccurring\":false,\"notes\":\"\",\"dateUpdated\":1475588992000,\"dateAdded\":1475588992000,\"sha256\":\"\"}"
 
         given:

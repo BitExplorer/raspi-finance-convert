@@ -43,6 +43,7 @@ class AccountBuilder {
         this.accountType = accountType
         return this
     }
+
     AccountBuilder activeStatus(activeStatus) {
         this.activeStatus = activeStatus
         return this

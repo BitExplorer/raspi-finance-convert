@@ -1,10 +1,12 @@
 package finance
 
+import finance.domain.AccountType
+import finance.domain.Transaction
+import finance.helpers.TransactionDAO
+
 //import com.github.javafaker.service.FakeValuesService
 //import com.github.javafaker.service.RandomService
-import finance.helpers.TransactionDAO
-import finance.domain.Transaction
-import finance.domain.AccountType
+
 import finance.services.TransactionService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -12,8 +14,8 @@ import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils
 import spock.lang.Specification
 
 import java.math.RoundingMode
-import java.sql.Timestamp
 import java.sql.Date
+import java.sql.Timestamp
 
 @SpringBootTest
 class TransactionServicePerformanceSpec extends Specification {
@@ -27,15 +29,15 @@ class TransactionServicePerformanceSpec extends Specification {
     //private FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"), new RandomService())
     //def password = org.apache.commons.lang.RandomStringUtils.randomAlphanumeric(length)
 
-    def "transaction service performance test" () {
+    def "transaction service performance test"() {
         when:
-        for( int idx = 0; idx < 5000; idx ++ ) {
+        for (int idx = 0; idx < 5000; idx++) {
             Transaction transaction = createTransaction()
             transactionService.insertTransaction(transaction)
         }
         then:
         //transactionDAO.transactionCount() == 5000
-        1==1
+        1 == 1
     }
 
     private Transaction createTransaction() {

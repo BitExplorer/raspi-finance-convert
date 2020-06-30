@@ -25,7 +25,7 @@ class JsonFileWriterRouteBuilderTest extends CamelTestSupport {
 
     @Override
     RouteBuilder createRouteBuilder() {
-        new JsonFileWriterRouteBuilder (
+        new JsonFileWriterRouteBuilder(
                 camelProperties
         )
     }

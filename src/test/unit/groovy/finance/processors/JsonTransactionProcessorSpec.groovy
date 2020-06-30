@@ -11,7 +11,7 @@ class JsonTransactionProcessorSpec extends Specification {
 
     //private static ObjectMapper mapper1 = new ObjectMapper()
 
-    def "test JsonTransactionProcessor" () {
+    def "test JsonTransactionProcessor"() {
         Exchange mockExchange = Mock(Exchange)
         Message mockMessage = Mock(Message)
         ObjectMapper mapper = new ObjectMapper()
@@ -37,11 +37,13 @@ class JsonTransactionProcessorSpec extends Specification {
         //1 * message.setBody(_ as Object)
         //1 * message.setBody({it -> return it.size() == 2})
         1 * mockMessage.setBody({
-            it -> println(it.size())
+            it ->
+                println(it.size())
                 println(it.size() == 1)
                 println(it.size() == 2)
                 println "transactions.getClass()=${transactions.getClass()}"
-                return it.size() == 1}
+                return it.size() == 1
+        }
         )
         //1 * message.setBody((Object)transactions)
         0 * _
