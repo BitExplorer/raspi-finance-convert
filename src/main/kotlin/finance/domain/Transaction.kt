@@ -88,11 +88,11 @@ data class Transaction(
         var notes: String,
 
         @JsonProperty
-        @field:ValidTimestamp
+        //@field:ValidTimestamp
         var dateUpdated: Timestamp,
 
         @JsonProperty
-        @field:ValidTimestamp
+        //@field:ValidTimestamp
         var dateAdded: Timestamp,
 
         //TODO: remove this field as it is not required.
