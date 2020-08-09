@@ -146,6 +146,8 @@ custom:
       - usbankcash_kari
       - wfargocash_brian
       - wfargocash_kari
+      - citicash_kari
+      - citicash_brian
     excluded-accounts:
       - 401k_brian
       - 401k_kari
