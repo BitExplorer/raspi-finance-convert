@@ -236,7 +236,7 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
         given:
         def mockTestOutputEndpoint = MockEndpoint.resolve(camelContext, camelProperties.transactionToDatabaseRoute)
         //should be 1 expectedCount
-        mockTestOutputEndpoint.expectedCount = 0
+        mockTestOutputEndpoint.expectedCount = 1
         mockTestOutputEndpoint.receivedExchanges.size()
         def producer = camelContext.createProducerTemplate()
         producer.setDefaultEndpointUri('direct:routeFromLocal')

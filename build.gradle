@@ -119,7 +119,7 @@ dependencies {
 
     //Camel
     // implementation("org.apache.camel:camel-spring-boot-starter:${apacheCamelVersion}")
-    implementation("org.apache.camel:camel-spring-boot:${apacheCamelVersion}")
+    //implementation("org.apache.camel:camel-spring-boot:${apacheCamelVersion}")
     implementation("org.apache.camel:camel-core:${apacheCamelVersion}")
 
     //excel
