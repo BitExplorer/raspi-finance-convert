@@ -24,19 +24,19 @@ class JsonTransactionProcessor @Autowired constructor(private val validator: Val
     override fun process(exchange: Exchange) {
         logger.info("JsonTransactionProcessor called")
 
-
         val message = exchange.`in`
         val payload = message.getBody(String::class.java)
         val transactions = mapper.readValue(payload, Array<Transaction>::class.java)
+        logger.info(transactions.toString())
         for (transaction in transactions) {
-            val constraintViolations: Set<ConstraintViolation<Transaction>> = validator.validate(transaction)
-            if (constraintViolations.isNotEmpty()) {
+            //val constraintViolations: Set<ConstraintViolation<Transaction>> = validator.validate(transaction)
+            //if (constraintViolations.isNotEmpty()) {
                 //TODO: handle the violation
 
                 TransactionService.logger.info("validation issue for<${transaction}>")
                 //meterService.incrementErrorCounter(transaction.accountNameOwner, MeterService.ErrorType.VALIDATION_ERROR)
                 TransactionService.logger.info("METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER")
-            }
+            //}
         }
         logger.info("JsonTransactionProcessor size: ${transactions.size}")
         message.body = transactions

@@ -45,6 +45,7 @@ class JsonFileReaderRouteBuilder @Autowired constructor(
                 .autoStartup(camelProperties.autoStartRoute)
                 .routeId(camelProperties.jsonFileReaderRouteId)
                 .log("choice for: " + camelProperties.jsonFileReaderRouteId)
+                .log("fname = \${header.CamelFileName}")
                 .choice()
                 .`when`(header("CamelFileName").endsWith(".json"))
                 .log(LoggingLevel.INFO, "fileName - new: \$simple{file:onlyname.noext}_\$simple{date:now:yyyy-MM-dd}.json")

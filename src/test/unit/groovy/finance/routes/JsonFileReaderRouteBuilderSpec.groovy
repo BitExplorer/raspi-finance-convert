@@ -24,11 +24,11 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
     //JsonTransactionProcessor jsonTransactionProcessor = new JsonTransactionProcessor(mockValidator)
     ExceptionProcessor mockExceptionProcessor = GroovyMock(ExceptionProcessor)
 
-    MockEndpoint mockToTransactionToDatabaseRouteEndpoint
-    MockEndpoint toFailedJsonFileEndpoint
-
-//    @EndpointInject(value = 'mock://toTransactionToDatabaseRoute')
-//    MockEndpoint toTransactionToDatabaseRoute
+//    MockEndpoint mockToTransactionToDatabaseRouteEndpoint
+//    MockEndpoint toFailedJsonFileEndpoint
+//
+////    @EndpointInject(value = 'mock://toTransactionToDatabaseRoute')
+////    MockEndpoint toTransactionToDatabaseRoute
 
     CamelProperties camelProperties = new CamelProperties("true",
             "jsonFileReaderRoute",
@@ -44,10 +44,9 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
             "mock:toFailedJsonFileEndpoint")
 
     def setup() {
-        println "setup started."
         camelContext = new DefaultCamelContext()
         def router = new JsonFileReaderRouteBuilder(camelProperties, mockJsonTransactionProcessor, mockExceptionProcessor)
-        //router.jsonTransactionProcessor = mockJsonTransactionProcessor
+        router.jsonTransactionProcessor = mockJsonTransactionProcessor
         camelContext.addRoutes(router)
 
         camelContext.start()
@@ -165,99 +164,51 @@ class JsonFileReaderRouteBuilderSpec extends Specification {
         0 * _
     }
 
-    //TODO: needs work
-    @Ignore
-    def "test with valid json payload"() {
+    def 'test with invalid file name'() {
         given:
-        def producer = camelContext.createProducerTemplate()
-        producer.setDefaultEndpointUri('direct:routeFromLocal')
-        Map<String, Object> headers = new HashMap<>()
-        headers.put(Exchange.FILE_NAME, "foo_brian.json")
-
-
-        when:
-        //producer.sendBody('direct:routeFromLocal', invalidJsonPayload)
-        //producer.sendBodyAndHeaders(payload, headers)
-        producer.sendBodyAndHeader('direct:routeFromLocal', payload, headers)
-        def ctx = producer.camelContext
-        def mockTestOutputEndpoint = MockEndpoint.resolve(ctx, 'mock://toTransactionToDatabaseRoute')
+        def mockTestOutputEndpoint = MockEndpoint.resolve(camelContext, camelProperties.failedJsonFileEndpoint)
         mockTestOutputEndpoint.expectedCount = 1
-        println "***** " + producer.getCamelContext().getEndpoints().size()
-        println "endpoints - " + ctx.getEndpoints()
-        def endp = producer.getCamelContext().getEndpoints()
-        def x = endp[1]
-        def y = ctx.getStatus()
-        println("***" + x)
-        println("***" + y)
-        println endp.getProperties()
-        //def pro = ctx.createProducerTemplate()
-
-        //println mockTestOutputEndpoint.expectedBodyReceived()
-        //println MockEndpoint.assertIsSatisfied(ctx)
-        //pro.sendBodyAndHeader('direct:routeFromLocal', payload, headers)
-
-        //MockEndpoint.assertIsSatisfied
-
-        //toFailedJsonFileEndpoint.receivedExchanges.size()
-
-//        println "payload = $payload"
-//        Map<String, Object> headers = new HashMap<>()
-//        headers.put(Exchange.FILE_NAME, "foo_brian.notjsonfile")
-//        routeFromLocal.sendBodyAndHeaders(payload, headers)
-        //int exchangeCount = toFailedJsonFileEndpoint.receivedExchanges.size()
-//        assertEquals(1, exchangeCount)
-
-
-        then:
-        mockTestOutputEndpoint.assertIsSatisfied()
-
-
-        //toTransactionToDatabaseRoute.assertIsSatisfied()
-        //1 * mockValidator.validate(_)
-        0 * _
-    }
-
-    //TODO: needs work
-    def "test with invalid json payload"() {
-        given:
         def producer = camelContext.createProducerTemplate()
         producer.setDefaultEndpointUri('direct:routeFromLocal')
-        Map<String, Object> headers = new HashMap<>()
-        headers.put(Exchange.FILE_NAME, "foo_brian.json")
 
         when:
-        producer.sendBody('direct:routeFromLocal', invalidJsonPayload)
+        producer.sendBodyAndHeader(payload, Exchange.FILE_NAME, 'foo_brian.bad')
+
         then:
+        mockTestOutputEndpoint.receivedExchanges.size() == 1
+        mockTestOutputEndpoint.assertIsSatisfied()
         0 * _
     }
 
-    // TODO: this is not working expected count should be 1 - ask for help
-    def 'test -- message with headers'() {
+    def 'test -- valid payload and valid fileName'() {
         given:
         def mockTestOutputEndpoint = MockEndpoint.resolve(camelContext, camelProperties.transactionToDatabaseRoute)
-        //should be 1 expectedCount
         mockTestOutputEndpoint.expectedCount = 1
-        mockTestOutputEndpoint.receivedExchanges.size()
         def producer = camelContext.createProducerTemplate()
         producer.setDefaultEndpointUri('direct:routeFromLocal')
-        Map<String, Object> headers = new HashMap<>()
-        headers.put(Exchange.FILE_NAME, "foo_brian.json")
 
         when:
-        //producer.sendBody('direct:routeFromLocal', 'foo')
-        //producer.sendBody('direct:routeFromLocal', payload)
-       // producer.start()
-        producer.sendBodyAndHeader('direct:routeFromLocal', payload, headers)
-        //println "properties = " + producer.getProperties()
+        producer.sendBodyAndHeader(payload, Exchange.FILE_NAME, 'foo_brian.json')
+
+        then:
+        mockTestOutputEndpoint.receivedExchanges.size() == 1
+        mockTestOutputEndpoint.assertIsSatisfied()
+        0 * _
+    }
+
+    def 'test -- invalid payload and valid fileName'() {
+        given:
+        def mockTestOutputEndpoint = MockEndpoint.resolve(camelContext, camelProperties.transactionToDatabaseRoute)
+        mockTestOutputEndpoint.expectedCount = 0
+        def producer = camelContext.createProducerTemplate()
+        producer.setDefaultEndpointUri('direct:routeFromLocal')
+
+        when:
+        producer.sendBodyAndHeader(invalidJsonPayload, Exchange.FILE_NAME, 'foo_brian.json')
 
         then:
         mockTestOutputEndpoint.receivedExchanges.size() == 0
         mockTestOutputEndpoint.assertIsSatisfied()
-        //1 * jsonTransactionProcessor.validator.validate(_)
-        //1 * mockSimpleInputService.performSimpleStringTask('')
-        //0 * mockSimpleOutputService.performSomeOtherSimpleStringTask(_)
-
         0 * _
     }
-
 }
