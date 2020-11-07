@@ -34,9 +34,11 @@ class TransactionService @Autowired constructor(
         if (constraintViolations.isNotEmpty()) {
             //TODO: handle the violation
 
-            logger.info("validation issue for<${transaction}>")
+            logger.error("validation issue for <${transaction}>")
+            logger.error("will not update this record in the database.")
             meterService.incrementErrorCounter(transaction.accountNameOwner, MeterService.ErrorType.VALIDATION_ERROR)
-            logger.info("METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER")
+            logger.error("METRIC_TRANSACTION_VALIDATOR_FAILED_COUNTER")
+            return false
         }
 
         if (transactionOptional.isPresent) {

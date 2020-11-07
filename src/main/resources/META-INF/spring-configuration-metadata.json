@@ -94,8 +94,12 @@
       "name": "custom.project.camel-route.failed-Json-File-Endpoint",
       "type": "java.lang.String",
       "description": "Description for custom.project.camel-route.failed-Json-File-Endpoint."
+    },
+    {
+      "name": "custom.project.camel-route.failed-json-parser-endpoint",
+      "type": "java.lang.String",
+      "description": "Description for custom.project.camel-route.failed-json-parser-endpoint."
     }
-
 
   ]
 }

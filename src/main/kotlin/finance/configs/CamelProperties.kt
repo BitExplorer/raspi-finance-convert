@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 
 @ConditionalOnProperty(name = ["camel.enabled"], havingValue = "true", matchIfMissing = true)
 @Configuration
-@ConfigurationProperties(prefix = "custom.project.camel-route", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "custom.project.camel-route", ignoreUnknownFields = true)
 open class CamelProperties(
         var autoStartRoute: String = "",
         var jsonFileReaderRouteId: String = "",
@@ -19,7 +19,11 @@ open class CamelProperties(
         var jsonFileWriterRoute: String = "",
         var savedFileEndpoint: String = "",
         var failedExcelFileEndpoint: String = "",
-        var failedJsonFileEndpoint: String = ""
+        var failedJsonFileEndpoint: String = "",
+        var failedJsonParserEndpoint: String = ""
+//        val jsonParseException: Class<JsonParseException> = JsonParseException::class.java,
+//        val unrecognizedPropertyException: Class<UnrecognizedPropertyException> = UnrecognizedPropertyException::class.java,
+//        val exception : Class<Exception> = Exception::class.java
 ) {
     constructor() : this(savedFileEndpoint = "")
 }

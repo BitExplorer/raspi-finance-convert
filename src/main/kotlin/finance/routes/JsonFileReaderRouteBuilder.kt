@@ -1,6 +1,7 @@
 package finance.routes
 
 import com.fasterxml.jackson.core.JsonParseException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import finance.configs.CamelProperties
 import finance.processors.ExceptionProcessor
@@ -23,23 +24,25 @@ class JsonFileReaderRouteBuilder @Autowired constructor(
     override fun configure() {
 
         onException(JsonParseException::class.java)
-                .log(LoggingLevel.INFO, "Exception trapped :: \${exception.message}")
+                .log(LoggingLevel.INFO, "Jason parsing issue :: \${exception.message}")
                 .process(exceptionProcessor)
+                .to(camelProperties.failedJsonParserEndpoint)
+                .handled(true)
+                .end()
+
+        onException(InvalidFormatException::class.java)
+                .log(LoggingLevel.INFO, "Invalid format :: \${exception.message}")
+                .process(exceptionProcessor)
+                .to(camelProperties.failedJsonParserEndpoint)
                 .handled(true)
                 .end()
 
         onException(UnrecognizedPropertyException::class.java)
-                .log(LoggingLevel.INFO, "Exception trapped :: \${exception.message}")
+                .log(LoggingLevel.INFO, "Unrecognized Property :: \${exception.message}")
                 .process(exceptionProcessor)
+                .to(camelProperties.failedJsonParserEndpoint)
                 .handled(true)
                 .end()
-
-        onException(Exception::class.java)
-                .log(LoggingLevel.INFO, "Exception trapped :: \${exception.message}")
-                .process(exceptionProcessor)
-                .handled(true)
-                .end()
-
 
         from(camelProperties.jsonFileReaderRoute)
                 .autoStartup(camelProperties.autoStartRoute)

@@ -87,7 +87,8 @@ custom:
       json-File-writer-route: direct:jsonFileWriterRoute
       saved-File-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.processed"
       failed-Excel-File-Endpoint: "file:${EXCEL_FILES_INPUT_PATH}/.notExcelAndNotProcessed"
-      failed-Json-File-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.notExcelAndNotProcessed"
+      failed-Json-File-Endpoint: "file:${JSON_FILES_INPUT_PATH}/.notJsonFileNotProcessed"
+      failed-json-parser-endpoint: file:${JSON_FILES_INPUT_PATH}/.notJsonFileNotProcessed"
     credit-accounts:
       - amazon_brian
       - amazon.store_brian

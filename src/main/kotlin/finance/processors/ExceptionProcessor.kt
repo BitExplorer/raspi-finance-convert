@@ -8,11 +8,8 @@ import org.springframework.stereotype.Component
 @Component
 class ExceptionProcessor @Autowired constructor() : Processor {
     override fun process(exchange: Exchange) {
-        //TODO("Not yet implemented")
         val message = exchange.`in`
         val payload = message.getBody(Exception::class.java)
         println(payload)
-        //exitProcess(1)
     }
-
 }
